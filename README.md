@@ -1,21 +1,48 @@
-# Prisma Client Extension starter repository
+# Prisma PGVector Client Extension
 
-Use this template to bootstrap creating your Prisma Client extension.
+`prisma-extension-pgvector` is a wrapper around the `pgvector-node` package
+that provides a convenient, type-safe way to interact with databases which
+support the `pgvector` vector-similarity search for Postgres databases.
 
-Client extensions provide a powerful way to add functionality to Prisma Client in a type-safe manner. You can use them to create simple and flexible solutions that are not natively supported by Prisma. 
+Learn more in the [`pgvector`](https://github.com/pgvector/pgvector) and
+[`pgvector-node`](https://github.com/pgvector/pgvector-node/) docs.
 
+## Quick Start
 
+### 1. Install dependencies
 
-If you would like to learn more, refer to the [Prisma docs](https://www.prisma.io/docs/concepts/components/prisma-client/client-extensions) to learn more information.
-
-## Get started
-
-Click the **Use this template** button and provide details for your Client extension
-
-Install the dependencies:
-
+```bash
+npm i @prisma/client prisma-extension-pgvector
+npm i -D prisma
+npx prisma init
 ```
-npm install
+
+### 2. Add vector support to your `prisma.schema`
+
+At the moment vector is a preview feature, so we need to enable it
+
+```prisma highlight=3,9;add
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  extensions = [vector]
+}
+```
+
+### 3. Add a vector field to your model
+
+Or create a whole new model for your vectors.
+
+```prisma highlight=3;add
+model Item {
+    id      String                  @id @default(cuid())
+    vector  Unsupported("vector")?
+}
 ```
 
 Build the extension:

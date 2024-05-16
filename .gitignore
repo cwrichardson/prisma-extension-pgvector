@@ -1,11 +1,13 @@
 # Dependency directories
 node_modules/
 
+# Production
 dist/
 
 # dotenv environment variable files
 .env
+.env.*
+!.env.example
 
-package-lock.json
-*.tgz
-dev.db
+# misc
+.DS_Store
