@@ -11,6 +11,9 @@ importers:
       '@prisma/client':
         specifier: ^5.7.0
         version: 5.14.0(prisma@5.14.0)
+      pgvector:
+        specifier: ^0.1.8
+        version: 0.1.8
       prisma-extension-pgvector:
         specifier: workspace:^
         version: link:../package

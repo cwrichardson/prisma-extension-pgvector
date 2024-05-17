@@ -4,11 +4,16 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
-		"build": "docker compose --build",
-		"start": "docker compose up && node --watch ./index.js"
+		"start": "docker compose up -d && node --watch ./index.js",
+		"build": "pnpm run generate && pnpm run docker:build",
+		"clean": "docker compose down",
+		"docker:build": "docker compose build",
+		"docker:stop": "docker compose stop",
+		"generate": "pnpx prisma generate"
 	},
 	"dependencies": {
 		"@prisma/client": "^5.7.0",
+		"pgvector": "^0.1.8",
 		"prisma-extension-pgvector": "workspace:^"
 	},
 	"devDependencies": {
