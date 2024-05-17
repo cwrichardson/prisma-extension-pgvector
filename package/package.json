@@ -33,9 +33,9 @@
   },
   "scripts": {
     "build": "esbuild ./src/index.js --bundle --format=cjs --outfile=dist/index.cjs --platform=node --external:@prisma/client --external:pgvector",
-    "prepublishOnly": "npm build",
+    "prepublishOnly": "pnpm build",
     "test": "vitest",
-    "prisma:generate": "npx prisma generate --schema=./test/setup/schema.prisma",
+    "prisma:generate": "pnpx prisma generate --schema=./test/setup/schema.prisma",
     "lint:fix": "eslint --ignore-path .gitignore . --fix",
     "lint": "eslint --ignore-path .gitignore ."
   },
