@@ -25,7 +25,7 @@
   "types": "./types/index.d.ts",
   "exports": {
     ".": {
-      "types": "./typex/index.d.ts",
+      "types": "./types/index.d.ts",
       "import": "./src/index.js",
       "require": "./dist/index.cjs"
     },
