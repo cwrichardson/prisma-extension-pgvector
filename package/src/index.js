@@ -1,6 +1,6 @@
 import { Prisma } from '@prisma/client';
 
-import * as store from './store/index';
+import * as store from './store/index.js';
 
 /**
  * Initialize PGVector as Prisma Extension
