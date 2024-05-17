@@ -1,0 +1,24 @@
+# Run this command to build a local docker image for using pgvector.
+#
+# docker-compose up --build
+#
+# Check https://hub.docker.com/r/pgvector/pgvector/tags
+# for updates.
+#
+# pgvector docs: https://github.com/pgvector/pgvector?tab=readme-ov-file#docker
+# langchain prisma docs: https://js.langchain.com/docs/integrations/vectorstores/prisma
+services:
+  db:
+    hostname: 127.0.0.1
+    image: pgvector/pgvector:pg16
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=mydb
+      - POSTGRES_USER=johndoe
+      - POSTGRES_PASSWORD=randompassword
+    volumes:
+      - db:/var/lib/postgresql/data
+
+volumes:
+  db:

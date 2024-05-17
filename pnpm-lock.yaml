@@ -6,6 +6,28 @@ settings:
 
 importers:
 
+  dev-test:
+    dependencies:
+      '@prisma/client':
+        specifier: ^5.7.0
+        version: 5.14.0(prisma@5.14.0)
+      prisma-extension-pgvector:
+        specifier: workspace:^
+        version: link:../package
+    devDependencies:
+      '@eslint/js':
+        specifier: ^9.2.0
+        version: 9.2.0
+      '@stylistic/eslint-plugin-js':
+        specifier: ^2.1.0
+        version: 2.1.0(eslint@8.57.0)
+      eslint:
+        specifier: ^8.57.0
+        version: 8.57.0
+      prisma:
+        specifier: ^5.7.0
+        version: 5.14.0
+
   package:
     dependencies:
       '@prisma/client':

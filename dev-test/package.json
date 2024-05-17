@@ -1,0 +1,23 @@
+{
+	"name": "devtest",
+	"version": "0.0.1",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"build": "docker compose --build",
+		"start": "docker compose up && node --watch ./index.js"
+	},
+	"dependencies": {
+		"@prisma/client": "^5.7.0",
+		"prisma-extension-pgvector": "workspace:^"
+	},
+	"devDependencies": {
+		"eslint": "^8.57.0",
+		"@eslint/js": "^9.2.0",
+		"@stylistic/eslint-plugin-js": "^2.1.0",
+		"prisma": "^5.7.0"
+	},
+	"prisma": {
+		"seed": "node ./prisma/seed.js"
+	}
+}
