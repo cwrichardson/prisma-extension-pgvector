@@ -3,7 +3,7 @@ import { PrismaModelType } from './prisma';
 
 // create
 export type createArgs<T, A, V> = {
-    data?: myProp extends keyof Prisma.Args<T, 'create'>['data']
+    data?: V extends keyof Prisma.Args<T, 'create'>['data']
       ? Omit<Prisma.Args<T, 'create'>['data'], V> | { [V]: PrismaModelType }
       : Prisma.Args<T, 'create'>['data'];
 } & Omit<Prisma.Args<T, 'create'>, 'data'>;

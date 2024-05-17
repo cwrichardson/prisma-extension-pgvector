@@ -1,5 +1,7 @@
 import { Prisma } from '@prisma/client';
 
+import * as store from './store/index';
+
 /**
  * Initialize PGVector as Prisma Extension
  * 
@@ -7,6 +9,7 @@ import { Prisma } from '@prisma/client';
  */
 export const withPGVector = (args) => Prisma.defineExtension(function (client) {
     const extensionMethods = {
+        ...store,
         // @ts-expect-error
         __$transaction: async (/** @type {any} */ ...args) => client.$transaction(...args)
     }
