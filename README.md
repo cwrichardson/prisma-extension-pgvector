@@ -45,32 +45,19 @@ model Item {
 }
 ```
 
-Build the extension:
+XXX Finish build & test steps, but then move this to a different section and do the QuickStart as npm.
 
-```
-npm run build
-```
+## Contributing
 
-Set up the example app:
+XXX
 
-```
-cd example
-npm install
-npx prisma db push
-```
+### TODO
 
-Test the extension in the example app:
-```
-npm run dev
-```
+- Override default model queries
+- Support other vector types (e.g., halfvector)
+- Support indexing, if possible
 
-### Evolve the extension
+## External Reading
 
-The code for the extension is located in the [`index.ts`](./src/index.ts) file. Feel free to update it before publishing your Client extension to [npm](https://npmjs.com/).
-
-## Learn more
-
-- [Docs — Client extensions](https://www.prisma.io/docs/concepts/components/prisma-client/client-extensions)
-- [Docs — Shared extensions](https://www.prisma.io/docs/concepts/components/prisma-client/client-extensions/shared-extensions)
-- [Examples](https://github.com/prisma/prisma-client-extensions/tree/main)
-- [Preview announcement blog post](https://www.prisma.io/blog/client-extensions-preview-8t3w27xkrxxn#introduction)
+- [Prisma — Client extensions](https://www.prisma.io/docs/concepts/components/prisma-client/client-extensions)
+- [Prisma — Shared extensions](https://www.prisma.io/docs/concepts/components/prisma-client/client-extensions/shared-extensions)

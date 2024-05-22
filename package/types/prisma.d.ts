@@ -1,6 +1,15 @@
 import { Prisma } from '@prisma/client';
 
 /**
+ * Extended types from Prisma to be used in generic models and queries.
+ */
+
+/**
+ * Default args passed to query callback.
+ */
+export type PrismaQueryArgs = Prisma.Extension.DynamicQueryExtensionArgs;
+
+/**
  * Model methods available in Prisma. (e.g. `prisma.node` or `prisma.user`)
  */
 export type PrismaModelProps = Prisma.TypeMap['meta']['modelProps'];
