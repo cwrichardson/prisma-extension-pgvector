@@ -1,1 +1,1 @@
-export { default as create } from './create.js';
+export { default as createVector } from './create-vector.js';

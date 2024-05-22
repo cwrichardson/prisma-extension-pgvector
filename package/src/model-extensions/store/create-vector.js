@@ -1,16 +1,24 @@
 import { Prisma } from '@prisma/client';
+import { toSql } from 'pgvector';
 
 /**
  * @template T - ctx
- * @template A - Args
- * @template V - vector column
+ * @template A - args
  * 
  * @this {T}
- * @param {import('$types/store').createArgs<T, A, V>} args
- * @returns {Promise<import('$types/store').createResult<T, A>>}
+ * @param {import('$types/model-extensions/store').createVectorArgs<T, A>}
+ * @returns {Promise<import('$types/model-extensions/store').createVectorResult<T, A>>}
  */
-export default async function ({ data, ...args }) {
+export default async function ({ data, configArgs }) {
     const ctx = Prisma.getExtensionContext(this);
+
+    const {
+        vectorFieldName,
+        idFieldName = 'id'
+    } = configArgs;
+
+    const vector = toSql(data[vectorFieldName]);
+    const 
 
     return ctx.create({
         data: { ...data },

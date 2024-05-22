@@ -1,8 +1,8 @@
 import PrismaDefault, { type Prisma } from '@prisma/client/scripts/default-index';
 
-import { PrismaModelProps, PrismaModelType } from './prisma';
+import { PrismaModelProps, PrismaModelType } from '$types/prisma';
 import { Types } from '@prisma/client/runtime/library';
-import { createArgs, createResult } from './store';
+import { createVectorArgs, createVectorResult } from '$typs/model-extensions/store';
 
 type PGVectorInitArgs = {
     /**
@@ -13,10 +13,21 @@ type PGVectorInitArgs = {
      * Name of the field to store the vector
      */
     vectorFieldName: PrismaModelType;
+    /**
+     * Name of the field used as unique ID
+     */
+    idFieldName?: PrismaModelType;
 }
 
+export type configArgs = Omit<PGVectorInitArgs, 'modelName'>;
+
+export declare function addProps<T extends keyof any>(
+  methods: Record<T, Function>,
+  configArgs: configArgs
+): Partial<Record<T, Function>>;
+
 export type PGVectorStoreMethods = {
-    create<T, A>(this: T, args: createArgs<T, A, V>): Prisma.PrismaPromise<createResult<T, A>>;
+    createVector<T, A>(this: T, args: createVectorArgs<T, A>): Prisma.PrismaPromise<createVectorResult<T, A>>;
 }
 
 export type PGVectorMethods = PGVectorStoreMethods;
@@ -32,7 +43,7 @@ export type PGVectorMethods = PGVectorStoreMethods;
  */
 export declare function withPGVector<I extends PGVectorInitArgs>(args: I):
   (client: any) => PrismaDefault.PrismaClientExtends<Types.Extensions.InternalArgs<{}, {
-    [K in (I['modelName'] extends ReadonlyArray<infer U> ? U : never )]: PGVectorMethods
+    readonly [K in (I['modelName'] extends ReadonlyArray<infer U> ? U : never )]: PGVectorMethods
   }, {}, {}>
   & Types.Extensions.InternalArgs<{}, {}, {}, {}>
   & Types.Extensions.DefaultArgs>;
