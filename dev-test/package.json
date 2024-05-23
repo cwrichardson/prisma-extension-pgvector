@@ -4,12 +4,15 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
-		"start": "docker compose up -d && node --watch ./index.js",
-		"build": "pnpm run generate && pnpm run docker:build",
+		"start": "pnpm run docker:start && pnpm run node:start",
+		"build": "pnpm run generate && pnpm run docker:build && pnpm run docker:start && pnpm run deploy && pnpm run docker:stop",
 		"clean": "docker compose down",
 		"docker:build": "docker compose build",
+		"docker:start": "docker compose up -d",
 		"docker:stop": "docker compose stop",
-		"generate": "pnpx prisma generate"
+		"node:start": "node --watch ./index.js",
+		"generate": "pnpx prisma generate",
+		"deploy": "pnpx prisma migrate deploy"
 	},
 	"dependencies": {
 		"@prisma/client": "^5.7.0",
