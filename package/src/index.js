@@ -1,18 +1,18 @@
 import { Prisma } from '@prisma/client';
 
-import * as store from './model-extensions/store/index';
+import * as store from './model-extensions/store/index.js';
 
 /**
  * HOF to attach config args to methods
  * 
- * @param {import('$types/index.js').configArgs} configArgs
+ * @param {import('$types/index').configArgs} configArgs
  * @returns {Function}
  */
 const withConfigArgs = (configArgs) => {
     return (/** @type Function */ func) => {
         return (/** @type any[] */ ...args) => {
-            const newArgs = [...args, configArgs];
-            func(...newArgs);
+            const newArgs = {...args[0], configArgs: configArgs};
+            func(newArgs);
         }
     }
 }
@@ -40,8 +40,18 @@ export const withPGVector = (args) => Prisma.defineExtension(function (client) {
         ...store
     };
     const extensionMethodsWithProps = addProps(extensionMethods, args);
+    /**
+     * Append client level methods to our model, for internal use
+     */
     // @ts-expect-error
-    extensionMethodsWithProps['__$transaction'] = async (/** @type {any} */ ...args) => client.$transaction(...args)
+    extensionMethodsWithProps.__$transaction = async (/** @type {any} */ ...args) => client.$transaction(...args)
+    // @ts-expect-error
+    extensionMethodsWithProps.__$queryRaw = async (/** @type {any} */ ...args) => client.$queryRaw(...args)
+    // @ts-expect-error
+    extensionMethodsWithProps.__$sql = async (/** @type {any} */ ...args) => client.$sql(...args)
+
+    console.log('final model method')
+    console.dir(extensionMethodsWithProps, { depth: null})
 
     // const queryMethods = {
     //     ...store
