@@ -1,8 +1,8 @@
-import PrismaDefault, { type Prisma } from '@prisma/client/scripts/default-index';
+import PrismaDefault, { type Prisma } from '@prisma/client/scripts/default-index.d.ts';
 
-import { PrismaModelProps, PrismaModelType } from '$types/prisma';
-import { Types } from '@prisma/client/runtime/library';
-import { createVectorArgs, createVectorResult } from '$typs/model-extensions/store';
+import { PrismaModelProps, PrismaModelType } from '$types/prisma.d.ts';
+import { Types } from '@prisma/client/runtime/library.d.ts';
+import { createVectorArgs, createVectorResult } from '$types/model-extensions/store.d.ts';
 
 type PGVectorInitArgs = {
     /**
@@ -43,7 +43,7 @@ export type PGVectorMethods = PGVectorStoreMethods;
  */
 export declare function withPGVector<I extends PGVectorInitArgs>(args: I):
   (client: any) => PrismaDefault.PrismaClientExtends<Types.Extensions.InternalArgs<{}, {
-    readonly [K in (I['modelName'] extends ReadonlyArray<infer U> ? U : never )]: PGVectorMethods
+    readonly [K in (I['modelName'] extends infer U ? U : never)]: PGVectorMethods
   }, {}, {}>
   & Types.Extensions.InternalArgs<{}, {}, {}, {}>
   & Types.Extensions.DefaultArgs>;
