@@ -6,7 +6,7 @@ import { toSql } from 'pgvector';
  * @template A - args
  * 
  * @this {T}
- * @param {import('$types/model-extensions/store').createVectorArgs<T, A>}
+ * @param {import('$types/model-extensions/store').createVectorArgs<T, A>} args
  * @returns {Promise<import('$types/model-extensions/store').createVectorResult<T, A>>}
  */
 export default async function ({ data, configArgs }) {
@@ -18,10 +18,22 @@ export default async function ({ data, configArgs }) {
     } = configArgs;
 
     const vector = toSql(data[vectorFieldName]);
-    const 
+    const id = data[idFieldName] ? data[idFieldName] : null;
 
-    return ctx.create({
-        data: { ...data },
-        ...args
-    })
+    let fields;
+    let values;
+
+    if (id) {
+        fields = `(${idFieldName}, ${vectorFieldName})`;
+        values = `(${data[idFieldName]}, '${vector}'::vector)`;
+    } else {
+        fields = `(${vectorFieldName})`;
+        values = `('${vector}'::vector)`;
+    }
+
+    const query = `INSERT INTO "${ctx.$name}" ${fields} VALUES ${values}`;
+
+    console.log('--- QUERY ---', query)
+
+    return ctx.__$queryRawUnsafe(query);
 }
