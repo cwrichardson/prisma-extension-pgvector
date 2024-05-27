@@ -13,10 +13,16 @@ try {
             embedding: [1, 2, 3]
         }
     });
-    
     console.log(insertedVector);
+
+    const idSpecified = await prisma.vector.createVector({
+        data: {
+            id: 25,
+            embedding: [4, 5, 6]
+        }
+    })
 } catch (/** @type any */ e) {
     console.log('Error inserting single vector');
     console.log(e.message);
-    console.log(e.meta)
+    console.log(e.meta);
 }
