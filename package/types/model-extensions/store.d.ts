@@ -1,8 +1,6 @@
 import type { Prisma } from '@prisma/client';
-import { PrismaModelType } from '$types/model-extensions/prisma';
 import { configArgs } from '$types/model-extensions';
-import { Prisma } from '@prisma/client/scripts/default-index';
-import { vectorFieldExtension } from '$types/vector';
+import { vectorEntry, vectorFieldExtension } from '$types/vector';
 
 /**
  * pgvector "storing" methods
@@ -30,4 +28,4 @@ type reducedDataArgs<T, A extends Prisma.Args<T, 'create'>['data'],
 export type createVectorArgs<T, A extends storeArgs> = {
   data: reducedDataArgs<A, configArgs['idFieldName'], configArgs['vectorFieldName']>
 } & { configArgs: configArgs };
-export type createVectorResult<T, A> = Prisma.Result<T, A, '$queryRaw'>;
+export type createVectorResult<T, A> = vectorEntry;

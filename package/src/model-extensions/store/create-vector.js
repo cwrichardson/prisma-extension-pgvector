@@ -19,17 +19,31 @@ export default async function ({ data, configArgs }) {
 
     const vector = toSql(data[vectorFieldName]);
     const id = data[idFieldName] ? data[idFieldName] : null;
+    
+    /**
+     * Initialize the return object
+     * Reverse the `toSql` we did earlier to get a standardized form, rather
+     * than just taking the submitted data as Prisma does with their
+     * PostGIS example.
+     * 
+     * @see https://www.prisma.io/docs/orm/prisma-client/queries/raw-database-access/custom-and-type-safe-queries#41-adding-an-extension-to-create-pointofinterest-records
+     */
+    const /** @type {import('$types/vector').vectorEntry} */ v = {
+        [vectorFieldName]: fromSql(vector)
+    }
 
     /**
      * Construct INSERT template for use in queryRaw. Either
      * 
-     *  INSERT INTO "<modelName>" (<vectorFieldName)
+     *  INSERT INTO "<modelName>" (<vectorFieldName>)
      *  VALUES ($1::vector)
+     *  RETURNING <idFieldName>
      * 
      * or
      * 
-     *  INSERT INTO "<modelName>" (<idFieldName, <vectorFieldName>)
+     *  INSERT INTO "<modelName>" (<idFieldName>, <vectorFieldName>)
      *  VALUES ($1, $2::vector)
+     *  RETURNING <idFieldName>
      * 
      * @see https://github.com/prisma/prisma/issues/13162#issuecomment-1769316967
      * 
@@ -43,35 +57,30 @@ export default async function ({ data, configArgs }) {
       `INSERT INTO "${Prisma.raw(ctx.$name || '').strings[0]}" `;
     let queryStrings;
     let values;
+    const queryClose =
+      `::vector) RETURNING ${Prisma.raw(idFieldName).strings[0]}`;
 
     if (id) {
         queryInsert += Prisma.raw(`(${idFieldName}, ${vectorFieldName})`)
           .strings[0] + ' VALUES (';
-        queryStrings = [ queryInsert, ', ', '::vector)' ]
+        queryStrings = [ queryInsert, ', ', queryClose ]
         values = [ data[idFieldName], vector ];
     } else {
         queryInsert += Prisma.raw(`(${vectorFieldName})`)
           .strings[0] += ' VALUES (';
-        queryStrings = [ queryInsert, '::vector)' ]
+        queryStrings = [ queryInsert, queryClose ]
         values = [ vector ];
     }
 
     const query = Prisma.sql(queryStrings, ...values);
-    console.log(query);
 
-    return ctx.__$queryRaw(query);
-
-    const record = await ctx.__$queryRawUnsafe(query)
-    .then(( /** @type Object[] */ rowData) => [idFieldName, vectorFieldName]
-        .reduce((acc, /** @type keyof typeof rowData[0] */ record) => (
-                record in rowData[0] && (acc[record] = rowData[0][record]),
-                acc
-        ), {})
-    )
-    .then(( /** @type Object */ rowObject) => ({
-        // @ts-ignore
-        ...rowObject, [vectorFieldName]: fromSql(rowObject[vectorFieldName])
-    }))
+    // model methods don't exist until instantiated
+    // @ts-ignore
+    const record = await ctx.__$queryRaw(query)
+    .then(( /** @type Object[] */ rowData) => ({
+        ...v,
+        ...rowData[0]
+    }));
     
     return record;
 }
