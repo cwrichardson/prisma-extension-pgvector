@@ -49,7 +49,7 @@ export const withPGVector = (args) => Prisma.defineExtension(function (client) {
     // @ts-expect-error
     extensionMethodsWithProps['__$queryRaw'] = async (/** @type {any} */ ...args) => client.$queryRaw(...args)
     // @ts-expect-error
-    extensionMethodsWithProps['__$queryRawUnsafe'] = async (/** @type {any} */ ...args) => client.$queryRawUnsafe(...args)
+    extensionMethodsWithProps['__$executeRaw'] = async (/** @type {any} */ ...args) => client.$executeRaw(...args)
 
     return client.$extends({
         name: 'prisma-extension-pgvector',
