@@ -53,6 +53,9 @@ export const withPGVector = (args) => Prisma.defineExtension(function (client) {
 
     return client.$extends({
         name: 'prisma-extension-pgvector',
-        model: Object.fromEntries([[args.modelName, extensionMethodsWithProps]])
+        model: Object.fromEntries([[args.modelName, extensionMethodsWithProps]]),
+        client: {
+            $getConfig: () => args
+        }
     })
 })
