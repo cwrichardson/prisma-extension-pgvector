@@ -7,22 +7,73 @@ const prisma = new PrismaClient().$extends(withPGVector({
     vectorFieldName: 'embedding'
 }));
 
+// create single vectors
 try {
     const insertedVector = await prisma.vector.createVector({
         data: {
             embedding: [1, 2, 3]
         }
     });
-    console.log(insertedVector);
-
+    console.log('Inserted single vector', insertedVector);
+    
     const idSpecified = await prisma.vector.createVector({
         data: {
             id: 25,
             embedding: [4, 5, 6]
         }
     })
+    console.log('Inserted single vector with id', idSpecified);
+
 } catch (/** @type any */ e) {
     console.log('Error inserting single vector');
     console.log(e.message);
-    console.log(e.meta);
+}
+
+// create multiple vectors in one go
+try {
+    const count = await prisma.vector.createManyVectors({
+        data: [
+            { id: 2, embedding: [10,11,12]},
+            { embedding: [7,8,9] }
+        ]
+    })
+    console.log('Many inserts, 1st has an id', count);
+
+    const count2 = await prisma.vector.createManyVectors({
+        data: [
+            { embedding: [13,14,15] },
+            { id: 3, embedding: [16,17,18]}
+        ]
+    })
+    console.log('Many inserts, last has an id', count2);
+
+    const count3 = await prisma.vector.createManyVectors({
+        data: [
+            { embedding: [19,20,21]},
+            { embedding: [22,23,24] }
+        ]
+    })
+    console.log('Many inserts, none have an id', count3);
+
+    const count4 = await prisma.vector.createManyVectors({
+        data: [
+            { id: 4, embedding: [25,26,27]},
+            { id: 5, embedding: [28,29,30] }
+        ]
+    })
+    console.log('Many inserts, all have an id', count4);
+
+    const count5 = await prisma.vector.createManyVectors({
+        data: [
+            { embedding: [34,35,36]},
+            { id: 6, embedding: [31,32,33]},
+            { embedding: [37,37,39] }
+        ]
+    })
+    console.log('Many inserts, middle an id', count5);
+
+
+} catch (/** @type any */ e) {
+    console.log('Error in createMany');
+    console.log(e.message)
 }

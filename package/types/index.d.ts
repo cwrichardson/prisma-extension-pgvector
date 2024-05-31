@@ -1,8 +1,9 @@
 import PrismaDefault, { type Prisma } from '@prisma/client/scripts/default-index.d.ts';
 
-import { PrismaModelProps, PrismaModelType } from '$types/prisma.d.ts';
 import { Types } from '@prisma/client/runtime/library.d.ts';
 import { createVectorArgs, createVectorResult } from '$types/model-extensions/store.d.ts';
+
+export { PrismaModelProps, PrismaModelType } from '$types/prisma.d.ts';
 
 type PGVectorInitArgs = {
     /**
@@ -28,6 +29,7 @@ export declare function addProps<T extends keyof any>(
 
 export type PGVectorStoreMethods = {
     createVector<T, A>(this: T, args: createVectorArgs<T, A>): Prisma.PrismaPromise<createVectorResult<T, A>>;
+    createManyVectors<T, A>(this: T, args: createManyVectorsArgs<T, A>): Prisma.PrismaPromise<createManyVectorsResult<T, A>>;
 }
 
 export type PGVectorMethods = PGVectorStoreMethods;

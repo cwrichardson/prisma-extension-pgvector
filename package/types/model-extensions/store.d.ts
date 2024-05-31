@@ -11,12 +11,11 @@ import { vectorEntry, vectorFieldExtension } from '$types/vector';
  * TODO:
  * upsertVector
  * updateVector
- * deleteVector
+ * createManyVectors
  */
 
 type idField = { [`${idFieldName}`] };
-
-type storeArgs<T extends Prisma.Args<T, 'create'>> = T & { configArgs: configArgs};
+type createArgs<T extends Prisma.Args<T, 'create'>> = T & { configArgs: configArgs};
 
 /**
  * Strip data down to just the vector and id fields
@@ -25,7 +24,14 @@ type reducedDataArgs<T, A extends Prisma.Args<T, 'create'>['data'],
   I extends keyof A,
   VF extends keyof A> = Pick<A, idField[I] | vectorFieldExtension[VF]>;
 
-export type createVectorArgs<T, A extends storeArgs> = {
+// createVector
+export type createVectorArgs<T, A extends createArgs> = {
   data: reducedDataArgs<A, configArgs['idFieldName'], configArgs['vectorFieldName']>
 } & { configArgs: configArgs };
 export type createVectorResult<T, A> = vectorEntry;
+
+// createManyVectors
+export type createManyVectorArgs<T, A extends createArgs> = {
+  data: Array<reducedDataArgs<A, configArgs['idFieldName'], configArgs['vectorFieldName']>>
+} & { configArgs: configArgs };
+export type createManyVectorsResult<T, A> = Prisma.Result<T, A, 'createMany'>;
