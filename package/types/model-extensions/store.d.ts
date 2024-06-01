@@ -1,5 +1,5 @@
 import type { Prisma } from '@prisma/client';
-import { configArgs } from '$types/model-extensions';
+import { configArgs } from '$types/index';
 import { vectorEntry, vectorFieldExtension } from '$types/vector';
 
 /**
