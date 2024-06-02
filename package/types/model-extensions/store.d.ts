@@ -20,18 +20,27 @@ type createArgs<T extends Prisma.Args<T, 'create'>> = T & { configArgs: configAr
 /**
  * Strip data down to just the vector and id fields
  */
-type reducedDataArgs<T, A extends Prisma.Args<T, 'create'>['data'],
+type createDataArgs<T, A extends Prisma.Args<T, 'create'>['data'],
+  I extends keyof A,
+  VF extends keyof A> = Pick<A, (idField[I] | undefined) | vectorFieldExtension[VF]>;
+type updateDataArgs<T, A extends Prisma.Args<T, 'create'>['data'],
   I extends keyof A,
   VF extends keyof A> = Pick<A, idField[I] | vectorFieldExtension[VF]>;
 
 // createVector
 export type createVectorArgs<T, A extends createArgs> = {
-  data: reducedDataArgs<A, configArgs['idFieldName'], configArgs['vectorFieldName']>
+  data: createDataArgs<A, configArgs['idFieldName'], configArgs['vectorFieldName']>
 } & { configArgs: configArgs };
 export type createVectorResult<T, A> = vectorEntry;
 
+// updateVector
+export type updateVectorArgs<T, A extends createArgs> = {
+  data: updateDataArgs<A, configArgs['idFieldName'], configArgs['vectorFieldName']>
+} & { configArgs: configArgs };
+export type updateVectorResult<T, A> = vectorEntry;
+
 // createManyVectors
 export type createManyVectorArgs<T, A extends createArgs> = {
-  data: Array<reducedDataArgs<A, configArgs['idFieldName'], configArgs['vectorFieldName']>>
+  data: Array<createDataArgs<A, configArgs['idFieldName'], configArgs['vectorFieldName']>>
 } & { configArgs: configArgs };
 export type createManyVectorsResult<T, A> = Prisma.Result<T, A, 'createMany'>;
