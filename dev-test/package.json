@@ -15,15 +15,15 @@
 		"deploy": "pnpx prisma migrate deploy"
 	},
 	"dependencies": {
-		"@prisma/client": "^5.7.0",
+		"@prisma/client": "^5.14.0",
 		"pgvector": "^0.1.8",
 		"prisma-extension-pgvector": "workspace:^"
 	},
 	"devDependencies": {
-		"eslint": "^8.57.0",
 		"@eslint/js": "^9.2.0",
 		"@stylistic/eslint-plugin-js": "^2.1.0",
-		"prisma": "^5.7.0"
+		"eslint": "^8.57.0",
+		"prisma": "^5.14.0"
 	},
 	"prisma": {
 		"seed": "node ./prisma/seed.js"

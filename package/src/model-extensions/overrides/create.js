@@ -1,5 +1,4 @@
 import { Prisma } from '@prisma/client';
-import { toSql } from 'pgvector';
 
 /**
  * Extend the default `create` method to support vectors in our model.
@@ -8,29 +7,59 @@ import { toSql } from 'pgvector';
  * @template A - args
  * 
  * @this {T}
- * @param {import('$types/query').createQueryArgs<T>} args
- * @returns {import('$types/query').createQueryResult<T, A>}
+ * @param {import('$types/model-extensions/overrides').createQueryArgs<T, A>} props
+ * @returns {import('$types/model-extensions/overrides').createQueryResult<T, A>}
  */
-export default async function ({ model, operation, args, query, vectorFieldName }) {
+export default async function ({ configArgs, parentContext, ...args }) {
     const ctx = Prisma.getExtensionContext(this);
+    const baseCreate = ctx?.$name ? parentContext[ctx.$name].create : () => {};
+    const {
+        vectorFieldName,
+        idFieldName = 'id'
+    } = configArgs;
 
     // if we're not adding vector data, or including it in the return, just
-    // run the native Prisma client query
-    if (! (args?.data.hasOwnProperty(vectorFieldName) || args?.select.hasOwnProperty(vectorFieldName))) {
-        return query(args);
-    }
-    // normal case ... we're inserting a vector. If we're _only_ inserting
-    // a vector, just do it. Otherwise, run a transaction to insert the vector
-    // first & then update the record with the rest of the data
-    else if (args?.data.hasOwnProperty(vectorFieldName)) {
-        const dataParams = Object.keys(args.data);
-        const vector = toSql(args.data[vectorFieldName]);
+    // run the native Prisma client query. If no specified return value with
+    // `select`, append an empty vector field to the object.
+    // TODO: make this work if the vector field has a default value in the
+    //       schema
+    if (! (args?.data?.hasOwnProperty(vectorFieldName) || args?.select?.hasOwnProperty(vectorFieldName))) {
+        const row = await baseCreate(args)
+        .then((/** @type Object */ rawRow) => {
+            if (args?.select) return rawRow;
+            return ({ ...rawRow, [vectorFieldName]: null })
+        })
 
-        if (dataParams.length === 1) {
-            return ctx.$parent[ctx.$name].$queryRawUnsafe(`INSERT INTO ${model} (${vectorFieldName}) VALUES $1::vector`, vector);
-        } else {
-            return ctx.$parent[ctx.$name].__$transaction
+        return row;
+    }
+    // run the normal create first, so we have a full model object, then
+    // update with the vector
+    else if (args?.data?.hasOwnProperty(vectorFieldName)) {
+        const select = args?.select;
+        const selectVector = (select && args.select[vectorFieldName]);
+
+        // remove the vector from any select clause
+        if (selectVector) {
+            delete args.select[vectorFieldName];
         }
+
+        // remove the vector from the data clause
+        const vector = args.data[vectorFieldName];
+        delete args.data[vectorFieldName];
+
+        // @ts-ignore
+        return ctx.__$transaction(async () => {
+            const rowWithoutVector = await baseCreate(args);
+            // @ts-ignore
+            const updatedVector = await ctx.updateVector({
+                data: {
+                    [idFieldName]: rowWithoutVector[idFieldName],
+                    [vectorFieldName]: vector
+                }
+            })
+
+            return ({ ...rowWithoutVector, ...updatedVector })
+        })
     }
     // we're creating an entry with no vector data, but including the vector
     // field in the return. Weird, but maybe there's a default.
@@ -38,11 +67,3 @@ export default async function ({ model, operation, args, query, vectorFieldName 
         return Promise.reject('Boo!');
     }
 }
-/* export default async function ({ data, ...args }) {
-    const ctx = Prisma.getExtensionContext(this);
-
-    return ctx.create({
-        data: { ...data },
-        ...args
-    })
-} */

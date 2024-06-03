@@ -7,6 +7,23 @@ const prisma = new PrismaClient().$extends(withPGVector({
     vectorFieldName: 'embedding'
 }));
 
+// create
+try {
+    const newNotAVector = await prisma.vector.create({
+        data: { metadata: 'foobar'}
+    });
+    console.log('Inserted not a vector ', newNotAVector);
+    
+    const newWithAVector = await prisma.vector.create({
+        data: { embedding: [1, 2, 3], metadata: 'foobar'}
+    });
+    console.log('Inserted not a vector ', newWithAVector);
+
+} catch (/** @type any */ e) {
+    console.log('Error inserting non-vector');
+    console.log(e.message);
+}
+
 // create single vectors
 try {
     const insertedVector = await prisma.vector.createVector({

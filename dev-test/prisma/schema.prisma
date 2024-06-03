@@ -13,5 +13,7 @@ datasource db {
 
 model Vector {
   id  Int @id @default(autoincrement())
+  metadata  Json?
+  testfield String?
   embedding Unsupported("vector(3)")?
 }
