@@ -11,7 +11,9 @@ export type vector = vectorComponent[];
 
 /** for use in queryRaw */
 export type vectorEntry = {
-    [K in `${idFieldName}`]: K extends PrismaModelType ? string | undefined : never;
+    [K in `${idFieldName}`]: K extends PrismaModelType
+      ? string | undefined
+      : never;
     [P in `${vectorFieldName}`]: P extends PrismaModelType ? vector : never;
 }
 
