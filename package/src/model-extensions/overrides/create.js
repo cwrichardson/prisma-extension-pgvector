@@ -16,7 +16,7 @@ export default async function (props) {
         parentContext,
         ...args
     } = props;
-    
+
     const ctx = Prisma.getExtensionContext(this);
     const baseCreate = ctx?.$name ? parentContext[ctx.$name].create : () => {};
     const {
@@ -64,7 +64,20 @@ export default async function (props) {
                 }
             })
 
-            return ({ ...rowWithoutVector, ...updatedVector })
+            if (select && !selectVector) {
+                return rowWithoutVector
+            } else if (!select) {
+                return ({ ...rowWithoutVector, ...updatedVector })
+            } else {
+                // rowWithoutVector will be the native results of the
+                // select, which may or may not include the ID field.
+                // remove ID from updatedVector before appending
+                return ({
+                    ...rowWithoutVector,
+                    [vectorFieldName]: updatedVector[vectorFieldName]
+                })
+            };
+
         })
     }
     // we're creating an entry with no vector data, but including the vector
