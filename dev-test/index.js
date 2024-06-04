@@ -19,6 +19,18 @@ try {
     });
     console.log('Inserted not a vector ', newWithAVector);
 
+    const selectedNoVector = await prisma.vector.create({
+        data: { metadata: 'with select', embedding: [1,2,3] },
+        select: { metadata: true }
+    });
+    console.log('create with select w/out vector', selectedNoVector);
+
+    const selectedVector = await prisma.vector.create({
+        data: { id: 1, embedding: [1,2,3], metadata: 'foo' },
+        select: { embedding: true, metadata: true }
+    });
+    console.log('create with select w/vector', selectedVector);
+
 } catch (/** @type any */ e) {
     console.log('Error inserting non-vector');
     console.log(e.message);

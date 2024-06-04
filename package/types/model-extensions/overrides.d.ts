@@ -28,7 +28,7 @@ type createExtendedArgs<
 } & Omit<Prisma.Exact<A, Prisma.Args<T, 'create'>>, 'data' | 'select'>;
 
 export type createArgs<T, A extends createExtendedArgs> = 
-  createQueryExtendedArgs<A, configArgs['vectorFieldName']>
+  createExtendedArgs<A, configArgs['vectorFieldName']>
   & { configArgs: configArgs }
   & { parentContext: PrismaClient };
 export type createResult<T, A> = Prisma.PrismaPromise;
