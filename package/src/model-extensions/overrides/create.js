@@ -7,10 +7,16 @@ import { Prisma } from '@prisma/client';
  * @template A - args
  * 
  * @this {T}
- * @param {import('$types/model-extensions/overrides').createQueryArgs<T, A>} props
- * @returns {import('$types/model-extensions/overrides').createQueryResult<T, A>}
+ * @param {import('$types/model-extensions/overrides').createArgs<T, A>} props
+ * @returns {import('$types/model-extensions/overrides').createResult<T, A>}
  */
-export default async function ({ configArgs, parentContext, ...args }) {
+export default async function (props) {
+    const {
+        configArgs,
+        parentContext,
+        ...args
+    } = props;
+    
     const ctx = Prisma.getExtensionContext(this);
     const baseCreate = ctx?.$name ? parentContext[ctx.$name].create : () => {};
     const {
