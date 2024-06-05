@@ -40,4 +40,4 @@ export type PrismaModelFunctionResult<TModelName extends PrismaModelProps,
  * This works because `findUnique` returns a typed javascript object.
  */
 export type PrismaModelType<TModelName extends PrismaModelProps> =
-  PrismaModelFunctionResult<TModelName, 'findUnique'>;
+  Prisma.Result<TModelName, {}, 'findFirst'>;
