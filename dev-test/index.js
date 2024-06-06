@@ -106,3 +106,17 @@ try {
     console.log('Error in createMany');
     console.log(e.message)
 }
+
+// query
+try {
+    const found = await prisma.vector.getVectorsById({
+        where: {
+            id: { in: [ 1 ]}
+        }
+    });
+    console.log('Found!', found)
+
+} catch (/** @type any */ e) {
+    console.log('Error in query');
+    console.log(e.message)
+}

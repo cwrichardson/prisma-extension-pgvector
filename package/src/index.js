@@ -1,6 +1,7 @@
 import { Prisma } from '@prisma/client';
 
 import * as store from './model-extensions/store/index.js';
+import * as query from './model-extensions/query/index.js';
 import * as overrides from './model-extensions/overrides/index.js';
 
 /**
@@ -32,7 +33,7 @@ const addProps = (methods, additionalProps) =>
 /**
  * HOF to pass config args and raw prisma context down to override methods
  * 
- * @type {import('$types/index.js').addPropsAndFunc}
+ * @type {import('$types/index.js').addPropsWithContext}
  */
 const addPropsWithContext = (methods, additionalProps, context) =>
     Object.entries(methods).reduce((acc, [name, method]) => {
@@ -72,7 +73,8 @@ const addPropsWithContext = (methods, additionalProps, context) =>
 export const withPGVector = (args) => Prisma.defineExtension(function (client) {
 
     const extensionMethods = {
-        ...store
+        ...store,
+        ...query
     }
     const extensionMethodsWithProps = addProps(extensionMethods, args);
 

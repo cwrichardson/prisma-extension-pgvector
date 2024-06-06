@@ -1,0 +1,1 @@
+export { default as getVectorsById } from './get-vectors-by-id.js';
