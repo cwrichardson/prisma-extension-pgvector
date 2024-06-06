@@ -1,7 +1,7 @@
 import PrismaDefault,
   { type PrismaClient,
     type Prisma
-  } from '@prisma/client/scripts/default-index.d.ts';
+} from '@prisma/client/scripts/default-index.d.ts';
 
 import { Types } from '@prisma/client/runtime/library.d.ts';
 import {
@@ -13,20 +13,22 @@ import {
 import {
   createArgs,
   createResult
-
 } from '$types/model-extensions/override.d.ts';
+import { getVectorsByIdArgs, getVectorsByIdResult } from './model-extensions/query';
 
 export { PrismaModelProps, PrismaModelType } from '$types/prisma.d.ts';
 
-type PGVectorInitArgs = {
+interface PGVectorInitArgs {
     /**
      * Name of model that has the vector field
      */
     modelName: PrismaModelProps;
     /**
-     * Name of the field to store the vector
+     * Name of the field to store the vector. Would be good if we could
+     * get this from Prisma types somehow, but ... I can't see how, as
+     * unsupported field types don't appear in the models.
      */
-    vectorFieldName: PrismaModelType;
+    vectorFieldName: string;
     /**
      * Name of the field used as unique ID
      */
@@ -34,31 +36,35 @@ type PGVectorInitArgs = {
 }
 
 export type configArgs = Omit<PGVectorInitArgs, 'modelName'>;
+export type idFieldKey<T> = T extends configArgs['idFieldName']
+  ? T extends undefined ? 'id' : `${idFieldName}` : never;
+export type vectorFieldKey<T> = T extends configArgs['vectorFieldName']
+  ? `${vectorFieldName}` : never;
+export type idFieldType<T, K extends idFieldKey> = Pick<PrismaModelType<T>, K>;
 
-export declare function addProps<T extends keyof any>(
-  methods: Record<T, Function>,
-  configArgs: configArgs
-): Partial<Record<T, Function>>;
 
-export declare function addPropsWithContext<T extends keyof any>(
-  methods: Record<T, Function>,
-  configArgs: PGVectorInitArgs,
-  parentContext: PrismaClient 
-): Partial<Record<T, Function>>;
-
-// model methods
+// new model methods
 export type PGVectorStoreMethods = {
-    createVector<T, A>(this: T, args: createVectorArgs<T, A>): Prisma.PrismaPromise<createVectorResult<T, A>>;
-    createManyVectors<T, A>(this: T, args: createManyVectorsArgs<T, A>): Prisma.PrismaPromise<createManyVectorsResult<T, A>>;
-    updateVector<T, A>(this: T, args: updateVectorArgs<T, A>): Prisma.PrismaPromise<updateVectorResult<T, A>>;
+    createVector<T, A>(this: T, args: createVectorArgs<T, A>):
+      Prisma.PrismaPromise<createVectorResult<T, A>>;
+    createManyVectors<T, A>(this: T, args: createManyVectorsArgs<T, A>):
+      Prisma.PrismaPromise<createManyVectorsResult<T, A>>;
+    updateVector<T, A>(this: T, args: updateVectorArgs<T, A>):
+      Prisma.PrismaPromise<updateVectorResult<T, A>>;
+}
+export type PGVectorQueryMethods = {
+    getVectorsById<T, A>(this: T, args: getVectorsByIdArgs<T, A>):
+      Prisma.PrismaPromise<getVectorsByIdResult<T, A>>;
 }
 
 // base model override methods
 export type PGVectorOverrides = {
-  create<T, A>(this: T, args: createArgs<T, A>): Prisma.PrismaPromise<createResult<T, A>>;
+    create<T, A>(this: T, args: createArgs<T, A>):
+      Prisma.PrismaPromise<createResult<T, A>>;
 }
 
-export type PGVectorModelMethods = PGVectorStoreMethods & PGVectorOverrides;
+export type PGVectorModelMethods = PGVectorStoreMethods & PGVectorQueryMethods
+  & PGVectorOverrides;
 
 /**
  * Extends Prisma Client with PGVector
@@ -75,3 +81,17 @@ export declare function withPGVector<I extends PGVectorInitArgs>(args: I):
   }, {}, {}>
   & Types.Extensions.InternalArgs<{}, {}, {}, {}>
   & Types.Extensions.DefaultArgs>;
+
+/**
+ * Types for helper functions to wrap config args.
+ */
+export declare function addProps<T extends keyof any>(
+  methods: Record<T, Function>,
+  configArgs: configArgs
+): Partial<Record<T, Function>>;
+
+export declare function addPropsWithContext<T extends keyof any>(
+  methods: Record<T, Function>,
+  configArgs: PGVectorInitArgs,
+  parentContext: PrismaClient 
+): Partial<Record<T, Function>>;
