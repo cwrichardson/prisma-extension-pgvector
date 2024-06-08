@@ -43,7 +43,6 @@ export default async function ({ where, configArgs}) {
         FROM "${Prisma.raw(ctx.$name || '').strings[0]}"
         WHERE ${Prisma.raw(idFieldName).strings[0]} = ANY(ARRAY[
     `;
-    console.log('QuerySelect', querySelect)
 
     const queryStrings = [querySelect];
     for (let i = 0; i < ids.length - 1; i++) {
