@@ -1,5 +1,5 @@
 import { Prisma } from '@prisma/client';
-import { toSql } from 'pgvector';
+import { fromSql, toSql } from 'pgvector';
 
 import { createManyQueryBuilder } from '../../../src/helpers/create-many-query-builder.js';
 
@@ -8,8 +8,8 @@ import { createManyQueryBuilder } from '../../../src/helpers/create-many-query-b
  * @template A - args
  * 
  * @this {T}
- * @param {import('$types/model-extensions/store').createManyVectorsArgs<T, A>} args
- * @returns {Promise<import('$types/model-extensions/store').createManyVectorsResult<T, A>>}
+ * @param {import('$types/model-extensions/store').createManyVectorsAndReturnArgs<T, A>} args
+ * @returns {Promise<import('$types/model-extensions/store').createManyVectorsAndReturnResult<T, A>>}
  */
 export default async function ({ data, configArgs }) {
     const ctx = Prisma.getExtensionContext(this);
@@ -25,7 +25,7 @@ export default async function ({ data, configArgs }) {
       : null);
 
     const query = createManyQueryBuilder({
-        queryType: 'count',
+        queryType: 'return',
         modelName: ctx.$name,
         idFieldName: idFieldName,
         vectorFieldName: vectorFieldName,
@@ -35,10 +35,16 @@ export default async function ({ data, configArgs }) {
 
     // model methods don't exist until instantiated
     // @ts-ignore
-    const record = await ctx.__$executeRaw(query)
-    .then(( /** @type number */ rows) => ({
-        count: rows
-    }));
+    const record = await ctx.__$queryRaw(query)
+    .then((/** @type {import('$types/vector.js').vectorEntry}[] */ rows) => (
+        rows.map((
+            /** @type {import('$types/vector.js').vectorEntry} */ entry,
+            /** @type number */ i) => ({
+                [idFieldName]: entry[idFieldName],
+                [vectorFieldName]: fromSql(vectors[i])
+            })
+        )
+    ))
     
     return record;
 }

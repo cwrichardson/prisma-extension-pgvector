@@ -40,7 +40,13 @@ export type updateVectorArgs<T, A extends createArgs> = {
 export type updateVectorResult<T, A> = vectorEntry;
 
 // createManyVectors
-export type createManyVectorArgs<T, A extends createArgs> = {
+export type createManyVectorsArgs<T, A extends createArgs> = {
   data: Array<createDataArgs<A, configArgs['idFieldName'], configArgs['vectorFieldName']>>
 } & { configArgs: configArgs };
 export type createManyVectorsResult<T, A> = Prisma.Result<T, A, 'createMany'>;
+
+// createManyVectorsAndReturn
+export type createManyVectorsAndReturnArgs<T, A extends createArgs> = {
+  data: Array<createDataArgs<A, configArgs['idFieldName'], configArgs['vectorFieldName']>>
+} & { configArgs: configArgs };
+export type createManyVectorsAndReturnResult<T, A> = Array<vectorEntry>;

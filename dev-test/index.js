@@ -107,6 +107,21 @@ try {
     console.log(e.message)
 }
 
+// create multiple vectors and return
+try {
+    const vectors = await prisma.vector.createManyVectorsAndReturn({
+        data: [
+            { id: 7, embedding: [10,11,12]},
+            { embedding: [7,8,9] }
+        ]
+    })
+    console.log('Many inserts, 1st has an id', vectors);
+
+} catch (/** @type any */ e) {
+    console.log('Error in createMany');
+    console.log(e.message)
+}
+
 // query
 try {
     const found = await prisma.vector.getVectorsById({

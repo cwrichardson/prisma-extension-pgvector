@@ -7,6 +7,10 @@ import { Types } from '@prisma/client/runtime/library.d.ts';
 import {
   createVectorArgs,
   createVectorResult,
+  createManyVectorsArgs,
+  createManyVectorsResult,
+  createManyVectorsAndReturnArgs,
+  createManyVectorsAndReturnResult,
   updateVectorArgs,
   updateVectorResult
 } from '$types/model-extensions/store.d.ts';
@@ -49,6 +53,8 @@ export type PGVectorStoreMethods = {
       Prisma.PrismaPromise<createVectorResult<T, A>>;
     createManyVectors<T, A>(this: T, args: createManyVectorsArgs<T, A>):
       Prisma.PrismaPromise<createManyVectorsResult<T, A>>;
+    createManyVectorsAndReturn<T, A>(this: T, args: createManyVectorsAndReturnArgs<T, A>):
+      Prisma.PrismaPromise<createManyVectorsAndReturnResult<T, A>>;
     updateVector<T, A>(this: T, args: updateVectorArgs<T, A>):
       Prisma.PrismaPromise<updateVectorResult<T, A>>;
 }
