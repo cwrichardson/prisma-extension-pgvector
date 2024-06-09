@@ -9,6 +9,7 @@ import { fromSql, toSql } from 'pgvector';
  * @param {import('$types/model-extensions/store').createVectorArgs<T, A>} args
  * @returns {Promise<import('$types/model-extensions/store').createVectorResult<T, A>>}
  */
+// @ts-ignore
 export default async function ({ data, configArgs }) {
     const ctx = Prisma.getExtensionContext(this);
 

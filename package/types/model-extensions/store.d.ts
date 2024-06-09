@@ -1,5 +1,5 @@
 import type { Prisma } from '@prisma/client';
-import { configArgs } from '$types/index';
+import { configArgs, idFieldKey } from '$types/index';
 import { vectorEntry, vectorFieldExtension } from '$types/vector';
 
 /**
@@ -7,46 +7,52 @@ import { vectorEntry, vectorFieldExtension } from '$types/vector';
  * @see https://github.com/pgvector/pgvector?tab=readme-ov-file#storing
  * 
  * createVector
- * 
- * TODO:
- * upsertVector
  * updateVector
  * createManyVectors
+ * createManyVectorsAndReturn
+ * TODO: updateManyVectors
  */
-
-type idField = { [`${idFieldName}`] };
-type createArgs<T extends Prisma.Args<T, 'create'>> = T & { configArgs: configArgs};
 
 /**
- * Strip data down to just the vector and id fields
+ * Strip data down to justid field and add the vector field
  */
-type createDataArgs<T, A extends Prisma.Args<T, 'create'>['data'],
+type createDataArgs<T, A,
   I extends keyof A,
-  VF extends keyof A> = Pick<A, (idField[I] | undefined) | vectorFieldExtension[VF]>;
-type updateDataArgs<T, A extends Prisma.Args<T, 'create'>['data'],
+  VFName extends keyof A> = Pick<Prisma.Exact<T, 'create'>['data'],
+    idFieldKey[I]>
+      & { [K in keyof vectorFieldExtension[VFName]]: vectorFieldExtension[K] };
+type updateDataArgs<T, A,
   I extends keyof A,
-  VF extends keyof A> = Pick<A, idField[I] | vectorFieldExtension[VF]>;
+  VFName extends keyof A> = Pick<Prisma.Exact<T, 'update'>['data'],
+    idFieldKey[I]>
+      & { [K in keyof vectorFieldExtension[VFName]]: vectorFieldExtension[K] };
 
 // createVector
-export type createVectorArgs<T, A extends createArgs> = {
-  data: createDataArgs<A, configArgs['idFieldName'], configArgs['vectorFieldName']>
-} & { configArgs: configArgs };
+export type createVectorArgs<T, A> = {
+  data: createDataArgs<T, A, configArgs['idFieldName'],
+    configArgs['vectorFieldName']>
+};
 export type createVectorResult<T, A> = vectorEntry;
 
 // updateVector
-export type updateVectorArgs<T, A extends createArgs> = {
-  data: updateDataArgs<A, configArgs['idFieldName'], configArgs['vectorFieldName']>
-} & { configArgs: configArgs };
+export type updateVectorArgs<T, A> = {
+  data: updateDataArgs<T, A, configArgs['idFieldName'],
+    configArgs['vectorFieldName']>
+};
 export type updateVectorResult<T, A> = vectorEntry;
 
 // createManyVectors
-export type createManyVectorsArgs<T, A extends createArgs> = {
-  data: Array<createDataArgs<A, configArgs['idFieldName'], configArgs['vectorFieldName']>>
-} & { configArgs: configArgs };
+// we use the native return value, because it's just a count, so we don't
+// have to worry about the vector field not being included in the model
+export type createManyVectorsArgs<T, A> = {
+  data: Array<createDataArgs<T, A, configArgs['idFieldName'],
+    configArgs['vectorFieldName']>>
+};
 export type createManyVectorsResult<T, A> = Prisma.Result<T, A, 'createMany'>;
 
 // createManyVectorsAndReturn
-export type createManyVectorsAndReturnArgs<T, A extends createArgs> = {
-  data: Array<createDataArgs<A, configArgs['idFieldName'], configArgs['vectorFieldName']>>
-} & { configArgs: configArgs };
+export type createManyVectorsAndReturnArgs<T, A> = {
+  data: Array<createDataArgs<T, A, configArgs['idFieldName'],
+    configArgs['vectorFieldName']>>
+};
 export type createManyVectorsAndReturnResult<T, A> = Array<vectorEntry>;

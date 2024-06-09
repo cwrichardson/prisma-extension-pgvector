@@ -11,6 +11,7 @@ import { createManyQueryBuilder } from '../../../src/helpers/create-many-query-b
  * @param {import('$types/model-extensions/store').createManyVectorsArgs<T, A>} args
  * @returns {Promise<import('$types/model-extensions/store').createManyVectorsResult<T, A>>}
  */
+// @ts-ignore
 export default async function ({ data, configArgs }) {
     const ctx = Prisma.getExtensionContext(this);
 
