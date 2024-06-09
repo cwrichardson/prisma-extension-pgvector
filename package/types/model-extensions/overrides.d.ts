@@ -5,18 +5,18 @@ import { vectorFieldExtension } from './vector';
 import { PrismaClient } from '@prisma/client/scripts/default-index';
 
 type extendedDataArgs<
-  T,
+  TModel,
   A extends Prisma.Exact<T, 'create'>['data'],
-  VF extends keyof A
-> = Pick<Prisma.Exact<T, 'create'>['data'] | { [P in VF]: never },
-  (keyof A) | vectorFieldExtension[VF]>;
+  VFName> = {
+  [K in keyof A]: A[K];
+} & { [K in keyof vectorFieldExtension[VFName]]: vectorFieldExtension[K] };
 
 type extendedSelectArgs<
   T,
   A extends Prisma.Exact<T, 'create'>['select'],
-  VF extends keyof A
-> = Pick<Prisma.Exact<T, 'create'>['select'] | { [P in VF]: never },
-  (keyof A) | vectorFieldExtension[VF]>;
+  VFName> = {
+    [K in keyof A]: A[K];
+} & { [K in keyof vectorFieldExtension[VFName]]: { [K]: boolean }};
 
 type createExtendedArgs<
   T,
