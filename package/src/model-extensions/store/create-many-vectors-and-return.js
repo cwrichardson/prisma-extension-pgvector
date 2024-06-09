@@ -26,6 +26,7 @@ export default async function ({ data, configArgs }) {
 
     const query = createManyQueryBuilder({
         queryType: 'return',
+        // @ts-ignore
         modelName: ctx.$name,
         idFieldName: idFieldName,
         vectorFieldName: vectorFieldName,

@@ -26,6 +26,7 @@ export default async function ({ data, configArgs }) {
 
     const query = createManyQueryBuilder({
         queryType: 'count',
+        // @ts-expect-error
         modelName: ctx.$name,
         idFieldName: idFieldName,
         vectorFieldName: vectorFieldName,
