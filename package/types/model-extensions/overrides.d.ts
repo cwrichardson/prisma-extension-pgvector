@@ -4,7 +4,7 @@ import { configArgs } from '$types/index';
 import { vectorFieldExtension } from './vector';
 import { PrismaClient } from '@prisma/client/scripts/default-index';
 
-type extendedDataArgs<
+type extendedCreateDataArgs<
   TModel,
   A extends Prisma.Exact<T, 'create'>['data'],
   VFName> = {
@@ -23,12 +23,10 @@ type createExtendedArgs<
   A extends Prisma.Exact<A, Prisma.Args<T, 'create'>>,
   VF
 > = {
-    data?: extendedDataArgs<A, VF>,
-    select?: extendedSelectArgs<A, VF>
+    data: extendedCreateDataArgs<T, A['data'], VF>,
+    select?: extendedSelectArgs<T, A['select'], VF>,
 } & Omit<Prisma.Exact<A, Prisma.Args<T, 'create'>>, 'data' | 'select'>;
 
 export type createArgs<T, A extends createExtendedArgs> = 
-  createExtendedArgs<A, configArgs['vectorFieldName']>
-  & { configArgs: configArgs }
-  & { parentContext: PrismaClient };
+  createExtendedArgs<T, A, configArgs['vectorFieldName']>
 export type createResult<T, A> = Prisma.PrismaPromise;

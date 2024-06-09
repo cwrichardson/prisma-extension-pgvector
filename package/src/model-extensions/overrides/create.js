@@ -12,8 +12,8 @@ import { Prisma } from '@prisma/client';
  */
 export default async function (props) {
     const {
-        configArgs,
-        parentContext,
+        // @ts-expect-error
+        configArgs, parentContext,
         ...args
     } = props;
 
@@ -42,11 +42,11 @@ export default async function (props) {
     // update with the vector
     else if (args?.data?.hasOwnProperty(vectorFieldName)) {
         const select = args?.select;
-        const selectVector = (select && args.select[vectorFieldName]);
+        const selectVector = (select && args.select?.[vectorFieldName]);
 
         // remove the vector from any select clause
         if (selectVector) {
-            delete args.select[vectorFieldName];
+            delete args.select?.[vectorFieldName];
         }
 
         // remove the vector from the data clause
