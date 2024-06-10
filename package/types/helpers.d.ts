@@ -1,6 +1,6 @@
 import { Sql } from "@prisma/client/runtime/library";
 
-import { idFieldKey, idFieldType, vectorFieldKey } from ".";
+import { idFieldType } from ".";
 import { PrismaModelProps, PrismaModelType } from "./prisma";
 import { vector } from "./vector";
 
