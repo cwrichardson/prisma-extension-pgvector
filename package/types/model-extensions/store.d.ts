@@ -10,7 +10,7 @@ import { vectorEntry, vectorFieldExtension } from '$types/vector';
  * updateVector
  * createManyVectors
  * createManyVectorsAndReturn
- * TODO: updateManyVectors
+ * updateManyVectors
  */
 
 /**
@@ -56,3 +56,10 @@ export type createManyVectorsAndReturnArgs<T, A> = {
     configArgs['vectorFieldName']>>
 };
 export type createManyVectorsAndReturnResult<T, A> = Array<vectorEntry>;
+
+// updateManyVectors
+export type updateManyVectorsArgs<T, A> = {
+  data: Array<updateDataArgs<T, A, configArgs['idFieldName'],
+  configArgs['vectorFieldName']>>
+};
+export type updateManyVectorsResult<T, A> = Prisma.Result<T, A, 'updateMany'>;

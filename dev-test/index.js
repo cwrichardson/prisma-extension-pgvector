@@ -10,7 +10,7 @@ const prisma = new PrismaClient().$extends(withPGVector({
 // create
 try {
     const newNotAVector = await prisma.vector.create({
-        data: { metadata: 'foobar'}
+        data: { metadata: 'foobar' }
     });
     console.log('Inserted not a vector ', newNotAVector);
     
@@ -33,6 +33,28 @@ try {
 
 } catch (/** @type any */ e) {
     console.log('Error inserting non-vector');
+    console.log(e.message);
+}
+
+// createManyAndReturn
+try {
+    const newNotVectors = await prisma.vector.createManyAndReturn({
+        data: [
+            { metadata: 'foo' },
+            { metadata: 'bar' }
+        ]
+    })
+    console.log('Create many not vectors', newNotVectors);
+
+    const newManyWithVectors = await prisma.vector.createManyAndReturn({
+        data: [
+            { metadata: 'foo', embedding: [11,12,13]},
+            { metadata: 'barfoo', embedding: [11,14,13]},
+        ]
+    })
+    console.log('Created many with vectors', newManyWithVectors)
+} catch (/** @type any */ e) {
+    console.log('Error inserting native many');
     console.log(e.message);
 }
 

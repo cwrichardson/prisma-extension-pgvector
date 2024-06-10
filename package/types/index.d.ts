@@ -12,11 +12,15 @@ import {
   createManyVectorsAndReturnArgs,
   createManyVectorsAndReturnResult,
   updateVectorArgs,
-  updateVectorResult
+  updateVectorResult,
+  updateManyVectorsArgs,
+  updateManyVectorsResult
 } from '$types/model-extensions/store.d.ts';
 import {
   createArgs,
-  createResult
+  createResult,
+  createManyAndReturnArgs,
+  createManyAndReturnResult
 } from '$types/model-extensions/override.d.ts';
 import { getVectorsByIdArgs, getVectorsByIdResult } from './model-extensions/query';
 
@@ -53,10 +57,13 @@ export type PGVectorStoreMethods = {
       Prisma.PrismaPromise<createVectorResult<T, A>>;
     createManyVectors<T, A>(this: T, args: createManyVectorsArgs<T, A>):
       Prisma.PrismaPromise<createManyVectorsResult<T, A>>;
-    createManyVectorsAndReturn<T, A>(this: T, args: createManyVectorsAndReturnArgs<T, A>):
-      Prisma.PrismaPromise<createManyVectorsAndReturnResult<T, A>>;
+    createManyVectorsAndReturn<T, A>(this: T, args:
+      createManyVectorsAndReturnArgs<T, A>):
+        Prisma.PrismaPromise<createManyVectorsAndReturnResult<T, A>>;
     updateVector<T, A>(this: T, args: updateVectorArgs<T, A>):
       Prisma.PrismaPromise<updateVectorResult<T, A>>;
+    updateManyVectors<T, A>(this: T, args: updateManyVectorsArgs<T, A>):
+      Prisma.PrismaPromise<updateManyVectorsResult<T, A>>;
 }
 export type PGVectorQueryMethods = {
     getVectorsById<T, A>(this: T, args: getVectorsByIdArgs<T, A>):
@@ -67,6 +74,8 @@ export type PGVectorQueryMethods = {
 export type PGVectorOverrides = {
     create<T, A>(this: T, args: createArgs<T, A>):
       Prisma.PrismaPromise<createResult<T, A>>;
+    createManyAndReturn<T, A>(this: T, args: createManyAndReturnArgs):
+      Prisma.PrismaPromise<createManyAndReturnResult<T, A>>;
 }
 
 export type PGVectorModelMethods = PGVectorStoreMethods & PGVectorQueryMethods
