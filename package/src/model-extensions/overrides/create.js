@@ -12,7 +12,6 @@ import { Prisma } from '@prisma/client';
  */
 export default async function (props) {
     const {
-        // @ts-expect-error
         configArgs, parentContext,
         ...args
     } = props;
