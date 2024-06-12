@@ -157,3 +157,28 @@ try {
     console.log('Error in query');
     console.log(e.message)
 }
+
+// nearest neighbors
+try {
+    const neighbors = await prisma.vector.findNearestNeighbors({
+        from: [1, 2, 3],
+        take: 2
+    })
+    console.log(neighbors);
+
+    const neighborsById = await prisma.vector.findNearestNeighbors({
+        from: [1,2,3],
+        where: { id: { in: [ 2,3,4,25]}}
+    })
+    console.log(neighborsById)
+
+    const byInnerProduct = await prisma.vector.findNearestNeighbors({
+        from: [1,2,3],
+        orderBy: 'InnerProduct',
+        take: 5
+    })
+    console.log(byInnerProduct)
+} catch (/** @type any */ e) {
+    console.log('Error in find nearest neighbors');
+    console.log(e.message)
+}

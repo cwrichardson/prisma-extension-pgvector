@@ -22,7 +22,12 @@ import {
   createManyAndReturnArgs,
   createManyAndReturnResult
 } from '$types/model-extensions/override.d.ts';
-import { getVectorsByIdArgs, getVectorsByIdResult } from './model-extensions/query';
+import {
+  findNearestNeighborsArgs,
+  findNearestNeighborsResults,
+  getVectorsByIdArgs,
+  getVectorsByIdResult
+} from './model-extensions/query';
 
 export { PrismaModelProps, PrismaModelType } from '$types/prisma.d.ts';
 
@@ -66,6 +71,8 @@ export type PGVectorStoreMethods = {
       Prisma.PrismaPromise<updateManyVectorsResult<T, A>>;
 }
 export type PGVectorQueryMethods = {
+    findNearestNeighbors<T, A>(this: T, args: findNearestNeighborsArgs<T, A>):
+      Prisma.PrismaPromise<getVectorsByIdResult<T, A>>;
     getVectorsById<T, A>(this: T, args: getVectorsByIdArgs<T, A>):
       Prisma.PrismaPromise<getVectorsByIdResult<T, A>>;
 }
