@@ -61,6 +61,9 @@ export default async function (props) {
                 data: {
                     [idFieldName]: rowWithoutVector[idFieldName],
                     [vectorFieldName]: vector
+                },
+                where: {
+                    [idFieldName]: rowWithoutVector[idFieldName]
                 }
             })
 

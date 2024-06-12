@@ -27,6 +27,12 @@ type updateDataArgs<T, A,
     idFieldKey[I]>
       & { [K in keyof vectorFieldExtension[VFName]]: vectorFieldExtension[K] };
 
+/**
+ * Strip where down to just id field for update
+ */
+type updateWhereArgs<T, A, I extends keyof A> =
+  Pick<Prisma.Exact<T, 'update'>['where'], idFieldKey[I]>;
+
 // createVector
 export type createVectorArgs<T, A> = {
   data: createDataArgs<T, A, configArgs['idFieldName'],
@@ -37,7 +43,8 @@ export type createVectorResult<T, A> = vectorEntry;
 // updateVector
 export type updateVectorArgs<T, A> = {
   data: updateDataArgs<T, A, configArgs['idFieldName'],
-    configArgs['vectorFieldName']>
+    configArgs['vectorFieldName']>;
+  where: updateVectorArgs<T, A, configArgs['idFieldName']>;
 };
 export type updateVectorResult<T, A> = vectorEntry;
 

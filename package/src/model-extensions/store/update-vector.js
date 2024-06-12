@@ -10,7 +10,7 @@ import { fromSql, toSql } from 'pgvector';
  * @returns {Promise<import('$types/model-extensions/store').updateVectorResult<T, A>>}
  */
 // @ts-ignore
-export default async function ({ data, configArgs }) {
+export default async function ({ data, where, configArgs }) {
     const ctx = Prisma.getExtensionContext(this);
 
     const {
@@ -19,7 +19,7 @@ export default async function ({ data, configArgs }) {
     } = configArgs;
 
     const vector = toSql(data[vectorFieldName]);
-    const id = data[idFieldName];
+    const id = where[idFieldName];
     
     /**
      * Initialize the return object
