@@ -40,7 +40,7 @@ export default async function ({orderBy = 'L2', from, where, take, configArgs}) 
      *  COALESCE (<vectorFieldName>::text, '') AS <vectorFieldName>
      * FROM <modelName>
      * WHERE <idFileldName> = ANY(ARRAY[ ...ids ])
-     * ORDER BY <vecrotFieldName> <orderByOperator> <from>
+     * ORDER BY <vectorFieldName> <orderByOperator> <from>
      * LIMIT <take>
      * 
      * Need the `::text` to cast the unknown column type into something
