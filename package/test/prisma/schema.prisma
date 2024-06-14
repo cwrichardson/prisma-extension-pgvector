@@ -1,0 +1,19 @@
+// @see https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  extensions = [vector]
+}
+
+model Vector {
+  id  Int @id @default(autoincrement())
+  metadata  Json?
+  testfield String?
+  embedding Unsupported("vector(3)")?
+}

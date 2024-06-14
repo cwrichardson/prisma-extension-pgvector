@@ -24,8 +24,5 @@
 		"@stylistic/eslint-plugin-js": "^2.1.0",
 		"eslint": "^8.57.0",
 		"prisma": "^5.15.0"
-	},
-	"prisma": {
-		"seed": "node ./prisma/seed.js"
 	}
 }

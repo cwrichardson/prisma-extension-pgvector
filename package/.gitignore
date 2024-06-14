@@ -9,5 +9,8 @@ dist
 .env.*
 !.env.example
 
+# test output
+coverage
+
 # misc
 .DS_Store
