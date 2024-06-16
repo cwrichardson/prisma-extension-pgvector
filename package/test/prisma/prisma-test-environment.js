@@ -1,13 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { execSync } from 'node:child_process';
 
-import { PrismaClient } from '@prisma/client';
-import { withPGVector } from '../../src/index.js';
-
-const prisma = new PrismaClient().$extends(withPGVector({
-    modelName: 'vector',
-    vectorFieldName: 'embedding'
-}));
+import prisma from '../helpers/prisma';
 
 function generateDatabaseURL(/** @type string */ schema) {
     if (!process.env.DATABASE_URL) {
@@ -29,8 +23,10 @@ export default {
         const schema = randomUUID();
         const databaseURL = generateDatabaseURL(schema);
 
+        process.env.DATABASE_URL = databaseURL;
+
         //deploy the test migration
-        execSync('pnpx prisma migrate deploy --schema ./test/prisma/schema.prisma');
+        execSync('pnpx prisma db execute --schema ./test/prisma/schema.prisma --file ./test/prisma/test_schema_config.sql');
 
         return {
             async teardown() {

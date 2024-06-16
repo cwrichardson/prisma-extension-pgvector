@@ -1,5 +1,9 @@
--- CreateExtension
-CREATE EXTENSION IF NOT EXISTS "vector";
+-- Extend search_path for this session;
+DO $$
+    BEGIN
+        EXECUTE 'SET search_path TO '||current_setting('search_path')||',extension';
+    END
+$$;
 
 -- CreateTable
 CREATE TABLE "Vector" (

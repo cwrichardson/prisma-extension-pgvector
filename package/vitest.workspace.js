@@ -7,7 +7,7 @@ export default defineWorkspace([
         test: {
             exclude: [
                 ...configDefaults.exclude,
-                '**/*.e2e-{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx'
+                '**/*.component-{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx'
             ],
             name: 'unit',
             environment: './test/prisma/prisma-test-environment.js'
@@ -16,9 +16,10 @@ export default defineWorkspace([
     {
         extends: './vitest.config.js',
         test: {
-            include: [ '**/*.e2e-{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx' ],
-            name: 'e2e',
-            environment: './test/prisma/prisma-test-environment.js'
+            include: [ '**/*.component-{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx' ],
+            name: 'component',
+            environment: './test/prisma/prisma-test-environment.js',
+            setupFiles: ['./test/helpers/setup.js']
         }
     }
 ])

@@ -57,6 +57,32 @@ XXX
 - Support other vector types (e.g., halfvector)
 - Support indexing, if possible
 
+### Testing locally
+
+Get the `pgvector` Docker image.
+
+```bash
+docker pull pgvector/pgvector:pg16
+```
+
+Then run the container with the username and password configured in `packages/test/.env`.
+
+```bash
+docker run --name pgv-extension-node-test-env -e POSTGRES_USERNAME=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DATABASE=pgv-test -p 5432:5432 -d pgvector/pgvector:pg16
+```
+
+and then inside `package/test`, deploy the database (**NB**: Do NOT run `prisma init`, as it will overwrite the custom migration):
+
+```bash
+pnpx prisma migrate deploy
+```
+
+Now you can run the `vitest` tests with `pnpm`:
+
+```bash
+pnpm run test
+```
+
 ## External Reading
 
 - [Prisma — Client extensions](https://www.prisma.io/docs/concepts/components/prisma-client/client-extensions)
