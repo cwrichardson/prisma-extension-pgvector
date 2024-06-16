@@ -18,6 +18,9 @@ export default async function ({ data, where, configArgs }) {
         idFieldName = 'id'
     } = configArgs;
 
+    if (!data?.[vectorFieldName]) throw new Error('data object is required.');
+    if (!where?.[idFieldName]) throw new Error('where: { <idFieldName>: <id>  } is required');
+
     const vector = toSql(data[vectorFieldName]);
     const id = where[idFieldName];
     

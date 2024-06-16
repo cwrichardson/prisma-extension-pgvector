@@ -44,6 +44,18 @@ describe('store', async () => {
                 id: 1,
                 embedding: [7, 8, 9]
             })
+        },
+        it('requires id in where'), async () => {
+            // @ts-expect-error
+            expect(async () => await prisma.vector.updateVector({
+                data: { embedding: [1,2,3]}
+            })).toThrowError('where: { <idFieldName>: <id>  } is required')
+        },
+        it('requires data'), async () => {
+            // @ts-expect-error
+            expect(async () => await prisma.vector.updateVector({
+                where: { id: 1 }
+            })).toThrowError('data object is required.')
         }
     })
 })
