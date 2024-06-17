@@ -1,20 +1,18 @@
 import { Prisma } from "@prisma/client/scripts/default-index";
 
-import { PrismaModelType } from "$types/prisma";
 import { vector, vectorEntry } from "$types/vector";
-import { configArgs, idFieldKey, idFieldType } from "$types/index";
-import { distanceTypeMap } from "src/helpers/distance-types";
+import { configArgs, idFieldKey } from "$types/index";
 import { distanceType } from "$types/helpers";
 
-type getVectorsByIdWhere<T, A> = {
-    [K in idFieldKey<T>]: { in: Array<idFieldType<T, K>> }
-};
+type inArg<T, A, I extends keyof A> = Prisma.Exact<T, 'update'>['where'][I]['in'];
 
-type orderByArgs = keyof typeof distanceTypeMap;
+type getVectorsByIdWhere<T, A, I extends keyof A> = {
+    [I in idFieldKey<T>]: { in: inArg }
+};
 
 // getVectorsById
 export interface getVectorsByIdArgs<T, A> {
-    where: getVectorsByIdWhere<T, A>
+    where: getVectorsByIdWhere<T, A, configArgs['idFieldName']>
 }
 export type getVectorsByIdResult<T, A> = vectorEntry[];
 

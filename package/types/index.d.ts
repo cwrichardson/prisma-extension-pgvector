@@ -53,7 +53,7 @@ export type idFieldKey<T> = T extends configArgs['idFieldName']
   ? T extends undefined ? 'id' : `${idFieldName}` : never;
 export type vectorFieldKey<T> = T extends configArgs['vectorFieldName']
   ? `${vectorFieldName}` : never;
-export type idFieldType<T, K extends idFieldKey> = Pick<PrismaModelType<T>, K>;
+export type idFieldType<T, K extends idFieldKey> = Pick<Prisma.Exact<T, 'findUnique'>['where'], K>;
 
 
 // new model methods
