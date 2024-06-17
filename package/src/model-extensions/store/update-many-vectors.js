@@ -44,11 +44,21 @@ export default async function ({ data, configArgs }) {
     const queryValues = [];
 
     for (let i=0; i < data.length - 1; i++) {
+      if (!data[i][idFieldName]) {
+        throw new Error(
+          `UpdateManyVectors requires every object to have an ${idFieldName}`
+        );
+      }
       queryStrings.push(', ', '::vector), (');
       queryValues.push(data[i][idFieldName], toSql(data[i][vectorFieldName]));
     }
 
     queryStrings.push(', ', queryClose);
+    if (!data[data.length - 1][idFieldName]) {
+      throw new Error(
+        `UpdateManyVectors requires every object to have an ${idFieldName}`
+      );
+    }
     queryValues.push(data[data.length - 1][idFieldName],
       toSql(data[data.length - 1][vectorFieldName]));
 
