@@ -10,7 +10,8 @@ export default defineWorkspace([
                 '**/*.component-{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx'
             ],
             name: 'unit',
-            environment: './test/prisma/prisma-test-environment.js'
+            environment: './test/prisma/prisma-test-environment.js',
+            setupFiles: ['./test/helpers/setup.js']
         }
     },
     {
