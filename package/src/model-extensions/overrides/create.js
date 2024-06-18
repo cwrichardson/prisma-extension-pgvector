@@ -52,6 +52,16 @@ export default async function (props) {
         const vector = args.data[vectorFieldName];
         delete args.data[vectorFieldName];
 
+        // if we're selecting, and it doesn't include the id, we add the
+        // id now, because we need it to do the vector update, and then
+        // remove it before the final return
+        let removeSelectId = false;
+        if (select && !args.select?.[idFieldName]) {
+            // @ts-ignore args.select is not, in fact, undefined
+            args.select[idFieldName] = true;
+            removeSelectId = true;
+        }
+
         // @ts-ignore
         return ctx.__$transaction(async () => {
             const rowWithoutVector = await baseCreate(args);
@@ -65,6 +75,11 @@ export default async function (props) {
                     [idFieldName]: rowWithoutVector[idFieldName]
                 }
             })
+
+            // remove id if we added it internally, earlier
+            if (removeSelectId) {
+                delete rowWithoutVector[idFieldName];
+            }
 
             if (select && !selectVector) {
                 return rowWithoutVector
