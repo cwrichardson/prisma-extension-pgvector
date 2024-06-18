@@ -53,9 +53,17 @@ XXX
 
 ### TODO
 
-- Override default model queries
+- Make override unit tests work
+- - Currently, the unit tests do some hackery to deal with the fact that prisma overwrites the
+    search_path (see
+    [setting a schema clobbers the postgresql search_path instead of prepending to search_path](https://github.com/prisma/prisma/issues/14662)). In our unit tests, each test suite runs as a different postgres schema, so that we 
+    can run in parallel. We work around this issue by setting `search_path` in `test_schema_config.sql`
+    before each Prisma invocation. This works fine, except in the case where the overrides run
+    transactions that make multiple calls, in which scenario, it seems the search path is lost
+    before the second (internal) call.
 - Support other vector types (e.g., halfvector)
 - Support indexing, if possible
+- Override default model queries
 
 ### Testing locally
 
