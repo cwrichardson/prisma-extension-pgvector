@@ -78,5 +78,53 @@ describe('overrides', async () => {
                 embedding: [ 1, 2, 3]
             })
         })
+    }),
+    describe('createManyAndReturn', () => {
+        it('creates many when no `vectorField` supplied', async () => {
+            const vectors = await prisma.vector.createManyAndReturn({
+                data: [
+                    { metadata: 'foo' },
+                    { metadata: 'bar' }
+                ]
+            });
+
+            expect(vectors).toStrictEqual([
+                {
+                    id: 1,
+                    metadata: 'foo',
+                    testfield: null,
+                    embedding: null
+                },
+                {
+                    id: 2,
+                    metadata: 'bar',
+                    testfield: null,
+                    embedding: null
+                }
+            ])
+        }),
+        it.skip('creates many when `vectorField` is supplied', async () => {
+            const vectors = await prisma.vector.createManyAndReturn({
+                data: [
+                    { metadata: 'foo', embedding: [1,2,3] },
+                    { metadata: 'bar', embedding: [4,5,6] }
+                ]
+            });
+
+            expect(vectors).toStrictEqual([
+                {
+                    id: 1,
+                    metadata: 'foo',
+                    testfield: null,
+                    embedding: [1,2,3]
+                },
+                {
+                    id: 2,
+                    metadata: 'bar',
+                    testfield: null,
+                    embedding: [4,5,6]
+                }
+            ])
+        })
     })
 })
