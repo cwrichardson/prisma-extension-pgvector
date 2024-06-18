@@ -1,7 +1,12 @@
-import { describe, expect, it } from 'vitest';
+import {
+    beforeEach,
+    describe,
+    expect,
+    expectTypeOf,
+    it
+} from 'vitest';
+
 import prisma from './helpers/prisma';
-import { expectTypeOf } from 'vitest';
-import { beforeEach } from 'vitest';
 
 describe('query', async () => {
     describe('getVectorsById', () => {
