@@ -1,4 +1,6 @@
 import { Prisma } from '@prisma/client';
+import { vectorEntry } from './vector';
+import { GetInputType } from './helpers';
 
 /**
  * Extended types from Prisma to be used in generic models and queries.
@@ -41,3 +43,18 @@ export type PrismaModelFunctionResult<TModelName extends PrismaModelProps,
  */
 export type PrismaModelType<TModelName extends PrismaModelProps> =
   Prisma.Result<TModelName, {}, 'findFirst'>;
+
+/**
+ * Extend results from create, which give us the internal model 
+ * object or an untyped object (if select or include), with
+ * the vector field.
+ */
+export type Vector<TModelName extends PrismaModelProps, Args> =
+  Prisma.Result<TModelName, Args, 'create'>
+  & Partial<vectorEntry>
+
+/**
+ * Get the base `orderBy` inputs
+ */
+export type OrderByInput<TModelName extends PrismaModelProps, Args> =
+  GetInputType<Prisma.Exact<Prisma.Args<TModelName, Args, 'findFirst'>['orderBy']>>;

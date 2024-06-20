@@ -3,6 +3,8 @@ import type { Prisma } from '@prisma/client';
 import { configArgs } from '$types/index';
 import { vectorFieldExtension } from './vector';
 import { PrismaClient } from '@prisma/client/scripts/default-index';
+import { XOR, distanceType } from '$types/helpers';
+import { OrderByInput, Vector } from '$types/prisma';
 
 /**
  * Extensions for parts of larger native arguments
@@ -22,6 +24,13 @@ type extendedSelectArgs<TModel, Args, VFName> = {
       ? Args[K]
       : never;
 } & { [K in keyof vectorFieldExtension[VFName]]: { [K]: boolean }};
+
+type extendedOrderByInput<TModel, Args, VFName> = OrderByInput | {
+  [K in keyof vectorFieldExtension[VFName]]: distanceType
+};
+type extendedOrderByArgs<TModel, Args, VFName> = XOR<
+  Array<extendedOrderByInput<TModel, Args, VFName>>,
+  extendedOrderByInput<TModel, Args, VFName>>;
 
 /**
  * Extended args and return objects for override functions
@@ -45,3 +54,16 @@ export type createManyAndReturnArgs<TModel, Args> = {
 } & Omit<Prisma.Exact<A, Prisma.Args<T, 'createManyAndReturn'>>,
   'data' | 'select'>;
 export type createManyAndReturnResult<T, A> = Prisma.PrismaPromise;
+
+// findMany
+export type findManyArgs<TModel, Args> = Omit<Prisma.Exact<
+    Prisma.Args<TModel, Args, 'findMany'>>, 'orderBy' | 'select'>
+    & { orderBy?: extendedOrderByArgs<
+        TModel,
+        Args,
+        configArgs['vectorFieldName']> }
+    & { select?: extendedSelectArgs<
+        TModel,
+        Args,
+        configArgs['vectorFieldName']> };
+export type findManyResult<TModel, Args> = Array<Vector<TModel, Args>> | [];

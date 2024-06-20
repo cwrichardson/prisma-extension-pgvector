@@ -21,13 +21,15 @@ import {
   createResult,
   createManyAndReturnArgs,
   createManyAndReturnResult
-} from '$types/model-extensions/override.d.ts';
+} from '$types/model-extensions/overrides.d.ts';
 import {
+  findManyArgs,
+  findManyResult,
   findNearestNeighborsArgs,
   findNearestNeighborsResults,
   getVectorsByIdArgs,
   getVectorsByIdResult
-} from './model-extensions/query';
+} from '$types/model-extensions/query.d.ts';
 
 export { PrismaModelProps, PrismaModelType } from '$types/prisma.d.ts';
 
@@ -83,6 +85,8 @@ export type PGVectorOverrides = {
       Prisma.PrismaPromise<createResult<T, A>>;
     createManyAndReturn<T, A>(this: T, args: createManyAndReturnArgs):
       Prisma.PrismaPromise<createManyAndReturnResult<T, A>>;
+    findMany<T, A>(this: T, args: findManyArgs):
+      Prisma.PrismaPromise<findManyResult<T, A>>;
 }
 
 export type PGVectorModelMethods = PGVectorStoreMethods & PGVectorQueryMethods

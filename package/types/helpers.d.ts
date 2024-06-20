@@ -22,3 +22,11 @@ export interface createManyQueryBuilder {
 }
 
 export type distanceType = keyof typeof distanceTypeMap;
+
+type Without<T, U> = { [P in Exclude<keyof T, keyof U>]?: never };
+export type XOR<T, U> = (T | U) extends object
+    ? (Without<T, U> & U) | (Without<U, T> & T)
+    : T | U;
+
+/** Get type Foo when the Prisma type is XOR<Enumerable<Foo>, Foo> */
+export type GetInputType<T> = T extends Array<infer U> ? U : T;
