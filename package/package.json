@@ -39,23 +39,24 @@
     "test:e2e": "vitest run test --project e2e",
     "test:e2e:watch": "vitest --project e2e",
     "test:watch": "vitest --project e2e",
-    "lint:fix": "eslint --ignore-path .gitignore . --fix",
-    "lint": "eslint --ignore-path .gitignore ."
+    "lint:fix": "eslint . --fix",
+    "lint": "eslint ."
   },
   "peerDependencies": {
     "@prisma/client": ">=5.7.0",
     "pgvector": ">=0.1.8"
   },
   "devDependencies": {
-    "@eslint/js": "^9.2.0",
-    "@stylistic/eslint-plugin-js": "^2.1.0",
+    "@eslint/compat": "^1.1.0",
+    "@eslint/js": "^9.5.0",
+    "@stylistic/eslint-plugin-js": "^2.2.2",
     "@vitest/coverage-v8": "^1.6.0",
-    "esbuild": "^0.20.0",
-    "eslint": "^8.57.0",
-    "globals": "^15.2.0",
-    "prisma": "^5.7.0",
-    "typescript": "^5.1.6",
-    "typescript-eslint": "^7.9.0",
+    "esbuild": "^0.20.2",
+    "eslint": "^9.5.0",
+    "globals": "^15.6.0",
+    "prisma": "^5.15.1",
+    "typescript": "^5.4.5",
+    "typescript-eslint": "8.0.0-alpha.10",
     "vitest": "^1.6.0"
   }
 }
