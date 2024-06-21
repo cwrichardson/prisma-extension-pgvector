@@ -1,7 +1,7 @@
 import { Sql } from '@prisma/client/runtime/library';
 
 import { idFieldType } from '.';
-import { PrismaModelProps, PrismaModelType } from './prisma';
+import { PrismaModelFields, PrismaModelProps } from '$types/prisma.d.ts';
 import { distanceTypeMap } from 'src/helpers/distance-types';
 
 /**
@@ -15,7 +15,7 @@ export interface createManyQueryBuilder {
     (args: {queryType?: 'count' | 'return',
     modelName: PrismaModelProps,
     vectorFieldName: string,
-    idFieldName: PrismaModelType,
+    idFieldName: PrismaModelFields,
     ids: idFieldType[],
     vectors: string[]}): Sql;
 }

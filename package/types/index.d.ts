@@ -30,8 +30,7 @@ import {
 	getVectorsByIdArgs,
 	getVectorsByIdResult
 } from '$types/model-extensions/query.d.ts';
-
-export { PrismaModelProps, PrismaModelType } from '$types/prisma.d.ts';
+import { PrismaModelFields } from '$types/prisma.d.ts';
 
 interface PGVectorInitArgs {
     /**
@@ -47,7 +46,7 @@ interface PGVectorInitArgs {
     /**
      * Name of the field used as unique ID
      */
-    idFieldName?: PrismaModelType;
+    idFieldName?: PrismaModelFields;
 }
 
 export type configArgs = Omit<PGVectorInitArgs, 'modelName'>;
