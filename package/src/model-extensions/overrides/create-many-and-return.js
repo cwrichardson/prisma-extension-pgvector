@@ -74,7 +74,7 @@ export default async function (props) {
 				...args
 			});
 			// @ts-expect-error extended methods not available until client created
-			const updatedVectorCount = await ctx.updateManyVectors({
+			await ctx.updateManyVectors({
 				data: data.map((obj, i) => ({
 					[idFieldName]: rowsWithoutVectors[i][idFieldName],
 					// @ts-ignore @todo fix this
