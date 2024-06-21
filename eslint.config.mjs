@@ -1,6 +1,7 @@
 import { includeIgnoreFile } from '@eslint/compat';
 import pluginJs from '@eslint/js';
 import stylistcJs from '@stylistic/eslint-plugin-js';
+import globals from 'globals';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import tseslint from 'typescript-eslint';
@@ -24,6 +25,9 @@ export default [
 			parserOptions: {
 				sourceType: 'module',
 				ecmaVersion: 2022
+			},
+			globals: {
+				...globals.node
 			}
 		},
 		rules: {
