@@ -17,7 +17,7 @@ describe('query', async () => {
 					{ id: 45, embedding: [1,2,3] }
 				]
 			})
-				.then(async (_) => {
+				.then(async () => {
 					return await prisma.vector.getVectorsById({
 						where: { id: { in: [ 25 ]}}
 					});
@@ -32,7 +32,7 @@ describe('query', async () => {
 					{ id: 45, embedding: [1,2,3] }
 				]
 			})
-				.then(async (_) => {
+				.then(async () => {
 					return await prisma.vector.getVectorsById({
 						where: { id: { in: [ 25, 45 ]}}
 					});
@@ -49,7 +49,7 @@ describe('query', async () => {
 					{ id: 25, embedding: [1,2,3] }
 				]
 			})
-				.then(async (_) => {
+				.then(async () => {
 					return await prisma.vector.getVectorsById({
 						where: { id: { in: [ 1 ]}}
 					});
@@ -65,7 +65,7 @@ describe('query', async () => {
 					{ id: 45, embedding: [1,2,3] }
 				]
 			})
-				.then(async (_) => {
+				.then(async () => {
 					return await prisma.vector.getVectorsById({
 						where: { id: { in: [ 1, 25, 45 ]}}
 					});

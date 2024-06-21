@@ -123,6 +123,7 @@ export default async function (props) {
 					.map((
 						/** @type Object */ row,
 						/** @type number */ i) => {
+						// eslint-disable-next-line @typescript-eslint/no-unused-vars
 						const { [idFieldName]: _, ...returnObj } =
                             Object.assign({}, row, vectorData[i]);
 
@@ -168,6 +169,7 @@ export default async function (props) {
 				const rows = vectorData.map((
 					/** @type {{ [x: string]: any; }} */ datum
 				) => {
+					// eslint-disable-next-line @typescript-eslint/no-unused-vars
 					const { [idFieldName]: _, ...returnObj} = {
 						...datum,
 						...rowsWithoutVectors.find((
