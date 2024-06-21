@@ -24,7 +24,7 @@ type extendedSelectArgs<TModel, Args, VFName> = {
       : never;
 } & { [K in keyof vectorFieldExtension[VFName]]: { [K]: boolean }};
 
-type extendedOrderByInput<TModel, Args, VFName> = OrderByInput | {
+type extendedOrderByInput<TModel, Args, VFName> = OrderByInput<TModel, Args> | {
   [K in keyof vectorFieldExtension[VFName]]: distanceType
 };
 type extendedOrderByArgs<TModel, Args, VFName> = XOR<
@@ -37,11 +37,11 @@ type extendedOrderByArgs<TModel, Args, VFName> = XOR<
 
 // create
 export type createArgs<TModel, Args> = {
-    data: extendedCreateDataArgs<T, Args['data'],
+    data: extendedCreateDataArgs<TModel, Args['data'],
       configArgs['vectorFieldName']>,
-    select?: extendedSelectArgs<T, Args['select'],
+    select?: extendedSelectArgs<TModel, Args['select'],
       configArgs['vectorFieldName']>,
-} & Omit<Prisma.Exact<A, Prisma.Args<T, 'create'>>, 'data' | 'select'>;
+} & Omit<Prisma.Exact<A, Prisma.Args<TModel, 'create'>>, 'data' | 'select'>;
 export type createResult<T, A> = Prisma.PrismaPromise;
 
 // createManyAndReturn

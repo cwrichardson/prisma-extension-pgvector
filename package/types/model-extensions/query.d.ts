@@ -7,17 +7,17 @@ import { distanceType } from '$types/helpers';
 type inArg<T, A, I extends keyof A> = Prisma.Exact<T, 'update'>['where'][I]['in'];
 
 type getVectorsByIdWhere<T, A, I extends keyof A> = {
-    [I in idFieldKey<T>]: { in: inArg }
+    [K in idFieldKey<T>]: { in: inArg<T, A, I> }
 };
 
 // getVectorsById
 export interface getVectorsByIdArgs<T, A> {
     where: getVectorsByIdWhere<T, A, configArgs['idFieldName']>
 }
-export type getVectorsByIdResult<T, A> = vectorEntry[];
+export type getVectorsByIdResult = vectorEntry[];
 
 // findNearestNeighbors
-export interface findNearestNeighborsArgs<T, A> {
+export interface findNearestNeighborsArgs {
     orderBy?: distanceType | undefined;
     from: vector;
     where?: getVectorsByIdWhere | undefined;
