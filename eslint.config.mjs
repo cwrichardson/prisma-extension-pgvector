@@ -8,9 +8,13 @@ import tseslint from 'typescript-eslint';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const gitIgnorePath = path.resolve(__dirname, '.gitignore');
+const packageIngorePaths = path.resolve(`${__dirname}/package/`, '.gitignore');
+const devTestIngorePaths = path.resolve(`${__dirname}/dev-test/`, '.gitignore');
 
 export default [
 	includeIgnoreFile(gitIgnorePath),
+	includeIgnoreFile(packageIngorePaths),
+	includeIgnoreFile(devTestIngorePaths),
 	pluginJs.configs.recommended,
 	{
 		plugins: {
