@@ -9,7 +9,6 @@ import { fromSql, toSql } from 'pgvector';
  * @param {import('$types/model-extensions/query').getVectorsByIdArgs<T, A>} args
  * @returns {Promise<import('$types/model-extensions/query').getVectorsByIdResult<T, A>>}
  */
-// @ts-ignore
 export default async function ({ where, configArgs}) {
 	const ctx = Prisma.getExtensionContext(this);
 	const {
@@ -52,7 +51,7 @@ export default async function ({ where, configArgs}) {
 
 	const query = Prisma.sql(queryStrings, ...ids);
 
-	// @ts-ignore
+	// @ts-expect-error extended methods not available until client created
 	const result = await ctx.__$queryRaw(query)
 		.then((/** @type {import('$types/vector').vectorEntry[]} */ rows) => (
 			rows.map((/** @type {import('$types/vector').vectorEntry} */row) => ({

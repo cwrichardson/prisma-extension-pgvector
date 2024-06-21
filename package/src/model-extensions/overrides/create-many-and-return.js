@@ -61,19 +61,19 @@ export default async function (props) {
 		}
 
 		const baseData = data.map(obj => {
-			// @ts-ignore @todo fix this
+			// @ts-ignore
 			const {[vectorFieldName]: _, ...baseProps } = obj;
 			return baseProps;
 		});
 
-		// @ts-ignore
+		// @ts-expect-error extended methods not available until client created
 		return ctx.__$transaction(async () => {
 			const rowsWithoutVectors = await baseCreateManyAndReturn({
 				data: baseData,
 				select: select,
 				...args
 			});
-			// @ts-ignore
+			// @ts-expect-error extended methods not available until client created
 			const updatedVectorCount = await ctx.updateManyVectors({
 				data: data.map((obj, i) => ({
 					[idFieldName]: rowsWithoutVectors[i][idFieldName],
@@ -91,7 +91,7 @@ export default async function (props) {
 					/** @type Object */ r,
 					/** @type number */ i) => ({
 					...r,
-					// @ts-ignore @todo fix this
+					// @ts-ignore
 					[vectorFieldName]: data[i][vectorFieldName]
 				})));
 			};

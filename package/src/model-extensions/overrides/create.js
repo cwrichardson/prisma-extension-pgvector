@@ -57,7 +57,8 @@ export default async function (props) {
 		// remove it before the final return
 		let removeSelectId = false;
 		if (select && !args.select?.[idFieldName]) {
-			// @ts-ignore args.select is not, in fact, undefined
+			/** @todo fix this */
+			// @ts-ignore
 			args.select[idFieldName] = true;
 			removeSelectId = true;
 		}

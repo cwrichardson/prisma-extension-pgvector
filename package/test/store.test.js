@@ -117,13 +117,11 @@ describe('store', async () => {
 			});
 		}),
 		it('requires id in where', async () => {
-			// @ts-expect-error
 			await expect(prisma.vector.updateVector({
 				data: { embedding: [1,2,3]}
 			})).rejects.toThrowError('where: { <idFieldName>: <id>  } is required');
 		}),
 		it('requires data', async () => {
-			// @ts-expect-error
 			await expect(prisma.vector.updateVector({
 				where: { id: 1 }
 			})).rejects.toThrowError('data object is required.');

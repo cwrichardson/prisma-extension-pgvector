@@ -23,8 +23,7 @@ const addProps = (methods, additionalProps) =>
 					// first argument is an array
 					newArgs = [ ...args[0], { configArgs: additionalProps }];
 				}
-				// args.configArgs = additionalProps;
-				// const newArgs = {...args[0], configArgs: additionalProps}
+
 				return method.call(this, newArgs);
 			}
 		};
@@ -57,8 +56,7 @@ const addPropsWithContext = (methods, additionalProps, context) =>
 						{ parentContext: context }
 					];
 				}
-				// args.configArgs = additionalProps;
-				// const newArgs = {...args[0], configArgs: additionalProps}
+
 				return method.call(this, newArgs);
 			}
 		};
@@ -69,7 +67,6 @@ const addPropsWithContext = (methods, additionalProps, context) =>
  * 
  * @type {import('$types/index').withPGVector}
  */
-// @ts-expect-error
 export const withPGVector = (args) => Prisma.defineExtension(function (client) {
 
 	const extensionMethods = {
@@ -91,11 +88,11 @@ export const withPGVector = (args) => Prisma.defineExtension(function (client) {
 	/**
      * Append client level methods to our model, for internal use
      */
-	// @ts-expect-error
+	// @ts-expect-error extended methods not available until client created
 	methods.__$transaction = async (/** @type {any} */ ...args) => client.$transaction(...args);
-	// @ts-expect-error
+	// @ts-expect-error extended methods not available until client created
 	methods['__$queryRaw'] = async (/** @type {any} */ ...args) => client.$queryRaw(...args);
-	// @ts-expect-error
+	// @ts-expect-error extended methods not available until client created
 	methods['__$executeRaw'] = async (/** @type {any} */ ...args) => client.$executeRaw(...args);
 
 	return client.$extends({
@@ -104,6 +101,5 @@ export const withPGVector = (args) => Prisma.defineExtension(function (client) {
 		client: {
 			$getConfig: () => args
 		},
-		// query: Object.fromEntries([[args.modelName, extensionQueryMethodsWithProps]])
 	});
 });

@@ -35,8 +35,7 @@ export default async function ({ data, configArgs }) {
 		vectors: vectors
 	});
 
-	// model methods don't exist until instantiated
-	// @ts-ignore
+	// @ts-expect-error extended methods not available until client created
 	const record = await ctx.__$queryRaw(query)
 		.then((/** @type {import('$types/vector.js').vectorEntry}[] */ rows) => (
 			rows.map((

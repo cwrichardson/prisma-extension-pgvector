@@ -75,8 +75,7 @@ export default async function ({ data, configArgs }) {
 
 	const query = Prisma.sql(queryStrings, ...values);
 
-	// model methods don't exist until instantiated
-	// @ts-ignore
+	// @ts-expect-error extended methods not available until client created
 	const record = await ctx.__$queryRaw(query)
 		.then(( /** @type Object[] */ rowData) => ({
 			...v,
