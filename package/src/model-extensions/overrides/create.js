@@ -26,9 +26,12 @@ export default async function (props) {
 	// if we're not adding vector data, or including it in the return, just
 	// run the native Prisma client query. If no specified return value with
 	// `select`, append an empty vector field to the object.
-	// TODO: make this work if the vector field has a default value in the
-	//       schema
-	if (! (args?.data?.hasOwnProperty(vectorFieldName) || args?.select?.hasOwnProperty(vectorFieldName))) {
+	/** @todo make this work if the vector field has a default value in the
+	       schema */
+	const dataHasVectorField = Object.prototype
+	  .hasOwnProperty.call(args?.data, vectorFieldName);
+	if (! (dataHasVectorField || Object.prototype
+	  .hasOwnProperty.call(args?.select, vectorFieldName))) {
 		const row = await baseCreate(args)
 			.then((/** @type Object */ rawRow) => {
 				if (args?.select) return rawRow;
@@ -39,7 +42,7 @@ export default async function (props) {
 	}
 	// run the normal create first, so we have a full model object, then
 	// update with the vector
-	else if (args?.data?.hasOwnProperty(vectorFieldName)) {
+	else if (dataHasVectorField) {
 		const select = args?.select;
 		const selectVector = (select && args.select?.[vectorFieldName]);
 

@@ -29,15 +29,16 @@ export default async function (props) {
 		idFieldName = 'id'
 	} = configArgs;
 
-	const hasVectorData = data.find((/** @type any */ d) =>
-		d.hasOwnProperty(vectorFieldName));
+	const hasVectorData = data.some((/** @type any */ d) =>
+		Object.prototype.hasOwnProperty.call(d, vectorFieldName));
 
 	// if we're not adding vector data, or including it in the return, just
 	// run the native Prisma client query. If no specified return value with
 	// `select`, append an empty vector field to the object.
 	// @todo make this work if the vector field has a default value in the
 	//       schema
-	if (! (hasVectorData || select?.hasOwnProperty(vectorFieldName))) {
+	if (! (hasVectorData
+	  || Object.prototype.hasOwnProperty.call(select, vectorFieldName))) {
 		const rows = await baseCreateManyAndReturn({
 			data: data,
 			select: select,
