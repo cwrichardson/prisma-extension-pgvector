@@ -2,7 +2,6 @@ import type { Prisma } from '@prisma/client';
 
 import { configArgs } from '$types/index';
 import { vectorFieldExtension } from './vector';
-import { PrismaClient } from '@prisma/client/scripts/default-index';
 import { XOR, distanceType } from '$types/helpers';
 import { OrderByInput, Vector } from '$types/prisma';
 

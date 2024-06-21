@@ -1,5 +1,5 @@
 import { Prisma } from '@prisma/client';
-import { fromSql, toSql } from 'pgvector';
+import { fromSql } from 'pgvector';
 
 /**
  * @template T - ctx

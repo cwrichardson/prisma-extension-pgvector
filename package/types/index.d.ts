@@ -74,7 +74,7 @@ export type PGVectorStoreMethods = {
 }
 export type PGVectorQueryMethods = {
     findNearestNeighbors<T, A>(this: T, args: findNearestNeighborsArgs<T, A>):
-      Prisma.PrismaPromise<getVectorsByIdResult<T, A>>;
+      Prisma.PrismaPromise<findNearestNeighborsResults<T, A>>;
     getVectorsById<T, A>(this: T, args: getVectorsByIdArgs<T, A>):
       Prisma.PrismaPromise<getVectorsByIdResult<T, A>>;
 }

@@ -135,7 +135,7 @@ describe('store', async () => {
 					{ id: 45, embedding: [1,2,3] }
 				]
 			})
-				.then(async (c) => {
+				.then(async () => {
 					return await prisma.vector.updateManyVectors({
 						data: [
 							{ id: 25, embedding: [4,5,6] },
@@ -147,7 +147,7 @@ describe('store', async () => {
 			expect(count).toStrictEqual({ count: 2 });
 		}),
 		it('should throw if any object lacks an id', async () => {
-			const count = await prisma.vector.createManyVectors({
+			await prisma.vector.createManyVectors({
 				data: [
 					{ id: 25, embedding: [1,2,3] },
 					{ id: 45, embedding: [1,2,3] }

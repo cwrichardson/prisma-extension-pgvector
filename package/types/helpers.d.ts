@@ -2,7 +2,6 @@ import { Sql } from '@prisma/client/runtime/library';
 
 import { idFieldType } from '.';
 import { PrismaModelProps, PrismaModelType } from './prisma';
-import { vector } from './vector';
 import { distanceTypeMap } from 'src/helpers/distance-types';
 
 /**

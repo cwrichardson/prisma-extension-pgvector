@@ -62,7 +62,6 @@ export default async function (props) {
 		}
 
 		const baseData = data.map(obj => {
-			// @ts-ignore
 			const {[vectorFieldName]: _, ...baseProps } = obj;
 			return baseProps;
 		});
