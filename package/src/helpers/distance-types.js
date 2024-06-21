@@ -1,6 +1,6 @@
 export const distanceTypeMap = {
-    'L2': '<->',
-    'InnerProduct': '<#>',
-    'Cosine': '<=>',
-    'L1': '<+>'
-}
+	'L2': '<->',
+	'InnerProduct': '<#>',
+	'Cosine': '<=>',
+	'L1': '<+>'
+};

@@ -13,40 +13,40 @@ import { createManyQueryBuilder } from '../../../src/helpers/create-many-query-b
  */
 // @ts-ignore
 export default async function ({ data, configArgs }) {
-    const ctx = Prisma.getExtensionContext(this);
+	const ctx = Prisma.getExtensionContext(this);
 
-    const {
-        vectorFieldName,
-        idFieldName = 'id'
-    } = configArgs;
+	const {
+		vectorFieldName,
+		idFieldName = 'id'
+	} = configArgs;
 
-    const vectors = data.map((entry) => toSql(entry[vectorFieldName]));
-    const ids = data.map((entry) => entry[idFieldName]
-      ? entry[idFieldName]
-      : null);
+	const vectors = data.map((entry) => toSql(entry[vectorFieldName]));
+	const ids = data.map((entry) => entry[idFieldName]
+		? entry[idFieldName]
+		: null);
 
-    const query = createManyQueryBuilder({
-        queryType: 'return',
-        // @ts-ignore
-        modelName: ctx.$name,
-        idFieldName: idFieldName,
-        vectorFieldName: vectorFieldName,
-        ids: ids,
-        vectors: vectors
-    })
+	const query = createManyQueryBuilder({
+		queryType: 'return',
+		// @ts-ignore
+		modelName: ctx.$name,
+		idFieldName: idFieldName,
+		vectorFieldName: vectorFieldName,
+		ids: ids,
+		vectors: vectors
+	});
 
-    // model methods don't exist until instantiated
-    // @ts-ignore
-    const record = await ctx.__$queryRaw(query)
-    .then((/** @type {import('$types/vector.js').vectorEntry}[] */ rows) => (
-        rows.map((
-            /** @type {import('$types/vector.js').vectorEntry} */ entry,
-            /** @type number */ i) => ({
-                [idFieldName]: entry[idFieldName],
-                [vectorFieldName]: fromSql(vectors[i])
-            })
-        )
-    ))
+	// model methods don't exist until instantiated
+	// @ts-ignore
+	const record = await ctx.__$queryRaw(query)
+		.then((/** @type {import('$types/vector.js').vectorEntry}[] */ rows) => (
+			rows.map((
+				/** @type {import('$types/vector.js').vectorEntry} */ entry,
+				/** @type number */ i) => ({
+				[idFieldName]: entry[idFieldName],
+				[vectorFieldName]: fromSql(vectors[i])
+			})
+			)
+		));
     
-    return record;
+	return record;
 }

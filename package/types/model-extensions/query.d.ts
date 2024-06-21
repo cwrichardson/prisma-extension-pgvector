@@ -1,8 +1,8 @@
-import { Prisma } from "@prisma/client/scripts/default-index";
+import { Prisma } from '@prisma/client/scripts/default-index';
 
-import { vector, vectorEntry } from "$types/vector";
-import { configArgs, idFieldKey } from "$types/index";
-import { distanceType } from "$types/helpers";
+import { vector, vectorEntry } from '$types/vector';
+import { configArgs, idFieldKey } from '$types/index';
+import { distanceType } from '$types/helpers';
 
 type inArg<T, A, I extends keyof A> = Prisma.Exact<T, 'update'>['where'][I]['in'];
 

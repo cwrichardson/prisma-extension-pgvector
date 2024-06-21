@@ -16,24 +16,24 @@ import { distanceTypeMap } from '../../../src/helpers/distance-types.js';
  */
 // @ts-ignore
 export default async function ({orderBy = 'L2', from, where, take, configArgs}) {
-    const ctx = Prisma.getExtensionContext(this);
-    const {
-        idFieldName = 'id',
-        vectorFieldName
-    } = configArgs;
+	const ctx = Prisma.getExtensionContext(this);
+	const {
+		idFieldName = 'id',
+		vectorFieldName
+	} = configArgs;
 
-    const ids = (where && where?.[idFieldName])
-        ? where[idFieldName]?.in
-        : undefined;
-    const operator = distanceTypeMap[orderBy];
+	const ids = (where && where?.[idFieldName])
+		? where[idFieldName]?.in
+		: undefined;
+	const operator = distanceTypeMap[orderBy];
 
-    // return in reverse order for InnerProduct (which is negative)
-    // and Cosine (which should be subtracted from 1)
-    const reverse = (orderBy === 'InnerProduct' || orderBy === 'Cosine')
-        ? 'DESC '
-        : '';
+	// return in reverse order for InnerProduct (which is negative)
+	// and Cosine (which should be subtracted from 1)
+	const reverse = (orderBy === 'InnerProduct' || orderBy === 'Cosine')
+		? 'DESC '
+		: '';
 
-    /**
+	/**
      * Construst the selector:
      * 
      * SELECT <idFieldName>,
@@ -47,54 +47,54 @@ export default async function ({orderBy = 'L2', from, where, take, configArgs}) 
      * supported.
      *
      */
-    let querySelect = `
+	let querySelect = `
         SELECT
             ${Prisma.raw(idFieldName).strings[0]},
             COALESCE (${Prisma.raw(vectorFieldName).strings[0]}::text, '')
                 AS ${Prisma.raw(vectorFieldName).strings[0]}
         FROM "${Prisma.raw(ctx.$name || '').strings[0]}"
     `;
-    const orderSql = `
+	const orderSql = `
         ORDER BY ${Prisma.raw(vectorFieldName).strings[0]}
             ${operator} 
-    `
+    `;
     
-    const queryStrings = [];
+	const queryStrings = [];
     
-    if (ids) {
-        querySelect += `
+	if (ids) {
+		querySelect += `
             WHERE ${Prisma.raw(idFieldName).strings[0]} = ANY(ARRAY[
         `;
-        queryStrings.push(querySelect);
+		queryStrings.push(querySelect);
 
-        for (let i = 0; i < ids.length - 1; i++) {
-            queryStrings.push(',');
-        }
-        queryStrings.push(']) ' + orderSql)
-    } else {
-        querySelect += orderSql;
-        queryStrings.push(querySelect);
-    }
+		for (let i = 0; i < ids.length - 1; i++) {
+			queryStrings.push(',');
+		}
+		queryStrings.push(']) ' + orderSql);
+	} else {
+		querySelect += orderSql;
+		queryStrings.push(querySelect);
+	}
 
-    const values = ids ? [ ...ids, toSql(from)] : [ toSql(from) ];
+	const values = ids ? [ ...ids, toSql(from)] : [ toSql(from) ];
 
-    if (take) {
-        queryStrings.push(`::vector ${reverse} LIMIT `, '');
-        values.push(take);
-    } else {
-        queryStrings.push(`::vector ${reverse}`);
-    }
+	if (take) {
+		queryStrings.push(`::vector ${reverse} LIMIT `, '');
+		values.push(take);
+	} else {
+		queryStrings.push(`::vector ${reverse}`);
+	}
 
-    const query = Prisma.sql(queryStrings, ...values);
+	const query = Prisma.sql(queryStrings, ...values);
 
-    // @ts-ignore
-    const result = await ctx.__$queryRaw(query)
-    .then((/** @type {import('$types/vector').vectorEntry[]} */ rows) => (
-        rows.map((/** @type {import('$types/vector').vectorEntry} */row) => ({
-            ...row,
-            [vectorFieldName]: fromSql(row[vectorFieldName])
-        })
-    )));
+	// @ts-ignore
+	const result = await ctx.__$queryRaw(query)
+		.then((/** @type {import('$types/vector').vectorEntry[]} */ rows) => (
+			rows.map((/** @type {import('$types/vector').vectorEntry} */row) => ({
+				...row,
+				[vectorFieldName]: fromSql(row[vectorFieldName])
+			})
+			)));
 
-    return result;
+	return result;
 }

@@ -1,34 +1,34 @@
 import PrismaDefault,
-  { type PrismaClient,
-    type Prisma
+{ type PrismaClient,
+	type Prisma
 } from '@prisma/client/scripts/default-index.d.ts';
 
 import { Types } from '@prisma/client/runtime/library.d.ts';
 import {
-  createVectorArgs,
-  createVectorResult,
-  createManyVectorsArgs,
-  createManyVectorsResult,
-  createManyVectorsAndReturnArgs,
-  createManyVectorsAndReturnResult,
-  updateVectorArgs,
-  updateVectorResult,
-  updateManyVectorsArgs,
-  updateManyVectorsResult
+	createVectorArgs,
+	createVectorResult,
+	createManyVectorsArgs,
+	createManyVectorsResult,
+	createManyVectorsAndReturnArgs,
+	createManyVectorsAndReturnResult,
+	updateVectorArgs,
+	updateVectorResult,
+	updateManyVectorsArgs,
+	updateManyVectorsResult
 } from '$types/model-extensions/store.d.ts';
 import {
-  createArgs,
-  createResult,
-  createManyAndReturnArgs,
-  createManyAndReturnResult
+	createArgs,
+	createResult,
+	createManyAndReturnArgs,
+	createManyAndReturnResult
 } from '$types/model-extensions/overrides.d.ts';
 import {
-  findManyArgs,
-  findManyResult,
-  findNearestNeighborsArgs,
-  findNearestNeighborsResults,
-  getVectorsByIdArgs,
-  getVectorsByIdResult
+	findManyArgs,
+	findManyResult,
+	findNearestNeighborsArgs,
+	findNearestNeighborsResults,
+	getVectorsByIdArgs,
+	getVectorsByIdResult
 } from '$types/model-extensions/query.d.ts';
 
 export { PrismaModelProps, PrismaModelType } from '$types/prisma.d.ts';

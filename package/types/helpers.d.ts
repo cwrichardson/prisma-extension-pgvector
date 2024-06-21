@@ -1,9 +1,9 @@
-import { Sql } from "@prisma/client/runtime/library";
+import { Sql } from '@prisma/client/runtime/library';
 
-import { idFieldType } from ".";
-import { PrismaModelProps, PrismaModelType } from "./prisma";
-import { vector } from "./vector";
-import { distanceTypeMap } from "src/helpers/distance-types";
+import { idFieldType } from '.';
+import { PrismaModelProps, PrismaModelType } from './prisma';
+import { vector } from './vector';
+import { distanceTypeMap } from 'src/helpers/distance-types';
 
 /**
  * Internal: used for building the Prisma sql query for

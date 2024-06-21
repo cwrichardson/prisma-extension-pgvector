@@ -11,20 +11,20 @@ import { fromSql, toSql } from 'pgvector';
  */
 // @ts-ignore
 export default async function ({ data, where, configArgs }) {
-    const ctx = Prisma.getExtensionContext(this);
+	const ctx = Prisma.getExtensionContext(this);
 
-    const {
-        vectorFieldName,
-        idFieldName = 'id'
-    } = configArgs;
+	const {
+		vectorFieldName,
+		idFieldName = 'id'
+	} = configArgs;
 
-    if (!data?.[vectorFieldName]) throw new Error('data object is required.');
-    if (!where?.[idFieldName]) throw new Error('where: { <idFieldName>: <id>  } is required');
+	if (!data?.[vectorFieldName]) throw new Error('data object is required.');
+	if (!where?.[idFieldName]) throw new Error('where: { <idFieldName>: <id>  } is required');
 
-    const vector = toSql(data[vectorFieldName]);
-    const id = where[idFieldName];
+	const vector = toSql(data[vectorFieldName]);
+	const id = where[idFieldName];
     
-    /**
+	/**
      * Initialize the return object
      * Reverse the `toSql` we did earlier to get a standardized form, rather
      * than just taking the submitted data as Prisma does with their
@@ -32,30 +32,30 @@ export default async function ({ data, where, configArgs }) {
      * 
      * @see https://www.prisma.io/docs/orm/prisma-client/queries/raw-database-access/custom-and-type-safe-queries#41-adding-an-extension-to-create-pointofinterest-records
      */
-    const /** @type {import('$types/vector').vectorEntry} */ v = {
-        [idFieldName]: id,
-        [vectorFieldName]: fromSql(vector)
-    }
+	const /** @type {import('$types/vector').vectorEntry} */ v = {
+		[idFieldName]: id,
+		[vectorFieldName]: fromSql(vector)
+	};
 
-    /**
+	/**
      * Construct UPDATE template for use in queryRaw.
      * 
      *  UPDATE "<modelName>"
      *  SET <vectorFieldName> = $1::vector
      *  WHERE <idFieldName> = $2
      */
-    const queryUpdate =
+	const queryUpdate =
       `UPDATE "${Prisma.raw(ctx.$name || '').strings[0]}" `
       + `SET ${Prisma.raw(vectorFieldName).strings[0]} = `;
-    const queryWhere =
-      `::vector WHERE ${Prisma.raw(idFieldName).strings[0]} = `
+	const queryWhere =
+      `::vector WHERE ${Prisma.raw(idFieldName).strings[0]} = `;
 
-    const query = Prisma.sql([queryUpdate, queryWhere, ""], vector, id);
+	const query = Prisma.sql([queryUpdate, queryWhere, ''], vector, id);
 
-    // model methods don't exist until instantiated
-    // @ts-ignore
-    const record = await ctx.__$queryRaw(query)
-    .then(() => v);
+	// model methods don't exist until instantiated
+	// @ts-ignore
+	const record = await ctx.__$queryRaw(query)
+		.then(() => v);
     
-    return record;
+	return record;
 }

@@ -11,19 +11,19 @@ import { fromSql, toSql } from 'pgvector';
  */
 // @ts-ignore
 export default async function ({ where, configArgs}) {
-    const ctx = Prisma.getExtensionContext(this);
-    const {
-        idFieldName = 'id',
-        vectorFieldName
-    } = configArgs;
+	const ctx = Prisma.getExtensionContext(this);
+	const {
+		idFieldName = 'id',
+		vectorFieldName
+	} = configArgs;
 
-    // @ts-ignore
-    const ids = where[idFieldName]?.in;
+	// @ts-ignore
+	const ids = where[idFieldName]?.in;
 
-    if (! Array.isArray(ids)) return Promise
-    .reject(new Error(`getVectorsById expected array of ids, got ${typeof ids}`))
+	if (! Array.isArray(ids)) return Promise
+		.reject(new Error(`getVectorsById expected array of ids, got ${typeof ids}`));
 
-    /**
+	/**
      * Construst the selector:
      * 
      * SELECT <idFieldName>,
@@ -35,7 +35,7 @@ export default async function ({ where, configArgs}) {
      * a record exists but the vector column is empty (i.e., NOT NULL was
      * not specified in the schema).
      */
-    const querySelect = `
+	const querySelect = `
         SELECT
             ${Prisma.raw(idFieldName).strings[0]},
             COALESCE (${Prisma.raw(vectorFieldName).strings[0]}::text, '')
@@ -44,22 +44,22 @@ export default async function ({ where, configArgs}) {
         WHERE ${Prisma.raw(idFieldName).strings[0]} = ANY(ARRAY[
     `;
 
-    const queryStrings = [querySelect];
-    for (let i = 0; i < ids.length - 1; i++) {
-        queryStrings.push(',');
-    }
-    queryStrings.push('])');
+	const queryStrings = [querySelect];
+	for (let i = 0; i < ids.length - 1; i++) {
+		queryStrings.push(',');
+	}
+	queryStrings.push('])');
 
-    const query = Prisma.sql(queryStrings, ...ids);
+	const query = Prisma.sql(queryStrings, ...ids);
 
-    // @ts-ignore
-    const result = await ctx.__$queryRaw(query)
-    .then((/** @type {import('$types/vector').vectorEntry[]} */ rows) => (
-        rows.map((/** @type {import('$types/vector').vectorEntry} */row) => ({
-            ...row,
-            [vectorFieldName]: fromSql(row[vectorFieldName])
-        })
-    )));
+	// @ts-ignore
+	const result = await ctx.__$queryRaw(query)
+		.then((/** @type {import('$types/vector').vectorEntry[]} */ rows) => (
+			rows.map((/** @type {import('$types/vector').vectorEntry} */row) => ({
+				...row,
+				[vectorFieldName]: fromSql(row[vectorFieldName])
+			})
+			)));
 
-    return result;
+	return result;
 }
