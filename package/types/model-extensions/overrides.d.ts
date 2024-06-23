@@ -42,7 +42,7 @@ export type createArgs<TModel, Args> = {
     select?: extendedSelectArgs<TModel, Args['select'],
       configArgs['vectorFieldName']>,
 } & Omit<Prisma.Exact<A, Prisma.Args<TModel, 'create'>>, 'data' | 'select'>;
-export type createResult<T, A> = Prisma.PrismaPromise;
+export type createResult<T, A> = Prisma.PrismaPromise<Vector<T, A>>;
 
 // createManyAndReturn
 export type createManyAndReturnArgs<TModel, Args> = {
@@ -52,7 +52,8 @@ export type createManyAndReturnArgs<TModel, Args> = {
       configArgs['vectorFieldName']>,
 } & Omit<Prisma.Exact<A, Prisma.Args<T, 'createManyAndReturn'>>,
   'data' | 'select'>;
-export type createManyAndReturnResult<T, A> = Prisma.PrismaPromise;
+export type createManyAndReturnResult<TModel, Args> =
+  Prisma.PrismaPromise<Vector<TModel, Args> | []>;
 
 // findMany
 export type findManyArgs<TModel, Args> = Omit<Prisma.Exact<
