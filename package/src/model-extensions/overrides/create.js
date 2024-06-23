@@ -8,7 +8,7 @@ import { Prisma } from '@prisma/client';
  * 
  * @this {T}
  * @param {import('$types/model-extensions/overrides').createArgs<T, A>} props
- * @returns {import('$types/model-extensions/overrides').createResult<T, A>}
+ * @returns {Promise<import('$types/model-extensions/overrides').createResult<T, A>>}
  */
 export default async function (props) {
 	const {
@@ -66,10 +66,10 @@ export default async function (props) {
 			removeSelectId = true;
 		}
 
-		// @ts-ignore
+		// @ts-expect-error function doesn't exist until client is created
 		return ctx.__$transaction(async () => {
 			const rowWithoutVector = await baseCreate(args);
-			// @ts-ignore
+			// @ts-expect-error function doesn't exist until client is created
 			const updatedVector = await ctx.updateVector({
 				data: {
 					[idFieldName]: rowWithoutVector[idFieldName],
@@ -103,6 +103,7 @@ export default async function (props) {
 	}
 	// we're creating an entry with no vector data, but including the vector
 	// field in the return. Weird, but maybe there's a default.
+	/** @todo handle this case */
 	else {
 		return Promise.reject('Boo!');
 	}

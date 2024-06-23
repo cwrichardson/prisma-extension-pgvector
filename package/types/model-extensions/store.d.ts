@@ -38,7 +38,7 @@ export type createVectorArgs<T, A> = {
   data: createDataArgs<T, A, configArgs['idFieldName'],
     configArgs['vectorFieldName']>
 };
-export type createVectorResult = vectorEntry;
+export type createVectorResult<T> = vectorEntry<T>;
 
 // updateVector
 export type updateVectorArgs<T, A> = {
@@ -46,7 +46,7 @@ export type updateVectorArgs<T, A> = {
     configArgs['vectorFieldName']>;
   where: updateVectorArgs<T, A, configArgs['idFieldName']>;
 };
-export type updateVectorResult = vectorEntry;
+export type updateVectorResult<T> = vectorEntry<T>;
 
 // createManyVectors
 // we use the native return value, because it's just a count, so we don't
@@ -62,7 +62,7 @@ export type createManyVectorsAndReturnArgs<T, A> = {
   data: Array<createDataArgs<T, A, configArgs['idFieldName'],
     configArgs['vectorFieldName']>>
 };
-export type createManyVectorsAndReturnResult = Array<vectorEntry>;
+export type createManyVectorsAndReturnResult<T> = Array<vectorEntry<T>>;
 
 // updateManyVectors
 export type updateManyVectorsArgs<T, A> = {

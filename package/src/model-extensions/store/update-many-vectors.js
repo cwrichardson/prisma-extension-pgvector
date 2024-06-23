@@ -9,7 +9,7 @@ import { toSql } from 'pgvector';
  * @param {import('$types/model-extensions/store').updateManyVectorsArgs<T, A>} args
  * @returns {Promise<import('$types/model-extensions/store').updateManyVectorsResult<T, A>>}
  */
-// @ts-ignore
+// @ts-expect-error configArgs not part of function definition
 export default async function ({ data, configArgs }) {
 	const ctx = Prisma.getExtensionContext(this);
 

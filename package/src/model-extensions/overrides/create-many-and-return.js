@@ -8,7 +8,7 @@ import { Prisma } from '@prisma/client';
  * 
  * @this {T}
  * @param {import('$types/model-extensions/overrides').createManyAndReturnArgs<T, A>} props
- * @returns {import('$types/model-extensions/overrides').createManyAndReturnResult<T, A>}
+ * @returns {Promise<import('$types/model-extensions/overrides').createManyAndReturnResult<T, A>>}
  */
 export default async function (props) {
 	const {
@@ -100,6 +100,7 @@ export default async function (props) {
 	}
 	// we're creating an entry with no vector data, but including the vector
 	// field in the return. Weird, but maybe there's a default.
+	/** @todo handle this case */
 	else {
 		return Promise.reject('Boo!');
 	}

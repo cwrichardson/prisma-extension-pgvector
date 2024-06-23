@@ -11,7 +11,7 @@ type vectorComponent = number;
 export type vector = vectorComponent[];
 
 /** for use in queryRaw */
-export type vectorEntry = {
-    [idFieldKey]: idFieldType;
-    [vectorFieldKey]: vector;
+export type vectorEntry<T> = {
+    [idFieldKey<T>]: idFieldType<T, idFieldKey<T>>;
+    [vectorFieldKey<T>]: vector;
 }

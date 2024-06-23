@@ -9,9 +9,9 @@ import { createManyQueryBuilder } from '../../../src/helpers/create-many-query-b
  * 
  * @this {T}
  * @param {import('$types/model-extensions/store').createManyVectorsAndReturnArgs<T, A>} args
- * @returns {Promise<import('$types/model-extensions/store').createManyVectorsAndReturnResult<T, A>>}
+ * @returns {Promise<import('$types/model-extensions/store').createManyVectorsAndReturnResult<T>>}
  */
-// @ts-ignore
+// @ts-expect-error configArgs isn't part of function signature
 export default async function ({ data, configArgs }) {
 	const ctx = Prisma.getExtensionContext(this);
 
@@ -37,9 +37,9 @@ export default async function ({ data, configArgs }) {
 
 	// @ts-expect-error extended methods not available until client created
 	const record = await ctx.__$queryRaw(query)
-		.then((/** @type {import('$types/vector.js').vectorEntry}[] */ rows) => (
+		.then((/** @type {import('$types/vector.js').vectorEntry<T>[]} */ rows) => (
 			rows.map((
-				/** @type {import('$types/vector.js').vectorEntry} */ entry,
+				/** @type {import('$types/vector.js').vectorEntry<T>} */ entry,
 				/** @type number */ i) => ({
 				[idFieldName]: entry[idFieldName],
 				[vectorFieldName]: fromSql(vectors[i])

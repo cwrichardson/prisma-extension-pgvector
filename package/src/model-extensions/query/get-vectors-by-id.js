@@ -7,8 +7,9 @@ import { fromSql } from 'pgvector';
  * 
  * @this {T}
  * @param {import('$types/model-extensions/query').getVectorsByIdArgs<T, A>} args
- * @returns {Promise<import('$types/model-extensions/query').getVectorsByIdResult<T, A>>}
+ * @returns {Promise<import('$types/model-extensions/query').getVectorsByIdResult<T>>}
  */
+// @ts-expect-error configArgs not part of function signature
 export default async function ({ where, configArgs}) {
 	const ctx = Prisma.getExtensionContext(this);
 	const {
@@ -53,8 +54,8 @@ export default async function ({ where, configArgs}) {
 
 	// @ts-expect-error extended methods not available until client created
 	const result = await ctx.__$queryRaw(query)
-		.then((/** @type {import('$types/vector').vectorEntry[]} */ rows) => (
-			rows.map((/** @type {import('$types/vector').vectorEntry} */row) => ({
+		.then((/** @type {import('$types/vector').vectorEntry<T>[]} */ rows) => (
+			rows.map((/** @type {import('$types/vector').vectorEntry<T>} */row) => ({
 				...row,
 				[vectorFieldName]: fromSql(row[vectorFieldName])
 			})

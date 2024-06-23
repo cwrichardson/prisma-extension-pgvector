@@ -7,9 +7,9 @@ import { fromSql, toSql } from 'pgvector';
  * 
  * @this {T}
  * @param {import('$types/model-extensions/store').updateVectorArgs<T, A>} args
- * @returns {Promise<import('$types/model-extensions/store').updateVectorResult<T, A>>}
+ * @returns {Promise<import('$types/model-extensions/store').updateVectorResult<T>>}
  */
-// @ts-ignore
+// @ts-expect-error configArgs not part of function definition
 export default async function ({ data, where, configArgs }) {
 	const ctx = Prisma.getExtensionContext(this);
 
@@ -32,7 +32,7 @@ export default async function ({ data, where, configArgs }) {
      * 
      * @see https://www.prisma.io/docs/orm/prisma-client/queries/raw-database-access/custom-and-type-safe-queries#41-adding-an-extension-to-create-pointofinterest-records
      */
-	const /** @type {import('$types/vector').vectorEntry} */ v = {
+	const /** @type {import('$types/vector').vectorEntry<T>} */ v = {
 		[idFieldName]: id,
 		[vectorFieldName]: fromSql(vector)
 	};

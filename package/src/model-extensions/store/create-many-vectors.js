@@ -11,7 +11,7 @@ import { createManyQueryBuilder } from '../../../src/helpers/create-many-query-b
  * @param {import('$types/model-extensions/store').createManyVectorsArgs<T, A>} args
  * @returns {Promise<import('$types/model-extensions/store').createManyVectorsResult<T, A>>}
  */
-// @ts-ignore
+// @ts-expect-error configArgs not part of function signature
 export default async function ({ data, configArgs }) {
 	const ctx = Prisma.getExtensionContext(this);
 
@@ -35,8 +35,7 @@ export default async function ({ data, configArgs }) {
 		vectors: vectors
 	});
 
-	// model methods don't exist until instantiated
-	// @ts-ignore
+	// @ts-expect-error model methods don't exist until instantiated
 	const record = await ctx.__$executeRaw(query)
 		.then(( /** @type number */ rows) => ({
 			count: rows
