@@ -1,7 +1,6 @@
+import { type PrismaClient } from '@prisma/client';
 import PrismaDefault,
-{ type PrismaClient,
-	type Prisma
-} from '@prisma/client/scripts/default-index.d.ts';
+{ type Prisma } from '@prisma/client/scripts/default-index.d.ts';
 
 import { Types } from '@prisma/client/runtime/library.d.ts';
 import {
@@ -101,22 +100,29 @@ export type PGVectorModelMethods = PGVectorStoreMethods & PGVectorQueryMethods
  * }))
  */
 export declare function withPGVector<I extends PGVectorInitArgs>(args: I):
-  (client: any) => PrismaDefault.PrismaClientExtends<Types.Extensions.InternalArgs<{}, {
-    readonly [K in (I['modelName'] extends infer U ? U : never)]: PGVectorModelMethods
-  }, {}, {}>
-  & Types.Extensions.InternalArgs<{}, {}, {}, {}>
+  (client: PrismaClient) => PrismaDefault.PrismaClientExtends<
+  Types.Extensions.InternalArgs<Record<never, never>, {
+    readonly [K in (I['modelName'] extends infer U ? U : never)]:
+    PGVectorModelMethods
+  }, Record<never, never>, Record<never, never>>
+  & Types.Extensions.InternalArgs<Record<never, never>,
+    Record<never, never>,
+    Record<never, never>,
+    Record<never, never>>
   & Types.Extensions.DefaultArgs>;
 
 /**
  * Types for helper functions to wrap config args.
  */
-export declare function addProps<T extends keyof any>(
-  methods: Record<T, Function>,
-  configArgs: configArgs
-): Partial<Record<T, Function>>;
+type methodType<T> = (this: T) => Prisma.PrismaPromise<unknown>;
 
-export declare function addPropsWithContext<T extends keyof any>(
-  methods: Record<T, Function>,
+export declare function addProps<T extends PGVectorModelMethods>(
+  methods: Record<T, methodType<T>>,
+  configArgs: configArgs
+): Partial<Record<T, methodType<T>>>;
+
+export declare function addPropsWithContext<T extends PGVectorModelMethods>(
+  methods: Record<T, methodType<T>>,
   configArgs: PGVectorInitArgs,
   parentContext: PrismaClient 
-): Partial<Record<T, Function>>;
+): Partial<Record<T, methodType<T>>>;

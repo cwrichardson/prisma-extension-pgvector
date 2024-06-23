@@ -67,7 +67,8 @@ const addPropsWithContext = (methods, additionalProps, context) =>
  * 
  * @type {import('$types/index').withPGVector}
  */
-export const withPGVector = (args) => Prisma.defineExtension(function (client) {
+export const withPGVector = (args) => Prisma.defineExtension(function (
+	/** @type {import('@prisma/client').PrismaClient} */ client) {
 
 	const extensionMethods = {
 		...store,
