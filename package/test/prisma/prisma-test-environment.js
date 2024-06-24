@@ -25,6 +25,8 @@ export default {
 
 		process.env.DATABASE_URL = databaseURL;
 
+		//generate prisma client
+		execSync('pnpx prisma generate --schema ./test/prisma/schema.prisma');
 		//deploy the test migration
 		execSync('pnpx prisma db execute --schema ./test/prisma/schema.prisma --file ./test/prisma/test_schema_config.sql');
 
