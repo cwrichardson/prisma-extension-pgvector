@@ -1,8 +1,9 @@
 import { type PrismaClient } from '@prisma/client';
+import { Types } from '@prisma/client/runtime/library.d.ts';
 import PrismaDefault,
 { type Prisma } from '@prisma/client/scripts/default-index.d.ts';
 
-import { Types } from '@prisma/client/runtime/library.d.ts';
+import { PrismaModelFields } from '$types/prisma.d.ts';
 import {
 	createVectorArgs,
 	createVectorResult,
@@ -29,7 +30,6 @@ import {
 	getVectorsByIdArgs,
 	getVectorsByIdResult
 } from '$types/model-extensions/query.d.ts';
-import { PrismaModelFields } from '$types/prisma.d.ts';
 
 interface PGVectorInitArgs {
     /**
