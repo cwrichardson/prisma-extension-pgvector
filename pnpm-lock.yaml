@@ -6,6 +6,8 @@ settings:
 
 importers:
 
+  .: {}
+
   dev-test:
     dependencies:
       '@prisma/client':

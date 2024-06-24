@@ -1,0 +1,21 @@
+{
+  "name": "prisma-extension-pgvector-monorepo",
+  "version": "0.1.0",
+  "private": "true",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "pnpm test -r --filter=./packages/*",
+        "lint": "pnpm -r lint && eslint --cache --cache-location node_modules/.eslintcache 'package/**/*.js'",
+        "lint:fix": "eslint --ignore-path .gitignore --fix --cache --cache-location node_modules/.eslintcache 'package/**/*.js'"
+  },
+  "keywords": [],
+  "author": {
+    "name": "Chris Richardson"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=18",
+    "pnpm": ">=8"
+  }
+}
