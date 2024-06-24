@@ -62,22 +62,20 @@ export default async function (props) {
 		}
 
 		const baseData = data.map(obj => {
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			const {[vectorFieldName]: _, ...baseProps } = obj;
 			return baseProps;
 		});
 
-		// @ts-expect-error extended methods not available until client created
 		return ctx.__$transaction(async () => {
 			const rowsWithoutVectors = await baseCreateManyAndReturn({
 				data: baseData,
 				select: select,
 				...args
 			});
-			// @ts-expect-error extended methods not available until client created
 			await ctx.updateManyVectors({
 				data: data.map((obj, i) => ({
 					[idFieldName]: rowsWithoutVectors[i][idFieldName],
-					// @ts-ignore @todo fix this
 					[vectorFieldName]: obj[vectorFieldName]
 				}))
 			});
@@ -91,7 +89,6 @@ export default async function (props) {
 					/** @type Object */ r,
 					/** @type number */ i) => ({
 					...r,
-					// @ts-ignore
 					[vectorFieldName]: data[i][vectorFieldName]
 				})));
 			};

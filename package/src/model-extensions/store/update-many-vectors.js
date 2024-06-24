@@ -64,7 +64,6 @@ export default async function ({ data, configArgs }) {
 
 	const query = Prisma.sql(queryStrings, ...queryValues);
 
-	// @ts-expect-error extended methods not available until client created
 	const record = await ctx.__$executeRaw(query)
 		.then(( /** @type number */ rows) => ({
 			count: rows

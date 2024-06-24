@@ -52,7 +52,6 @@ export default async function ({ data, where, configArgs }) {
 
 	const query = Prisma.sql([queryUpdate, queryWhere, ''], vector, id);
 
-	// @ts-expect-error extended methods not available until client created
 	const record = await ctx.__$queryRaw(query)
 		.then(() => v);
     

@@ -27,7 +27,6 @@ export default async function ({ data, configArgs }) {
 
 	const query = createManyQueryBuilder({
 		queryType: 'count',
-		// @ts-expect-error
 		modelName: ctx.$name,
 		idFieldName: idFieldName,
 		vectorFieldName: vectorFieldName,
@@ -35,7 +34,6 @@ export default async function ({ data, configArgs }) {
 		vectors: vectors
 	});
 
-	// @ts-expect-error model methods don't exist until instantiated
 	const record = await ctx.__$executeRaw(query)
 		.then(( /** @type number */ rows) => ({
 			count: rows

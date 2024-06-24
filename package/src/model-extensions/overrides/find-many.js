@@ -95,14 +95,12 @@ export default async function (props) {
 	}
 	// we want the vector field, but aren't sorting by it
 	else if (wantVectors && !wantVectorDistance) {
-		// @ts-expect-error extended methods not available until client created
 		return ctx.__$transaction(async () => {
 			const rowsWithoutVectors = await baseFindMany({
 				select: nativeSelect,
 				orderBy: nativeOrderBy,
 				...args
 			});
-			// @ts-expect-error extended methods not available until client created
 			const vectorData = await ctx.getVectorsById({
 				where: {
 					id: {
@@ -136,14 +134,12 @@ export default async function (props) {
 	}
 	// doing nearest neighbor sort
 	else {
-		// @ts-expect-error extended methods not available until client created
 		return ctx.__$transaction(async () => {
 			const rowsWithoutVectors = await baseFindMany({
 				select: nativeSelect,
 				orderBy: nativeOrderBy,
 				...args
 			});
-			// @ts-expect-error extended methods not available until client created
 			const vectorData = await ctx.findNearestNeighbors({
 				from: from,
 				orderBy: wantVectorDistance,

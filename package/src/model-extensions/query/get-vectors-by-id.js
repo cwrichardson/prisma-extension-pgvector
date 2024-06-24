@@ -12,12 +12,13 @@ import { fromSql } from 'pgvector';
 // @ts-expect-error configArgs not part of function signature
 export default async function ({ where, configArgs}) {
 	const ctx = Prisma.getExtensionContext(this);
+
 	const {
 		idFieldName = 'id',
 		vectorFieldName
 	} = configArgs;
 
-	// @ts-ignore
+	
 	const ids = where[idFieldName]?.in;
 
 	if (! Array.isArray(ids)) return Promise
@@ -52,7 +53,6 @@ export default async function ({ where, configArgs}) {
 
 	const query = Prisma.sql(queryStrings, ...ids);
 
-	// @ts-expect-error extended methods not available until client created
 	const result = await ctx.__$queryRaw(query)
 		.then((/** @type {import('$types/vector').vectorEntry<T>[]} */ rows) => (
 			rows.map((/** @type {import('$types/vector').vectorEntry<T>} */row) => ({

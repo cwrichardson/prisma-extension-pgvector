@@ -27,7 +27,6 @@ export default async function ({ data, configArgs }) {
 
 	const query = createManyQueryBuilder({
 		queryType: 'return',
-		// @ts-ignore
 		modelName: ctx.$name,
 		idFieldName: idFieldName,
 		vectorFieldName: vectorFieldName,
@@ -35,7 +34,6 @@ export default async function ({ data, configArgs }) {
 		vectors: vectors
 	});
 
-	// @ts-expect-error extended methods not available until client created
 	const record = await ctx.__$queryRaw(query)
 		.then((/** @type {import('$types/vector.js').vectorEntry<T>[]} */ rows) => (
 			rows.map((

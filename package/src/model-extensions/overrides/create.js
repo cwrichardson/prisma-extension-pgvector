@@ -60,16 +60,13 @@ export default async function (props) {
 		// remove it before the final return
 		let removeSelectId = false;
 		if (select && !args.select?.[idFieldName]) {
-			/** @todo fix this */
-			// @ts-ignore
 			args.select[idFieldName] = true;
 			removeSelectId = true;
 		}
 
-		// @ts-expect-error function doesn't exist until client is created
 		return ctx.__$transaction(async () => {
 			const rowWithoutVector = await baseCreate(args);
-			// @ts-expect-error function doesn't exist until client is created
+
 			const updatedVector = await ctx.updateVector({
 				data: {
 					[idFieldName]: rowWithoutVector[idFieldName],

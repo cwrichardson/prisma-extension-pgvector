@@ -86,7 +86,6 @@ export default async function ({orderBy = 'L2', from, where, take, configArgs}) 
 
 	const query = Prisma.sql(queryStrings, ...values);
 
-	// @ts-expect-error extended methods not available until client created
 	const result = await ctx.__$queryRaw(query)
 		.then((/** @type {import('$types/vector').vectorEntry[]} */ rows) => (
 			rows.map((/** @type {import('$types/vector').vectorEntry} */row) => ({
