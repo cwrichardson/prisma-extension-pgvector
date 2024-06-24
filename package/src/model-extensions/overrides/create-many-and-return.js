@@ -38,7 +38,8 @@ export default async function (props) {
 	// @todo make this work if the vector field has a default value in the
 	//       schema
 	if (! (hasVectorData
-	  || Object.prototype.hasOwnProperty.call(select, vectorFieldName))) {
+	  || (select
+		&& Object.prototype.hasOwnProperty.call(select, vectorFieldName)))) {
 		const rows = await baseCreateManyAndReturn({
 			data: data,
 			select: select,
@@ -46,7 +47,9 @@ export default async function (props) {
 		})
 			.then((/** @type Object[] */ rawRows) => {
 				if (select) return rawRows;
-				return (rawRows.map((r) => ({ ...r, [vectorFieldName]: null })));
+				return (rawRows.map((r) => (
+					{ ...r, [vectorFieldName]: null }
+				)));
 			});
 
 		return rows;

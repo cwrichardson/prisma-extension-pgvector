@@ -28,10 +28,10 @@ export default async function (props) {
 	// `select`, append an empty vector field to the object.
 	/** @todo make this work if the vector field has a default value in the
 	       schema */
-	const dataHasVectorField = Object.prototype
+	const dataHasVectorField = args?.data && Object.prototype
 	  .hasOwnProperty.call(args?.data, vectorFieldName);
-	if (! (dataHasVectorField || Object.prototype
-	  .hasOwnProperty.call(args?.select, vectorFieldName))) {
+	if (! (dataHasVectorField || (args?.select && Object.prototype
+	  .hasOwnProperty.call(args?.select, vectorFieldName)))) {
 		const row = await baseCreate(args)
 			.then((/** @type Object */ rawRow) => {
 				if (args?.select) return rawRow;
