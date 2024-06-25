@@ -5,9 +5,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "pnpm test -r --filter=./packages/*",
-        "lint": "pnpm -r lint && eslint --cache --cache-location node_modules/.eslintcache 'package/**/*.js'",
-        "lint:fix": "eslint --ignore-path .gitignore --fix --cache --cache-location node_modules/.eslintcache 'package/**/*.js'"
+    "test:unit": "./scripts/run-unit-tests.sh",
+    "lint": "pnpm -r lint && eslint --cache --cache-location node_modules/.eslintcache 'package/**/*.js'",
+    "lint:fix": "eslint --ignore-path .gitignore --fix --cache --cache-location node_modules/.eslintcache 'package/**/*.js'"
   },
   "keywords": [],
   "author": {
@@ -17,5 +17,6 @@
   "engines": {
     "node": ">=18",
     "pnpm": ">=8"
-  }
+  },
+  "packageManager": "pnpm@9.1.3"
 }
