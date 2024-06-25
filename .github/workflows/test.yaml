@@ -1,0 +1,17 @@
+name: Tests
+on:
+  pull_request:
+    branches:
+      - main
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    env:
+      # sync with /package/test/docker-compose.yaml
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/pgv-test?schema=public
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/build
+      - uses: ./.github/actions/docker-compose
+      - name: Run tests
+        run: pnpm test
