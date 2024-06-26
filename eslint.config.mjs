@@ -23,13 +23,15 @@ export default [
 	{
 		files: [
 			'**/*.component-{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx',
-			'test/**/*.test.js'
+			'**/test/**/*.test.js'
 		],
 		plugins: {
 			vitest
 		},
 		rules: {
-			...vitest.configs.recommended.rules
+			...vitest.configs.recommended.rules,
+			// _lots_ of the vitest syntax is unused expressions
+			'@typescript-eslint/no-unused-expressions': 'off'
 		}
 	},
 	{
