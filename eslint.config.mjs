@@ -4,6 +4,7 @@ import stylistcJs from '@stylistic/eslint-plugin-js';
 import globals from 'globals';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import vitest from 'eslint-plugin-vitest';
 import tseslint from 'typescript-eslint';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -17,6 +18,20 @@ export default [
 	includeIgnoreFile(packageIngorePaths),
 	includeIgnoreFile(devTestIngorePaths),
 	pluginJs.configs.recommended,
+	...tseslint.configs.recommended,
+	...tseslint.configs.stylistic,
+	{
+		files: [
+			'**/*.component-{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx',
+			'test/**/*.test.js'
+		],
+		plugins: {
+			vitest
+		},
+		rules: {
+			...vitest.configs.recommended.rules
+		}
+	},
 	{
 		plugins: {
 			'@stylistic/js': stylistcJs
@@ -30,22 +45,21 @@ export default [
 				...globals.node
 			}
 		},
-		rules: {
-			indent: ['error', 'tab'],
-			quotes: ['error', 'single'],
-			semi: ['warn', 'always', { omitLastInOneLineBlock: true }],
-			'no-case-declarations': 0,
-			'no-undef': 'error',
-			'no-unused-vars': [
-				'warn',
-				{
-					'vars': 'all',
-					'args': 'after-used',
-					'ignoreRestSiblings': true,
-					'argsIgnorePattern': '^_'
-				}
-			]
-		}
+		// rules: {
+		// 	indent: ['error', 'tab'],
+		// 	quotes: ['error', 'single'],
+		// 	semi: ['warn', 'always', { omitLastInOneLineBlock: true }],
+		// 	'no-case-declarations': 0,
+		// 	'no-undef': 'error',
+		// 	'no-unused-vars': [
+		// 		'warn',
+		// 		{
+		// 			'vars': 'all',
+		// 			'args': 'after-used',
+		// 			'ignoreRestSiblings': true,
+		// 			'argsIgnorePattern': '^_'
+		// 		}
+		// 	]
+		// }
 	},
-	...tseslint.configs.recommended,
 ];
