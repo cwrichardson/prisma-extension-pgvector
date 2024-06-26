@@ -17,7 +17,12 @@ export default async function (props) {
 	} = props;
 
 	const ctx = Prisma.getExtensionContext(this);
-	const baseCreate = ctx?.$name ? parentContext[ctx.$name].create : () => {};
+	const baseCreate = ctx?.$name
+		? parentContext[ctx.$name].create
+		: () => {
+			// do nothing
+		};
+
 	const {
 		vectorFieldName,
 		idFieldName = 'id'

@@ -21,7 +21,9 @@ export default async function (props) {
 	const ctx = Prisma.getExtensionContext(this);
 	const baseCreateManyAndReturn = ctx?.$name
 		? parentContext[ctx.$name].createManyAndReturn
-		: () => {};
+		: () => {
+			// do nothing
+		};
 
 	/** @type {import('$types/index').configArgs} */
 	const {

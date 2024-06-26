@@ -22,7 +22,9 @@ export default async function (props) {
 	const ctx = Prisma.getExtensionContext(this);
 	const baseFindMany = ctx?.$name
 		? parentContext[ctx.$name].findMany
-		: () => {};
+		: () => {
+			// do nothing
+		};
 
 	/** @type {import('$types/index').configArgs} */
 	const {
