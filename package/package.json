@@ -54,7 +54,7 @@
     "esbuild": "^0.20.2",
     "eslint": "^9.5.0",
     "globals": "^15.6.0",
-    "prisma": "^5.15.1",
+    "prisma": "^=5.14.0",
     "typescript": "^5.4.5",
     "typescript-eslint": "8.0.0-alpha.10",
     "vitest": "^1.6.0"
