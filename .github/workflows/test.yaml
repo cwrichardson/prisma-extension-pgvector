@@ -14,4 +14,4 @@ jobs:
       - uses: ./.github/actions/build
       - uses: ./.github/actions/docker-compose
       - name: Run tests
-        run: pnpm test
+        run: pnpm test:unit
