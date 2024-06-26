@@ -11,14 +11,14 @@ import { distanceTypeMap } from 'src/helpers/distance-types';
  * @param string[] args.vectors - an array of strings instead
  *      of vectors, as we pass it after calling `toSql`.
  */
-export interface createManyQueryBuilder {
-    (args: {queryType?: 'count' | 'return',
+export type createManyQueryBuilder = (args: {
+    queryType?: 'count' | 'return',
     modelName: PrismaModelProps,
     vectorFieldName: string,
     idFieldName: PrismaModelFields,
     ids: idFieldType[],
-    vectors: string[]}): Sql;
-}
+    vectors: string[]
+}) => Sql;
 
 export type distanceType = keyof typeof distanceTypeMap;
 
