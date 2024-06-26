@@ -52,21 +52,21 @@ export type updateVectorResult<T> = vectorEntry<T>;
 // we use the native return value, because it's just a count, so we don't
 // have to worry about the vector field not being included in the model
 export type createManyVectorsArgs<T, A> = {
-  data: Array<createDataArgs<T, A, configArgs['idFieldName'],
-    configArgs['vectorFieldName']>>
+  data: createDataArgs<T, A, configArgs['idFieldName'],
+    configArgs['vectorFieldName']>[]
 };
 export type createManyVectorsResult<T, A> = Prisma.Result<T, A, 'createMany'>;
 
 // createManyVectorsAndReturn
 export type createManyVectorsAndReturnArgs<T, A> = {
-  data: Array<createDataArgs<T, A, configArgs['idFieldName'],
-    configArgs['vectorFieldName']>>
+  data: createDataArgs<T, A, configArgs['idFieldName'],
+    configArgs['vectorFieldName']>[]
 };
-export type createManyVectorsAndReturnResult<T> = Array<vectorEntry<T>>;
+export type createManyVectorsAndReturnResult<T> = vectorEntry<T>[];
 
 // updateManyVectors
 export type updateManyVectorsArgs<T, A> = {
-  data: Array<updateDataArgs<T, A, configArgs['idFieldName'],
-  configArgs['vectorFieldName']>>
+  data: updateDataArgs<T, A, configArgs['idFieldName'],
+  configArgs['vectorFieldName']>[]
 };
 export type updateManyVectorsResult<T, A> = Prisma.Result<T, A, 'updateMany'>;

@@ -28,4 +28,4 @@ export type XOR<T, U> = (T | U) extends object
     : T | U;
 
 /** Get type Foo when the Prisma type is XOR<Enumerable<Foo>, Foo> */
-export type GetInputType<T> = T extends Array<infer U> ? U : T;
+export type GetInputType<T> = T extends (infer U)[] ? U : T;

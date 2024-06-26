@@ -14,7 +14,7 @@ type getVectorsByIdWhere<T, A, I extends keyof A> = {
 export interface getVectorsByIdArgs<T, A> {
     where: getVectorsByIdWhere<T, A, configArgs['idFieldName']>
 }
-export type getVectorsByIdResult<T> = Array<vectorEntry<T>>;
+export type getVectorsByIdResult<T> = vectorEntry<T>[];
 
 // findNearestNeighbors
 export interface findNearestNeighborsArgs {
@@ -23,4 +23,4 @@ export interface findNearestNeighborsArgs {
     where?: getVectorsByIdWhere | undefined;
     take?: number | undefined;
 }
-export type findNearestNeighborsResults = Array<vectorEntry>;
+export type findNearestNeighborsResults = vectorEntry[];
