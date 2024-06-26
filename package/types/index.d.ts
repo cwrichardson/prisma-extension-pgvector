@@ -57,7 +57,7 @@ export type idFieldType<T, K extends idFieldKey> = Pick<Prisma.Exact<T, 'findUni
 
 
 // new model methods
-export type PGVectorStoreMethods = {
+export interface PGVectorStoreMethods {
     createVector<T, A>(this: T, args: createVectorArgs<T, A>):
       Prisma.PrismaPromise<createVectorResult<T, A>>;
     createManyVectors<T, A>(this: T, args: createManyVectorsArgs<T, A>):
@@ -70,7 +70,7 @@ export type PGVectorStoreMethods = {
     updateManyVectors<T, A>(this: T, args: updateManyVectorsArgs<T, A>):
       Prisma.PrismaPromise<updateManyVectorsResult<T, A>>;
 }
-export type PGVectorQueryMethods = {
+export interface PGVectorQueryMethods {
     findNearestNeighbors<T, A>(this: T, args: findNearestNeighborsArgs<T, A>):
       Prisma.PrismaPromise<findNearestNeighborsResults<T, A>>;
     getVectorsById<T, A>(this: T, args: getVectorsByIdArgs<T, A>):
@@ -78,7 +78,7 @@ export type PGVectorQueryMethods = {
 }
 
 // base model override methods
-export type PGVectorOverrides = {
+export interface PGVectorOverrides {
     create<T, A>(this: T, args: createArgs<T, A>):
       Prisma.PrismaPromise<createResult<T, A>>;
     createManyAndReturn<T, A>(this: T, args: createManyAndReturnArgs):

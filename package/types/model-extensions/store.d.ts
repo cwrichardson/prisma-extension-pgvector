@@ -34,39 +34,39 @@ type updateWhereArgs<T, A, I extends keyof A> =
   Pick<Prisma.Exact<T, 'update'>['where'], idFieldKey[I]>;
 
 // createVector
-export type createVectorArgs<T, A> = {
+export interface createVectorArgs<T, A> {
   data: createDataArgs<T, A, configArgs['idFieldName'],
     configArgs['vectorFieldName']>
-};
+}
 export type createVectorResult<T> = vectorEntry<T>;
 
 // updateVector
-export type updateVectorArgs<T, A> = {
+export interface updateVectorArgs<T, A> {
   data: updateDataArgs<T, A, configArgs['idFieldName'],
     configArgs['vectorFieldName']>;
   where: updateVectorArgs<T, A, configArgs['idFieldName']>;
-};
+}
 export type updateVectorResult<T> = vectorEntry<T>;
 
 // createManyVectors
 // we use the native return value, because it's just a count, so we don't
 // have to worry about the vector field not being included in the model
-export type createManyVectorsArgs<T, A> = {
+export interface createManyVectorsArgs<T, A> {
   data: createDataArgs<T, A, configArgs['idFieldName'],
     configArgs['vectorFieldName']>[]
-};
+}
 export type createManyVectorsResult<T, A> = Prisma.Result<T, A, 'createMany'>;
 
 // createManyVectorsAndReturn
-export type createManyVectorsAndReturnArgs<T, A> = {
+export interface createManyVectorsAndReturnArgs<T, A> {
   data: createDataArgs<T, A, configArgs['idFieldName'],
     configArgs['vectorFieldName']>[]
-};
+}
 export type createManyVectorsAndReturnResult<T> = vectorEntry<T>[];
 
 // updateManyVectors
-export type updateManyVectorsArgs<T, A> = {
+export interface updateManyVectorsArgs<T, A> {
   data: updateDataArgs<T, A, configArgs['idFieldName'],
   configArgs['vectorFieldName']>[]
-};
+}
 export type updateManyVectorsResult<T, A> = Prisma.Result<T, A, 'updateMany'>;
