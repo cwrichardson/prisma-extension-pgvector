@@ -45,6 +45,7 @@ export default [
 				...globals.node
 			}
 		},
+		/** @todo see if any of these rules need to be put back */
 		// rules: {
 		// 	indent: ['error', 'tab'],
 		// 	quotes: ['error', 'single'],
