@@ -8,7 +8,7 @@ import {
 
 import prisma from './helpers/prisma';
 
-describe('query', async () => {
+describe('query', () => {
 	describe('getVectorsById', () => {
 		it('should find and return a `vectorEntry`', async () => {
 			const vector = await prisma.vector.createManyVectors({
@@ -55,7 +55,7 @@ describe('query', async () => {
 					});
 				});
 
-			expectTypeOf(vector).toBeArray;
+			expectTypeOf(vector).toBeArray();
 			expect(vector).toHaveLength(0);
 		}),
 		it('should find some when some exist', async () => {
