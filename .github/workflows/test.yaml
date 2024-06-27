@@ -13,6 +13,9 @@ jobs:
         run: pnpm lint
 
   unit-tests:
+    strategy:
+      matrix:
+        install-node-versions: [18.x, stable]
     runs-on: ubuntu-latest
     env:
       # sync with /package/test/docker-compose.yaml
@@ -20,6 +23,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/workflows/install
+        with:
+          node-version: ${{ matrix.install-node-versions }}
       - uses: ./.github/workflows/docker-compose
       - name: Run tests
         run: pnpm test:unit

@@ -2,12 +2,18 @@ name: 'Intall'
 description: 'Sets up the repository'
 runs:
   using: 'composite'
+  inputs:
+    node-version: # node version on which to build
+      description: "Node version for the build"
+      required: true
+      default: stable
   steps:
     - name: Set up pnpm
       # pnpm version controlled in top level package.json
       uses: pnpm/action-setup@v4
     - name: Install NodeJS
       uses: actions/setup-node@v4
+      with: ${{ inputs.node-version }}
     - name: Install dependencies
       shell: bash
       run: pnpm install
