@@ -6,8 +6,8 @@
   "main": "index.js",
   "scripts": {
     "test:unit": "./scripts/run-unit-tests.sh",
-    "lint": "pnpm -r lint && eslint --cache --cache-location node_modules/.eslintcache 'package/**/*.js'",
-    "lint:fix": "eslint --ignore-path .gitignore --fix --cache --cache-location node_modules/.eslintcache 'package/**/*.js'"
+    "lint": "pnpm -r lint",
+    "lint:fix": "pnpm -r lint:fix"
   },
   "keywords": [],
   "author": {
