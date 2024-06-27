@@ -11,7 +11,7 @@ jobs:
       DATABASE_URL: postgresql://postgres:postgres@localhost:5432/pgv-test?schema=public
     steps:
       - uses: actions/checkout@v4
-      - uses: ./.github/workflows/build
+      - uses: ./.github/workflows/install
       - uses: ./.github/workflows/docker-compose
       - name: Run tests
         run: pnpm test:unit
