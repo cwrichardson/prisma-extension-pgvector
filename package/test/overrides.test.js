@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, expectTypeOf, it } from 'vitest';
 
 import prisma from './helpers/prisma';
 
-describe('overrides', async () => {
+describe('overrides', () => {
 	describe('create', () => {
 		it('should should create and return complete records, when `vectorField` not provided', async () => {
 			const vector = await prisma.vector.create({
@@ -144,8 +144,10 @@ describe('overrides', async () => {
 		it.skip('should find everything and include `vectorField', async () => {
 			const vectors = await prisma.vector.findMany({});
 
-			expectTypeOf(vectors).toBeArray;
+			expectTypeOf(vectors).toBeArray();
 			expect(vectors).toHaveLength(6);
+			/** @todo fix lint when we remove skip from test */
+			// eslint-disable-next-line vitest/valid-expect
 			expect(vectors).to.include.members([
 				expect.objectContaining({ testfield: 'a', embedding: [1,2,3], metadata: null }),
 				expect.objectContaining({ testfield: 'z', embedding: [4,5,6], metadata: null }),
@@ -166,8 +168,10 @@ describe('overrides', async () => {
 				}
 			});
 
-			expectTypeOf(vectors).toBeArray;
+			expectTypeOf(vectors).toBeArray();
 			expect(vectors).toHaveLength(2);
+			/** @todo fix lint when we remove skip from test */
+			// eslint-disable-next-line vitest/valid-expect
 			expect(vectors).to.include.members([
 				{ testfield: 'a', metadata: null },
 				{ testfield: 'z', metadata: null },
