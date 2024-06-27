@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import prisma from './helpers/prisma';
 
-describe('store', async () => {
+describe('store', () => {
 	describe('createVector', () => {
 		it('should return a `vectorEntry` when given an `id` and a `vector`', async () => {
 			await expect(prisma.vector.createVector({
@@ -117,11 +117,13 @@ describe('store', async () => {
 			});
 		}),
 		it('requires id in where', async () => {
+			// @ts-expect-error we're throwing an error
 			await expect(prisma.vector.updateVector({
 				data: { embedding: [1,2,3]}
 			})).rejects.toThrowError('where: { <idFieldName>: <id>  } is required');
 		}),
 		it('requires data', async () => {
+			// @ts-expect-error we're throwing an error
 			await expect(prisma.vector.updateVector({
 				where: { id: 1 }
 			})).rejects.toThrowError('data object is required.');
