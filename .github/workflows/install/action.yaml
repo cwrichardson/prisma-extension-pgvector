@@ -22,4 +22,4 @@ runs:
     # needed for linting
     - name: Link globals package
       shell: bash
-      run: ln -s node_modules/.pnpm/globals@15.6.0/node_modules/globals/ node_modules/globals
+      run: ln -s ~/.npm/node_modules/.pnpm/globals@15.6.0/node_modules/globals/ ~/.npm/node_modules/globals
