@@ -4,7 +4,7 @@ inputs:
   node-version: # node version on which to build
     description: "Node version for the build"
     required: true
-    default: latest
+    default: 'latest'
 runs:
   using: 'composite'
   steps:

@@ -20,7 +20,7 @@ jobs:
   unit-tests:
     strategy:
       matrix:
-        install-node-versions: [18, latest]
+        install-node-versions: ['18', 'latest']
     runs-on: ubuntu-latest
     env:
       # sync with /package/test/docker-compose.yaml
