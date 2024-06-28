@@ -4,91 +4,59 @@
 that provides a convenient, type-safe way to interact with databases which
 support the `pgvector` vector-similarity search for Postgres databases.
 
-Learn more in the [`pgvector`](https://github.com/pgvector/pgvector) and
-[`pgvector-node`](https://github.com/pgvector/pgvector-node/) docs.
+See [the package docs](./package/README.md) for installation and usage.
 
-## Quick Start
+## Goals
 
-### 1. Install dependencies
-
-```bash
-npm i @prisma/client prisma-extension-pgvector
-npm i -D prisma
-npx prisma init
-```
-
-### 2. Add vector support to your `prisma.schema`
-
-At the moment vector is a preview feature, so we need to enable it
-
-```prisma highlight=3,9;add
-generator client {
-  provider = "prisma-client-js"
-  previewFeatures = ["postgresqlExtensions"]
-}
-
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-  extensions = [vector]
-}
-```
-
-### 3. Add a vector field to your model
-
-Or create a whole new model for your vectors.
-
-```prisma highlight=3;add
-model Item {
-    id      String                  @id @default(cuid())
-    vector  Unsupported("vector")?
-}
-```
-
-XXX Finish build & test steps, but then move this to a different section and do the QuickStart as npm.
+The target for release 1.0 is the minimal feature set to enable using the
+package with [LangChain](https://www.langchain.com). The current LangChain
+[Prisma vector store](https://js.langchain.com/v0.2/docs/integrations/vectorstores/prisma)
+is missing critical functionality for even using LangChain (e.g., it 
+doesn't work with their [reindexing](https://js.langchain.com/v0.2/docs/how_to/indexing)
+capability), and generally doesn't integrate particularly well if you're
+already using Pirsma.
 
 ## Contributing
 
-XXX
+**You can help!** Jump on the TODO list, and give us a hand!
 
 ### TODO
 
+#### Current (v1.x)
+
+Roughly in order of priority:
+
 - Make override unit tests work
-- - Currently, the unit tests do some hackery to deal with the fact that prisma overwrites the
-    search_path (see
-    [setting a schema clobbers the postgresql search_path instead of prepending to search_path](https://github.com/prisma/prisma/issues/14662)). In our unit tests, each test suite runs as a different postgres schema, so that we 
-    can run in parallel. We work around this issue by setting `search_path` in `test_schema_config.sql`
-    before each Prisma invocation. This works fine, except in the case where the overrides run
-    transactions that make multiple calls, in which scenario, it seems the search path is lost
-    before the second (internal) call.
+- - Currently, the unit tests do some hackery to deal with the fact that
+    prisma overwrites the search_path (see [setting a schema clobbers the postgresql search_path instead of prepending to search_path](https://github.com/prisma/prisma/issues/14662)).
+    In our unit tests, each test suite runs as a different postgres schema,
+    so that we can run in parallel. We work around this issue by setting
+    `search_path` in `test_schema_config.sql` before each Prisma invocation.
+    This works fine, except in the case where the overrides run
+    transactions that make multiple calls, in which scenario, it seems the
+    search path is lost before the second (internal) call.
+- Fix the `@todo`s in the codebase
+
+#### Future (v2.x+)
 - Support other vector types (e.g., halfvector)
 - Support indexing, if possible
-- Override default model queries
 
 ### Testing locally
 
-Get the `pgvector` Docker image.
+Both `dev-test` and the automated unit tests run on Docker, so make sure you
+have [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+installed and running.
+
+Inside [`dev-test`](./dev-test/), feel free to fiddle around in `index.js`
+to play with features, including any new ones you implement. There are a
+number of shortcuts for Docker commands as npm scripts.
+
+To ensure any pull requests you make are accepted, make sure to run linting
+and unit testing locally. From the top level you can
 
 ```bash
-docker pull pgvector/pgvector:pg16
-```
-
-Then run the container with the username and password configured in `packages/test/.env`.
-
-```bash
-docker run --name pgv-extension-node-test-env -e POSTGRES_USERNAME=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DATABASE=pgv-test -p 5432:5432 -d pgvector/pgvector:pg16
-```
-
-and then inside `package/test`, deploy the database (**NB**: Do NOT run `prisma init`, as it will overwrite the custom migration):
-
-```bash
-pnpx prisma migrate deploy
-```
-
-Now you can run the `vitest` tests with `pnpm`:
-
-```bash
-pnpm run test
+pnpm lint
+pnpm test:unit
 ```
 
 ## External Reading
