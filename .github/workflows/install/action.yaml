@@ -1,12 +1,12 @@
 name: 'Intall'
 description: 'Sets up the repository'
+inputs:
+  node-version: # node version on which to build
+    description: "Node version for the build"
+    required: true
+    default: stable
 runs:
   using: 'composite'
-  inputs:
-    node-version: # node version on which to build
-      description: "Node version for the build"
-      required: true
-      default: stable
   steps:
     - name: Set up pnpm
       # pnpm version controlled in top level package.json
