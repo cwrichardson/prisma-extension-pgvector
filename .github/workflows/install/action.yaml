@@ -4,7 +4,7 @@ inputs:
   node-version: # node version on which to build
     description: "Node version for the build"
     required: true
-    default: stable
+    default: latest
 runs:
   using: 'composite'
   steps:
@@ -16,7 +16,7 @@ runs:
       with: ${{ inputs.node-version }}
     - name: Install dependencies
       shell: bash
-      run: pnpm install
+      run: pnpm install --frozen-lockfile
     # pnpm doesn't do this? ¯\_(ツ)_/¯
     # needed for linting
     - name: Link globals package
