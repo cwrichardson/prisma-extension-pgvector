@@ -15,22 +15,17 @@
     "pgvector"
   ],
   "license": "BSD-2-Clause",
-  "type": "module",
-  "module": "src/index.js",
-  "main": "dist/index.cjs",
   "files": [
     "src",
     "types",
     "dist"
   ],
-  "types": "./types/index.d.ts",
   "exports": {
     ".": {
       "types": "./types/index.d.ts",
       "import": "./src/index.js",
       "require": "./dist/index.cjs"
-    },
-    "./package.json": "./package.json"
+    }
   },
   "scripts": {
     "build": "esbuild ./src/index.js --bundle --format=cjs --outfile=dist/index.cjs --platform=node --external:@prisma/client --external:pgvector",

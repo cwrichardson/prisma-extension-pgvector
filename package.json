@@ -12,7 +12,6 @@
   "author": {
     "name": "Chris Richardson"
   },
-  "type": "module",
   "engines": {
     "node": ">=18",
     "pnpm": ">=8"

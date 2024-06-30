@@ -36,6 +36,10 @@ Roughly in order of priority:
     transactions that make multiple calls, in which scenario, it seems the
     search path is lost before the second (internal) call.
 - Fix the `@todo`s in the codebase
+- CJS support?
+- - We build and export a cjs version which is included in the package. Not
+    sure if that's required in 2024, but if it is, then should figure out a
+    way to test it.
 
 #### Future (v2.x+)
 - Support other vector types (e.g., halfvector)
