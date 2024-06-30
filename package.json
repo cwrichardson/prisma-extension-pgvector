@@ -4,9 +4,13 @@
   "private": "true",
   "description": "Monorepo root for prisma-extension-pgvector",
   "scripts": {
+    "build": "pnpm build -r --filter=package",
     "test:unit": "./scripts/run-unit-tests.sh",
     "lint": "pnpm -r lint",
-    "lint:fix": "pnpm -r lint:fix"
+    "lint:fix": "pnpm -r lint:fix",
+    "changeset:version": "changeset version",
+    "changeset:publish": "changeset publish",
+    "release": "pnpm build && pnpm changeset:publish"
   },
   "keywords": [],
   "author": {
