@@ -11,7 +11,7 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
-    permission:
+    permissions:
       contents: write
       pull-requests: write
     steps:
