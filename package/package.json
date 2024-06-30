@@ -15,6 +15,11 @@
     "pgvector"
   ],
   "license": "BSD-2-Clause",
+  "repository": {
+        "type": "git",
+        "url": "cwrichardson/prisma-extension-pgvector",
+        "directory": "package"
+  },
   "files": [
     "src",
     "types",
