@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": "true",
   "description": "Monorepo root for prisma-extension-pgvector",
-  "main": "index.js",
   "scripts": {
     "test:unit": "./scripts/run-unit-tests.sh",
     "lint": "pnpm -r lint",
