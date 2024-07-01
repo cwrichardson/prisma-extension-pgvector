@@ -11,6 +11,7 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
+    #shouldn't need these?
     permissions:
       contents: write
       pull-requests: write
