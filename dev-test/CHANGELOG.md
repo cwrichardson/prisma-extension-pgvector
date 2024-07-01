@@ -1,5 +1,12 @@
 # devtest
 
+## 0.0.3
+
+### Patch Changes
+
+- Updated dependencies [[`bc9a239`](https://github.com/cwrichardson/prisma-extension-pgvector/commit/bc9a239a8686d3de7421dda655be039fdd34a0f6)]:
+  - prisma-extension-pgvector@0.10.1
+
 ## 0.0.2
 
 ### Patch Changes
