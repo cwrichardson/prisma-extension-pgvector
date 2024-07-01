@@ -1,5 +1,7 @@
 # Prisma PGVector Client Extension
 
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/cwrichardson/prisma-extension-pgvector/test.yaml?logo=vitest&label=CI)
+
 `prisma-extension-pgvector` is a wrapper around the `pgvector-node` package
 that provides a convenient, type-safe way to interact with databases which
 support the `pgvector` vector-similarity search for Postgres databases.
