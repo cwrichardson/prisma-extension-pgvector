@@ -12,7 +12,7 @@ Learn more in the [`pgvector`](https://github.com/pgvector/pgvector) and
 ### 1. Install dependencies
 
 ```bash
-npm i @prisma/client prisma-extension-pgvector
+npm i @prisma/client pgvector prisma-extension-pgvector
 npm i -D prisma
 npx prisma init
 ```
@@ -45,7 +45,19 @@ model Item {
 }
 ```
 
-Boom!
+Then create or update your client (usually `prisma migrate dev`).
+
+### 4. Extend the client
+
+Add the extension to your Prisma instantiation, and specify the name of the
+model which has the vector field, as well as the name of the field.
+
+```js
+const prisma = new PrismaClient().$extends(withPGVector({
+    modelName: 'item',
+    vectorFieldName: 'vector'
+}));
+```
 
 ## Queries
 
@@ -56,7 +68,7 @@ of vectors from the database by id with, for example,
 ```js
 const vectors = await prisma.vector.getVectorsById({
   where: {
-    id: { in: [1, 2, 3] }
+    id: { in: [ 1 ] }
   }
 })
 ```
