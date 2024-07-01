@@ -1,6 +1,6 @@
 {
   "name": "prisma-extension-pgvector",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "author": {
     "name": "Chris Richardson",
     "url": "https://chrisrichardson.info"
@@ -16,9 +16,9 @@
   ],
   "license": "BSD-2-Clause",
   "repository": {
-        "type": "git",
-        "url": "cwrichardson/prisma-extension-pgvector",
-        "directory": "package"
+    "type": "git",
+    "url": "cwrichardson/prisma-extension-pgvector",
+    "directory": "package"
   },
   "files": [
     "src",
