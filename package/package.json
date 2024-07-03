@@ -28,12 +28,12 @@
   "exports": {
     ".": {
       "types": "./types/index.d.ts",
-      "import": "./src/index.js",
+      "import": "./src/index.mjs",
       "require": "./dist/index.cjs"
     }
   },
   "scripts": {
-    "build": "esbuild ./src/index.js --bundle --format=cjs --outfile=dist/index.cjs --platform=node --external:@prisma/client --external:pgvector",
+    "build": "esbuild ./src/index.mjs --bundle --format=cjs --outfile=dist/index.cjs --platform=node --external:@prisma/client --external:pgvector",
     "prepublishOnly": "pnpm build",
     "test": "vitest run test --project unit",
     "test:coverage": "vitest run --coverage",

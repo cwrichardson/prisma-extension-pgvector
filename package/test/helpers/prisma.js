@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { withPGVector } from '../../src/index.js';
+import { withPGVector } from '../../src/index.mjs';
 
 const prisma = new PrismaClient().$extends(withPGVector({
 	modelName: 'vector',

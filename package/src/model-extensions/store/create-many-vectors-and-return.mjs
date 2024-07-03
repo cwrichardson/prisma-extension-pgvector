@@ -1,7 +1,7 @@
 import { Prisma } from '@prisma/client';
 import { fromSql, toSql } from 'pgvector';
 
-import { createManyQueryBuilder } from '../../../src/helpers/create-many-query-builder.js';
+import { createManyQueryBuilder } from '../../../src/helpers/create-many-query-builder.mjs';
 
 /**
  * @template T - ctx

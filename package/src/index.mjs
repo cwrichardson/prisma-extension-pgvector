@@ -1,8 +1,8 @@
 import { Prisma } from '@prisma/client';
 
-import * as store from './model-extensions/store/index.js';
-import * as query from './model-extensions/query/index.js';
-import * as overrides from './model-extensions/overrides/index.js';
+import * as store from './model-extensions/store/index.mjs';
+import * as query from './model-extensions/query/index.mjs';
+import * as overrides from './model-extensions/overrides/index.mjs';
 
 /**
  * HOF to pass config args down to model methods

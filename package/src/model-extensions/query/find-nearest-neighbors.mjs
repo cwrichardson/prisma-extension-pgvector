@@ -1,6 +1,6 @@
 import { Prisma } from '@prisma/client';
 import { fromSql, toSql } from 'pgvector/utils';
-import { distanceTypeMap } from '../../../src/helpers/distance-types.js';
+import { distanceTypeMap } from '../../../src/helpers/distance-types.mjs';
 
 /**
  * @template T - ctx
