@@ -101,10 +101,21 @@ export type PGVectorModelMethods = PGVectorStoreMethods & PGVectorQueryMethods
  */
 export declare function withPGVector<I extends PGVectorInitArgs>(args: I):
   (client: PrismaClient) => PrismaDefault.PrismaClientExtends<
-  Types.Extensions.InternalArgs<Record<never, never>, {
-    readonly [K in (I['modelName'] extends infer U ? U : never)]:
-    PGVectorModelMethods
-  }, Record<never, never>, Record<never, never>>
+    Types.Extensions.InternalArgs<
+      // result
+      Record<never, never>,
+      // model
+      {
+        readonly [K in (I['modelName'] extends infer U ? U : never)]:
+        PGVectorModelMethods
+      },
+      // query
+      Record<never, never>,
+      // client
+      {
+        $getConfig(): PGVectorInitArgs
+      }
+  >
   & Types.Extensions.InternalArgs<Record<never, never>,
     Record<never, never>,
     Record<never, never>,
