@@ -1,4 +1,4 @@
-# Client Extension API Reference
+# Client Model Extension Method Reference
 
 ## New Methods
 
@@ -15,13 +15,13 @@ use with the native Prisma methods, see the [Overrides Documentation](./OVERRIDE
 
 | Name        | Type              | Required | Description  |
 | ----------- | ----------------- | -------- | ------------------------------------------------|
-| `data`      | `createDataArgs`  | **Yes**  | Wraps the configured `vector` and `id` fields in a type so they can be provided when creating new records |
+| `data`      | `createDataArgs`  | **Yes**  | Wraps the configured Vector and ID fields in a type so they can be provided when creating new records |
 
 #### Return Type
 
 | Return type      | Example                        | Description                 |
 | ---------------- | ------------------------------ | --------------------------- |
-| `vectorEntry`    | `{ id: 1, vector: [1, 2, 3] }` | A typed vectorEntry object. |
+| `vectorEntry`    | `{ id: 1, vector: [1, 2, 3] }` | A typed `vectorEntry` object. |
 
 #### Examples
 
@@ -91,7 +91,7 @@ const insertedVector = await prisma.vector.createVector({
 
 | Name        | Type                          | Required | Description  |
 | ----------- | ----------------------------- | -------- | ------------------------------------------------|
-| `data`      | `Enumerable<createDataArgs>`  | **Yes**  | Wraps the configured `vector` and `id` fields in a type so they can be provided when creating new records |
+| `data`      | `Enumerable<createDataArgs>`  | **Yes**  | Wraps the configured Vector and ID fields in a type so they can be provided when creating new records |
 
 #### Return Type
 
@@ -121,7 +121,7 @@ const countVectors = await prisma.vector.createManyVectors({
 
 | Name        | Type                          | Required | Description  |
 | ----------- | ----------------------------- | -------- | ------------------------------------------------|
-| `data`      | `Enumerable<createDataArgs>`  | **Yes**  | Wraps the configured `vector` and `id` fields in a type so they can be provided when creating new records |
+| `data`      | `Enumerable<createDataArgs>`  | **Yes**  | Wraps the configured Vector and ID fields in a type so they can be provided when creating new records |
 
 #### Return Type
 
@@ -171,7 +171,7 @@ const vectors = await prisma.vector.createManyVectorsAndReturn({
 
 </Admonition>
 
-`updateManyVectors` updates multiple records' `vector`s based on the `id` and `vector` in the `data` argument.
+`updateManyVectors` updates multiple records' Vectors based on the ID and Vector in the `data` argument.
 
 #### Options
 
@@ -234,8 +234,8 @@ const vector = await prisma.vector.getVectorsById({
 
 | Name        | Type                          | Required | Description  |
 | ----------- | ----------------------------- | -------- | ------------------------------------------------|
-| `from`      | `vector`                      | **Yes**  | The `vector` from which distance is being calculated |
-| `where`     | `getVectorsByIdWhere`         | No       | A `where` object narrowed to just the `id` key, and requiring (and only supporting) the `in` filter condition. |
+| `from`      | `vector`                      | **Yes**  | The vector from which distance is being calculated |
+| `where`     | `getVectorsByIdWhere`         | No       | A `where` object narrowed to just the ID key, and requiring (and only supporting) the `in` filter condition. |
 | `orderBy`   | `distanceType`                | No       | The distance function to use for finding neighbors. Default is `L2`. |
 | `take`      | `PositiveIntege`              | No       | How many records to return |
 
@@ -256,7 +256,7 @@ const vector = await prisma.vector.getVectorsById({
 
 <Admonition type="info">
 
-**Note**: The extension does not mandate that the `vector` field be required. If it is not, and some vectors are empty, then you may get unexpected results — particularly with `Cosine` and `InnerProduct` distance. See [this example](#nan-example)
+**Note**: The extension does not mandate that the Vector field be required. If it is not, and some vectors are empty, then you may get unexpected results — particularly with `Cosine` and `InnerProduct` distance. See [this example](#nan-example)
 
 </Admonition>
 

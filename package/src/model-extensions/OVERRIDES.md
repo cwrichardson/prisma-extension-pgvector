@@ -1,15 +1,16 @@
-# Client Method Overrides API Reference
+# Client Model Method Overrides API Reference
 
 ## Overrides
 
 [Unsupported field types](https://www.prisma.io/docs/orm/prisma-schema/data-model/unsupported-database-features#unsupported-field-types)
 are not available in the generated Prisma client. These override methods
 are provided as convenience wrappers around the standard methods. In general,
-if you're not interacting with the `vector` field, they simply operate as
+if you're not interacting with the Vector field, they simply operate as
 a pass-through to the generated methods. Conversely, if operating only on
-the configured `vector` or `id` fields, they operate as pass-throughs to the
+the configured Vector` or ID fields, they operate as pass-throughs to the
 model specific [extension methods](EXTENSIONS.md). When interacting with both
-supported fields and the `vector` field, they execute [sequential operations](https://www.prisma.io/docs/orm/prisma-client/queries/transactions#sequential-prisma-client-operations).
+supported fields and the Vector field, they execute
+[sequential operations](https://www.prisma.io/docs/orm/prisma-client/queries/transactions#sequential-prisma-client-operations).
 
 Below, only options which are modified from the native methods are documented;
 other options are expected to operate normally. For example, in `create`, `data`
@@ -284,7 +285,7 @@ Overrides the default [findMany](https://www.prisma.io/docs/orm/reference/prisma
 | ----------- | -------------------------------------------------------------------------------- | -------- | ------------------------------------------------|
 | `select`    | `XOR<VectorSelect`<br />` & [vectorFieldName]: boolean, null>`                   | No       | Specified which properties to include in the returned object, including the configured `vectorField`
 | `orderBy`   | `XOR<Enumerable<extendedVector`<br />`OrderByInput>, extendedVectorOrderByInput` | No       | The standard `orderBy` args, extended with an object for `vectorFieldName`, which instead of `'asc'` or `'desc'` takes a [`distanceType`](EXTENSIONS.md#distancetype) |
-| `from`      | `vector`                      | No `\|` **yes** | The `vector` from which distance is being calculated (**required** if and only if `vectorFieldName` is included in `orderBy`) |
+| `from`      | `vector`                      | No `\|` **yes** | The vector from which distance is being calculated (**required** if and only if `vectorFieldName` is included in `orderBy`) |
 | `take`      | `number \| PositiveInteger`              | No       | How many records to return. Must be a positive number if provided and `orderBy` includes `vectorFieldName` |
 
 #### Return Type

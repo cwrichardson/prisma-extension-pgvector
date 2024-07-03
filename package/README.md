@@ -61,6 +61,84 @@ const prisma = new PrismaClient().$extends(withPGVector({
 }));
 ```
 
+## Schema
+
+The [`model`](https://www.prisma.io/docs/orm/prisma-schema/data-model/models)
+you use for the vector store must include an ID field, [as with all Prisma
+models](https://www.prisma.io/docs/orm/prisma-schema/data-model/models#defining-an-id-field).
+Any ID usable for a generic Prisma `model` should be usable with
+`prisma-extension-pgvector`, but it **must** resolve to either a `number` or
+`string` type.
+
+Additionally, the `model` must have a Vector Field of type `Unsupported`
+`vector`. The field may be optional in the schema, but one must be defined.
+You can also specify a Vector Field of specific or arbitary length. (e.g.,
+`vector Unsupported("vector")` or `vector Unsupported("vector(1536)")`).
+
+<Admonition type="info">
+
+**Note**: While it is permissable to have the Vector Field as optional
+(e.g., `vector Unsupported("vector")?`), if you perform distance queries
+and some records in your database actually have no vector data, you may get
+unexpected results.
+
+</Admonition>
+
+The documentation is built around the following schema:
+
+```prisma file=schema.prisma showLineNumbers
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  extensions = [vector]
+}
+
+model Vector {
+  id  Int @id @default(autoincrement())
+  metadata  Json?
+  testfield String?
+  embedding Unsupported("vector(3)")?
+}
+```
+
+## Instantiating Prisma Client with pgvector extension
+
+### Installation requirements
+
+In addition addition to the usual Prisma installation, and of course
+`prisma-extension-pgvector`, you will need to install
+[`pgvector`](https://www.npmjs.com/package/pgvector).
+
+```bash
+npm install prisma --save-dev
+npm install @prisma/client
+npm install pgvector
+npm install prisma-extension-pgvector
+```
+
+### Instantiation arguments
+
+When you instantiate a Prisma client with `prisma-extension-pgvector`,
+you need to specify which `model` has the Vector Field, the name of the
+Vector Field, and the name of the ID field (`idFieldName` is optional, 
+and will default to `id`).
+
+```js
+import { PrismaClient } from '@prisma/client';
+import { withPGVector } from 'prisma-extension-pgvector';
+
+const prisma = new PrismaClient().$extends(withPGVector({
+    modelName: 'vector',
+    vectorFieldName: 'embedding',
+    idFieldName: 'id'
+}));
+```
+
 ## Queries
 
 Model-specific methods for the unsupported vector field type are
