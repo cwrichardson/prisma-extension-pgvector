@@ -2,7 +2,6 @@ import { Sql } from '@prisma/client/runtime/library';
 
 import { idFieldType } from '.';
 import { PrismaModelFields, PrismaModelProps } from '$types/prisma.d.ts';
-import { distanceTypeMap } from 'src/helpers/distance-types';
 
 /**
  * Internal: used for building the Prisma sql query for
@@ -20,7 +19,13 @@ export type createManyQueryBuilder = (args: {
     vectors: string[]
 }) => Sql;
 
-export type distanceType = keyof typeof distanceTypeMap;
+export interface DistanceType {
+    L2: string,
+    InnerProduct: string,
+    Cosine: string,
+    L1: string
+}
+export type distanceType = keyof DistanceType;
 
 type Without<T, U> = { [P in Exclude<keyof T, keyof U>]?: never };
 export type XOR<T, U> = (T | U) extends object

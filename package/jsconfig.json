@@ -1,5 +1,5 @@
 {
-    "include": ["**/*.ts", "**/*.js"],
+    "include": ["**/*.ts", "**/*.js", "**/*.mjs"],
     "exclude": ["node_modules"],
     "compilerOptions": {
         "baseUrl": "./",
@@ -8,20 +8,9 @@
                 "types/*"
             ]
         },
-        "noEmit": true,
-        "lib": ["ESNext"],
-        "isolatedModules": true,
-        "esModuleInterop": true,
-        "module": "ESNext",
-        "moduleResolution": "Node",
-        "resolveJsonModule": true,
         "target": "ESNext",
-        "strict": true,
-        "allowJs": true,
-        "checkJs": true,
-        "forceConsistentCasingInFileNames": true,
-        "sourceMap": true,
-        "skipLibCheck": true,
-        "noImplicitAny": true
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "checkJs": true
     }
 }

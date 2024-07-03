@@ -1,7 +1,7 @@
 import { Prisma } from '@prisma/client';
 
 /**
- * @type {import('$types/helpers').createManyQueryBuilder}
+ * @type {import('$types/helpers.d.ts').createManyQueryBuilder}
  */
 export function createManyQueryBuilder({
 	queryType = 'count',
