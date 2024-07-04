@@ -1,5 +1,16 @@
 # prisma-extension-pgvector
 
+## 0.11.0
+
+### Minor Changes
+
+- [`2ecde35`](https://github.com/cwrichardson/prisma-extension-pgvector/commit/2ecde35d466e2e177ee02ea88353d7c33c6583c4) - Add support for $getConfig.
+  Make modules work (as opposed to always CJS).
+
+### Patch Changes
+
+- [`d91e359`](https://github.com/cwrichardson/prisma-extension-pgvector/commit/d91e359be280c867d19f071207fe06eadf539f2a) - Fixed support for JS modules (previously was defaulting to using CJS).
+
 ## 0.10.1
 
 ### Patch Changes
