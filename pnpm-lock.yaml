@@ -18,7 +18,7 @@ importers:
   dev-test:
     dependencies:
       '@prisma/client':
-        specifier: 5.16.1
+        specifier: ^5.14.0
         version: 5.16.1(prisma@5.16.1)
       pgvector:
         specifier: ^0.1.8
@@ -37,7 +37,7 @@ importers:
         specifier: ^9.5.0
         version: 9.5.0
       prisma:
-        specifier: 5.16.1
+        specifier: ^5.14.0
         version: 5.16.1
 
   package:
