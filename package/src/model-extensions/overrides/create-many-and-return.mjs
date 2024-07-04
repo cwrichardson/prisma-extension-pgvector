@@ -1,3 +1,6 @@
+// no Prisma to import until client is build
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import { Prisma } from '@prisma/client';
 
 /**
@@ -7,8 +10,8 @@ import { Prisma } from '@prisma/client';
  * @template A - args
  * 
  * @this {T}
- * @param {import('$types/model-extensions/overrides').createManyAndReturnArgs<T, A>} props
- * @returns {Promise<import('$types/model-extensions/overrides').createManyAndReturnResult<T, A>>}
+ * @param {import('$types/model-extensions/overrides.d.ts').createManyAndReturnArgs<T, A>} props
+ * @returns {Promise<import('$types/model-extensions/overrides.d.ts').createManyAndReturnResult<T, A>>}
  */
 export default async function (props) {
 	const {
@@ -25,7 +28,7 @@ export default async function (props) {
 			// do nothing
 		};
 
-	/** @type {import('$types/index').configArgs} */
+	/** @type {import('$types/index.d.ts').configArgs} */
 	const {
 		vectorFieldName,
 		idFieldName = 'id'
@@ -66,7 +69,7 @@ export default async function (props) {
 			delete select[vectorFieldName];
 		}
 
-		const baseData = data.map(obj => {
+		const baseData = data.map((/** @type {{ [x: string]: any; }} */ obj) => {
 			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			const {[vectorFieldName]: _, ...baseProps } = obj;
 			return baseProps;
@@ -79,7 +82,9 @@ export default async function (props) {
 				...args
 			});
 			await ctx.updateManyVectors({
-				data: data.map((obj, i) => ({
+				data: data.map((
+					/** @type {{ [x: string]: any; }} */ obj,
+					/** @type {string | number} */ i) => ({
 					[idFieldName]: rowsWithoutVectors[i][idFieldName],
 					[vectorFieldName]: obj[vectorFieldName]
 				}))

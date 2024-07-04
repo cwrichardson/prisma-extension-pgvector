@@ -1,3 +1,6 @@
+// no Prisma to import until client is build
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import { Prisma } from '@prisma/client';
 
 /**

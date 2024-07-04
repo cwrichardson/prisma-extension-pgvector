@@ -1,3 +1,6 @@
+// no Prisma to import until client is build
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import { Prisma } from '@prisma/client';
 import { fromSql, toSql } from 'pgvector';
 
@@ -8,8 +11,8 @@ import { createManyQueryBuilder } from '../../../src/helpers/create-many-query-b
  * @template A - args
  * 
  * @this {T}
- * @param {import('$types/model-extensions/store').createManyVectorsAndReturnArgs<T, A>} args
- * @returns {Promise<import('$types/model-extensions/store').createManyVectorsAndReturnResult<T>>}
+ * @param {import('$types/model-extensions/store.d.ts').createManyVectorsAndReturnArgs<T, A>} args
+ * @returns {Promise<import('$types/model-extensions/store.d.ts').createManyVectorsAndReturnResult<T>>}
  */
 // @ts-expect-error configArgs isn't part of function signature
 export default async function ({ data, configArgs }) {

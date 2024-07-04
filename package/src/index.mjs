@@ -1,3 +1,6 @@
+// no Prisma to import until client is build
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import { Prisma } from '@prisma/client';
 
 import * as store from './model-extensions/store/index.mjs';
@@ -7,7 +10,7 @@ import * as overrides from './model-extensions/overrides/index.mjs';
 /**
  * HOF to pass config args down to model methods
  * 
- * @type {import('$types/index').addProps}
+ * @type {import('$types/index.d.ts').addProps}
  */
 const addProps = (methods, additionalProps) =>
 	Object.entries(methods).reduce((acc, [name, method]) => {
@@ -32,7 +35,7 @@ const addProps = (methods, additionalProps) =>
 /**
  * HOF to pass config args and raw prisma context down to override methods
  * 
- * @type {import('$types/index.js').addPropsWithContext}
+ * @type {import('$types/index.d.ts').addPropsWithContext}
  */
 const addPropsWithContext = (methods, additionalProps, context) =>
 	Object.entries(methods).reduce((acc, [name, method]) => {
@@ -65,9 +68,12 @@ const addPropsWithContext = (methods, additionalProps, context) =>
 /**
  * Initialize PGVector as Prisma Extension
  * 
- * @type {import('$types/index').withPGVector}
+ * @type {import('$types/index.d.ts').withPGVector}
  */
 export const withPGVector = (args) => Prisma.defineExtension(function (
+	// no Prisma to import until client is build
+	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+	// @ts-ignore
 	/** @type {import('@prisma/client').PrismaClient} */ client) {
 
 	const extensionMethods = {
@@ -89,11 +95,8 @@ export const withPGVector = (args) => Prisma.defineExtension(function (
 	/**
      * Append client level methods to our model, for internal use
      */
-	// @ts-expect-error extended methods not available until client created
-	methods.__$transaction = async (/** @type {any} */ ...args) => client.$transaction(...args);
-	// @ts-expect-error extended methods not available until client created
+	methods['__$transaction'] = async (/** @type {any} */ ...args) => client.$transaction(...args);
 	methods['__$queryRaw'] = async (/** @type {any} */ ...args) => client.$queryRaw(...args);
-	// @ts-expect-error extended methods not available until client created
 	methods['__$executeRaw'] = async (/** @type {any} */ ...args) => client.$executeRaw(...args);
 
 	return client.$extends({

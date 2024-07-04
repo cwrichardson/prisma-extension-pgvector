@@ -1,3 +1,6 @@
+// no Prisma to import until client is build
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import { Prisma } from '@prisma/client';
 import { fromSql } from 'pgvector';
 
@@ -6,8 +9,8 @@ import { fromSql } from 'pgvector';
  * @template A - args
  * 
  * @this {T}
- * @param {import('$types/model-extensions/query').getVectorsByIdArgs<T, A>} args
- * @returns {Promise<import('$types/model-extensions/query').getVectorsByIdResult<T>>}
+ * @param {import('$types/model-extensions/query.d.ts').getVectorsByIdArgs<T, A>} args
+ * @returns {Promise<import('$types/model-extensions/query.d.ts').getVectorsByIdResult<T>>}
  */
 // @ts-expect-error configArgs not part of function signature
 export default async function ({ where, configArgs}) {
@@ -54,8 +57,8 @@ export default async function ({ where, configArgs}) {
 	const query = Prisma.sql(queryStrings, ...ids);
 
 	const result = await ctx.__$queryRaw(query)
-		.then((/** @type {import('$types/vector').vectorEntry<T>[]} */ rows) => (
-			rows.map((/** @type {import('$types/vector').vectorEntry<T>} */row) => ({
+		.then((/** @type {import('$types/vector.d.ts').vectorEntry<T>[]} */ rows) => (
+			rows.map((/** @type {import('$types/vector.d.ts').vectorEntry<T>} */row) => ({
 				...row,
 				[vectorFieldName]: fromSql(row[vectorFieldName])
 			})

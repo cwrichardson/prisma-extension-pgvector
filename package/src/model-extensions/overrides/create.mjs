@@ -1,3 +1,6 @@
+// no Prisma to import until client is build
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import { Prisma } from '@prisma/client';
 
 /**
@@ -7,8 +10,8 @@ import { Prisma } from '@prisma/client';
  * @template A - args
  * 
  * @this {T}
- * @param {import('$types/model-extensions/overrides').createArgs<T, A>} props
- * @returns {Promise<import('$types/model-extensions/overrides').createResult<T, A>>}
+ * @param {import('$types/model-extensions/overrides.d.ts').createArgs<T, A>} props
+ * @returns {Promise<import('$types/model-extensions/overrides.d.ts').createResult<T, A>>}
  */
 export default async function (props) {
 	const {
@@ -36,7 +39,7 @@ export default async function (props) {
 	const dataHasVectorField = args?.data && Object.prototype
 	  .hasOwnProperty.call(args?.data, vectorFieldName);
 	if (! (dataHasVectorField || (args?.select && Object.prototype
-	  .hasOwnProperty.call(args?.select, vectorFieldName)))) {
+	  .hasOwnProperty.call(args.select, vectorFieldName)))) {
 		const row = await baseCreate(args)
 			.then((/** @type Object */ rawRow) => {
 				if (args?.select) return rawRow;
@@ -48,12 +51,13 @@ export default async function (props) {
 	// run the normal create first, so we have a full model object, then
 	// update with the vector
 	else if (dataHasVectorField) {
+		/** @type Record<string, any> */
 		const select = args?.select;
 		const selectVector = (select && args.select?.[vectorFieldName]);
 
 		// remove the vector from any select clause
 		if (selectVector) {
-			delete args.select?.[vectorFieldName];
+			delete select?.[vectorFieldName];
 		}
 
 		// remove the vector from the data clause
@@ -64,13 +68,15 @@ export default async function (props) {
 		// id now, because we need it to do the vector update, and then
 		// remove it before the final return
 		let removeSelectId = false;
-		if (select && !args.select?.[idFieldName]) {
-			args.select[idFieldName] = true;
+		if (select && !select?.[idFieldName]) {
+			select[idFieldName] = true;
 			removeSelectId = true;
 		}
 
+		const baseArgs = select ? { ...args, select } : args;
+
 		return ctx.__$transaction(async () => {
-			const rowWithoutVector = await baseCreate(args);
+			const rowWithoutVector = await baseCreate(baseArgs);
 
 			const updatedVector = await ctx.updateVector({
 				data: {

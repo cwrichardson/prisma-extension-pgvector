@@ -1,4 +1,3 @@
-import { type PrismaClient } from '@prisma/client';
 import { Types } from '@prisma/client/runtime/library.d.ts';
 import PrismaDefault,
 { type Prisma } from '@prisma/client/scripts/default-index.d.ts';
@@ -100,7 +99,7 @@ export type PGVectorModelMethods = PGVectorStoreMethods & PGVectorQueryMethods
  * }))
  */
 export declare function withPGVector<I extends PGVectorInitArgs>(args: I):
-  (client: PrismaClient) => PrismaDefault.PrismaClientExtends<
+  (client: unknown) => PrismaDefault.PrismaClientExtends<
     Types.Extensions.InternalArgs<
       // result
       Record<never, never>,
@@ -135,5 +134,5 @@ export declare function addProps<T extends PGVectorModelMethods>(
 export declare function addPropsWithContext<T extends PGVectorModelMethods>(
   methods: Record<T, methodType<T>>,
   configArgs: PGVectorInitArgs,
-  parentContext: PrismaClient 
+  parentContext: unknown 
 ): Partial<Record<T, methodType<T>>>;

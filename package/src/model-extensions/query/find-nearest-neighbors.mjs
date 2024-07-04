@@ -1,19 +1,22 @@
+// no Prisma to import until client is build
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import { Prisma } from '@prisma/client';
 import { fromSql, toSql } from 'pgvector/utils';
 import { distanceTypeMap } from '../../../src/helpers/distance-types.mjs';
 
 /**
  * @template T - ctx
- * @template A - args
  * 
  * 
  * @todo make sure take is an integer and deal with negative take
  * 
  * @this {T}
  * 
- * @param {import('$types/model-extensions/query').findNearestNeighborsArgs<T, A>} args
- * @returns {Promise<import('$types/model-extensions/query').findNearestNeighborsResults>}
+ * @param {import('$types/model-extensions/query.d.ts').findNearestNeighborsArgs} args
+ * @returns {Promise<import('$types/model-extensions/query.d.ts').findNearestNeighborsResults>}
  */
+// @ts-expect-error configArgs not part of function definition
 export default async function ({orderBy = 'L2', from, where, take, configArgs}) {
 	const ctx = Prisma.getExtensionContext(this);
 	const {
@@ -87,8 +90,8 @@ export default async function ({orderBy = 'L2', from, where, take, configArgs}) 
 	const query = Prisma.sql(queryStrings, ...values);
 
 	const result = await ctx.__$queryRaw(query)
-		.then((/** @type {import('$types/vector').vectorEntry[]} */ rows) => (
-			rows.map((/** @type {import('$types/vector').vectorEntry} */row) => ({
+		.then((/** @type {import('$types/vector.d.ts').vectorEntry<T>[]} */ rows) => (
+			rows.map((/** @type {import('$types/vector.d.ts').vectorEntry<T>} */ row) => ({
 				...row,
 				[vectorFieldName]: fromSql(row[vectorFieldName])
 			})

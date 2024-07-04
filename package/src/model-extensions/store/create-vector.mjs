@@ -1,3 +1,6 @@
+// no Prisma to import until client is build
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import { Prisma } from '@prisma/client';
 import { fromSql, toSql } from 'pgvector';
 
@@ -6,8 +9,8 @@ import { fromSql, toSql } from 'pgvector';
  * @template A - args
  * 
  * @this {T}
- * @param {import('$types/model-extensions/store').createVectorArgs<T, A>} args
- * @returns {Promise<import('$types/model-extensions/store').createVectorResult<T>>}
+ * @param {import('$types/model-extensions/store.d.ts').createVectorArgs<T, A>} args
+ * @returns {Promise<import('$types/model-extensions/store.d.ts').createVectorResult<T>>}
  */
 // @ts-expect-error configArgs not part of function signature
 export default async function ({ data, configArgs }) {
@@ -29,7 +32,7 @@ export default async function ({ data, configArgs }) {
      * 
      * @see https://www.prisma.io/docs/orm/prisma-client/queries/raw-database-access/custom-and-type-safe-queries#41-adding-an-extension-to-create-pointofinterest-records
      */
-	const /** @type {import('$types/vector').vectorEntry<T>} */ v = {
+	const /** @type {import('$types/vector.d.ts').vectorEntry<T>} */ v = {
 		[vectorFieldName]: fromSql(vector)
 	};
 

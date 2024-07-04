@@ -1,3 +1,6 @@
+// no Prisma to import until client is build
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import { Prisma } from '@prisma/client';
 import { toSql } from 'pgvector';
 
@@ -6,8 +9,8 @@ import { toSql } from 'pgvector';
  * @template A - args
  * 
  * @this {T}
- * @param {import('$types/model-extensions/store').updateManyVectorsArgs<T, A>} args
- * @returns {Promise<import('$types/model-extensions/store').updateManyVectorsResult<T, A>>}
+ * @param {import('$types/model-extensions/store.d.ts').updateManyVectorsArgs<T, A>} args
+ * @returns {Promise<import('$types/model-extensions/store.d.ts').updateManyVectorsResult<T, A>>}
  */
 // @ts-expect-error configArgs not part of function definition
 export default async function ({ data, configArgs }) {

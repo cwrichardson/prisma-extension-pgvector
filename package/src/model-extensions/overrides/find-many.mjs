@@ -1,3 +1,6 @@
+// no Prisma to import until client is build
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import { Prisma } from '@prisma/client';
 
 /**
@@ -7,8 +10,8 @@ import { Prisma } from '@prisma/client';
  * @template A - args
  * 
  * @this {T}
- * @param {import('$types/model-extensions/overrides').findManyArgs<T, A>} props
- * @returns {Promise<import('$types/model-extensions/overrides').findManyResult<T, A>>}
+ * @param {import('$types/model-extensions/overrides.d.ts').findManyArgs<T, A>} props
+ * @returns {Promise<import('$types/model-extensions/overrides.d.ts').findManyResult<T, A>>}
  */
 export default async function (props) {
 	const {
@@ -26,14 +29,14 @@ export default async function (props) {
 			// do nothing
 		};
 
-	/** @type {import('$types/index').configArgs} */
+	/** @type {import('$types/index.d.ts').configArgs} */
 	const {
 		vectorFieldName,
 		idFieldName = 'id'
 	} = configArgs;
 
 	// separate any vector distance ordering from the native orderBy args
-	/** @type {import('$types/prisma').OrderByInput<T, A>} */
+	/** @type {import('$types/prisma.d.ts').OrderByInput<T, A>} */
 	let nativeOrderBy;
 	/** @type string | undefined */
 	let wantVectorDistance;
