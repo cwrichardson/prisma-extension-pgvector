@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, expectTypeOf, it } from 'vitest';
 
-import prisma from './helpers/prisma';
+import prisma from './helpers/prisma.mjs';
 
 describe('overrides', () => {
 	describe('create', () => {

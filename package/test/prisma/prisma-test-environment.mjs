@@ -1,7 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { execSync } from 'node:child_process';
 
-import prisma from '../helpers/prisma';
+import prisma from '../helpers/prisma.mjs';
 
 function generateDatabaseURL(/** @type string */ schema) {
 	if (!process.env.DATABASE_URL) {

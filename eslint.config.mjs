@@ -23,7 +23,7 @@ export default [
 	{
 		files: [
 			'**/*.component-{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx',
-			'**/test/**/*.test.js'
+			'**/test/**/*.test.mjs'
 		],
 		plugins: {
 			vitest

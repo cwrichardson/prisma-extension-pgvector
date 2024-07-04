@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import prisma from './helpers/prisma';
+import prisma from './helpers/prisma.mjs';
 
 describe('client', () => {
 	describe('$getConfig', () => {

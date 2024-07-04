@@ -6,7 +6,7 @@ import {
 	it
 } from 'vitest';
 
-import prisma from './helpers/prisma';
+import prisma from './helpers/prisma.mjs';
 
 describe('query', () => {
 	describe('getVectorsById', () => {
